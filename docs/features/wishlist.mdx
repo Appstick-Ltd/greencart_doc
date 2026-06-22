@@ -1,0 +1,161 @@
+---
+sidebar_position: 9
+title: Wishlist
+description: Wishlist functionality in Hana Go — save products, move to cart, and persistent wishlist state.
+---
+
+# ❤️ Wishlist
+
+The Wishlist allows users to save products they love and move them to cart when ready.
+
+---
+
+## 📁 Files
+
+```
+lib/pages/wishlist/
+└── wishlist_view.dart
+
+Wishlist state is managed in HomeViewController (lib/pages/home/home_view_controller.dart)
+```
+
+---
+
+## 💖 Features
+
+**Route:** `/wishlist` (accessible from bottom nav — 4th tab, or heart icon on product cards)
+
+- Grid of saved product cards (same `ProductCard` component as Product List)
+- **Heart toggle** on every product card throughout the app
+- **"Move to Cart"** button per item — adds to cart and removes from wishlist
+- **"Remove"** action — swipe or long-press
+- Empty state illustration when wishlist is empty
+- Item count badge on wishlist tab icon
+
+---
+
+## 🔴 Heart Toggle (App-wide)
+
+The wishlist heart appears on:
+- Product List cards
+- Product Details header
+- Home screen product strips
+- AI recommendation cards
+
+All heart buttons use the `HomeViewController` reactively:
+
+```dart
+// lib/components/product_card.dart
+Obx(() {
+  final controller = Get.find<HomeViewController>();
+  final isWishlisted = controller.isInWishlist(product.id);
+  return IconButton(
+    icon: Icon(
+      isWishlisted ? Icons.favorite : Icons.favorite_border,
+      color: isWishlisted ? Colors.red : AppColors.grey,
+    ),
+    onPressed: () => controller.toggleWishlist(product.id),
+  );
+})
+```
+
+---
+
+## 🔧 Wishlist State Management
+
+Wishlist state is managed inside `HomeViewController` using a reactive list of product IDs:
+
+```dart
+// lib/pages/home/home_view_controller.dart
+
+class HomeViewController extends GetxController {
+  // Wishlist stores product IDs, not full models
+  var wishlist = <String>[].obs;
+
+  void _loadWishlist() {
+    wishlist.value = AppLocalStorageService.instance.getWishlist();
+  }
+
+  bool isInWishlist(String productId) => wishlist.contains(productId);
+
+  List<ProductModel> get wishlistItems {
+    return wishlist
+        .map(getProductDetailsById)
+        .whereType<ProductModel>()
+        .toList();
+  }
+
+  void toggleWishlist(String productId) {
+    if (wishlist.contains(productId)) {
+      wishlist.remove(productId);
+    } else {
+      wishlist.add(productId);
+    }
+    AppLocalStorageService.instance.saveWishlist(wishlist);
+  }
+}
+```
+
+Persistence is handled through `LocalStorageService` (backed by `GetStorage`).
+
+---
+
+## 📊 Empty State
+
+When the wishlist is empty, a centered illustration with a CTA is shown:
+
+```dart
+// wishlist_view.dart
+Obx(() {
+  if (controller.items.isEmpty) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset('assets/icons/empty_wishlist.svg', height: 160.h),
+        SizedBox(height: 24.h),
+        Text('Your wishlist is empty', style: AppTextStyles.heading3),
+        SizedBox(height: 8.h),
+        Text('Save items you love by tapping the ❤️', style: AppTextStyles.body),
+        SizedBox(height: 24.h),
+        HanaButton(
+          label: 'Start Shopping',
+          onPressed: () => Get.toNamed(Routes.categoryView),
+        ),
+      ],
+    );
+  }
+  return WishlistGrid(items: controller.items);
+})
+```
+
+---
+
+## 🔔 Persistence
+
+Wishlist state is persisted to `GetStorage` automatically after every change, so items survive app restarts.
+
+To sync wishlist with a server:
+
+```dart
+// After loading locally, sync with server:
+Future<void> syncWithServer(String userId) async {
+  final serverItems = await _dio.get('/wishlist/$userId');
+  final serverIds = (serverItems.data as List).map((e) => e['productId'] as String).toSet();
+  // Merge local + server (server wins on conflict)
+  final merged = {...items.map((p) => p.id), ...serverIds};
+  // Load full product models for server IDs not yet local...
+}
+```
+
+---
+
+:::tip Wishlist Count Badge
+The bottom navigation wishlist tab shows a live badge count:
+```dart
+// navigator/app_navigator.dart
+Obx(() => Badge(
+  count: Get.find<HomeViewController>().wishlist.length,
+  child: Icon(Icons.favorite_border),
+))
+```
+:::

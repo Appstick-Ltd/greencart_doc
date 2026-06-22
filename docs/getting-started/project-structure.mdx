@@ -1,0 +1,234 @@
+---
+sidebar_position: 3
+title: Project Structure
+description: Complete breakdown of the Hana Go Flutter project folder architecture and file organization.
+---
+
+# 📂 Project Structure
+
+Hana Go follows a **feature-first, clean architecture** pattern. Every folder has a single responsibility, making navigation and customization intuitive.
+
+---
+
+## 🗂️ Root Directory
+
+```
+hana_go/                          ← Flutter project root
+├── android/                      ← Android native configuration
+│   └── app/
+│       ├── build.gradle          ← App-level Gradle config (bundle ID, versions)
+│       └── src/main/
+│           └── AndroidManifest.xml
+├── ios/                          ← iOS native configuration
+│   └── Runner/
+│       ├── Info.plist            ← App name, permissions, bundle ID
+│       └── GoogleService-Info.plist  ← Firebase iOS config
+├── assets/                       ← All static assets
+├── lib/                          ← ⭐ All Flutter/Dart source code
+├── test/                         ← Unit & widget tests
+├── pubspec.yaml                  ← Package dependencies & asset declarations
+└── analysis_options.yaml         ← Dart linter configuration
+```
+
+---
+
+## 📁 `lib/` — Source Code Architecture
+
+```
+lib/
+├── main.dart                     ← App entry point, initialization
+├── components/                   ← Shared reusable widgets
+├── constants/                    ← App-wide constants (colors, strings)
+├── data/                         ← Data access layer
+│   ├── loaders/                  ← Asset/JSON data loaders
+│   └── seeds/                    ← Mock seed databases
+├── domain/                       ← Business logic entities
+├── managers/                     ← System-level managers
+├── models/                       ← Dart data models
+├── navigator/                    ← Navigation controller & bottom nav
+├── pages/                        ← Feature screens (UI + controllers)
+├── routes/                       ← Route constants & page bindings
+├── services/                     ← Device/infrastructure services
+├── theme/                        ← Material 3 theme configuration
+└── utils/                        ← Helper utilities & extensions
+```
+
+---
+
+## 📱 `lib/pages/` — Feature Screens
+
+Each feature folder contains a `*_view.dart` (UI) and `*_controller.dart` (business logic):
+
+```
+pages/
+├── splash/
+│   ├── splash_view.dart          ← Animated splash screen
+│   └── splash_controller.dart   ← Navigation timing logic
+│
+├── onboarding/
+│   ├── onboarding_view.dart      ← 2-page onboarding carousel
+│   └── onboarding_controller.dart
+│
+├── auth/
+│   ├── login/
+│   │   ├── login_view.dart       ← Login form with country code picker
+│   │   └── login_controller.dart
+│   ├── register/
+│   ├── forgot_password/
+│   ├── otp_verification/
+│   ├── new_password/
+│   └── welcome/
+│
+├── home/
+│   ├── home_view.dart            ← Main home screen shell
+│   ├── home_controller.dart      ← Location, category, product state
+│   └── widgets/
+│       ├── home_hero_banner.dart         ← Sliding banner carousel
+│       ├── home_quick_categories.dart    ← 8-category horizontal scroll
+│       ├── home_limited_offers.dart      ← Offer cards strip
+│       ├── home_ai_recommendations.dart  ← AI product suggestions
+│       └── home_daily_purchase.dart      ← Daily repeat items
+│
+├── category/
+│   ├── category_view.dart        ← Category browse with sub-filters
+│   └── category_controller.dart
+│
+├── product/
+│   ├── product_list/
+│   │   ├── product_list_view.dart         ← Grid/list with filter & sort
+│   │   └── product_list_controller.dart
+│   └── product_details/
+│       ├── product_details_view.dart      ← Detail page, add to cart
+│       └── product_details_controller.dart
+│
+├── all_products/
+│   ├── all_products_view.dart    ← Browse all products
+│   └── all_products_controller.dart
+│
+├── cart/
+│   ├── cart_view.dart            ← Full cart page
+│   └── cart_controller.dart
+│
+├── wishlist/
+│   ├── wishlist_view.dart
+│   └── wishlist_controller.dart
+│
+├── checkout/
+│   ├── checkout_view.dart        ← Multi-section checkout
+│   ├── checkout_controller.dart
+│   ├── date_and_time_view.dart   ← Delivery scheduler
+│   └── order_confirmed_view.dart ← Success screen
+│
+├── orders/
+│   ├── my_orders_view.dart       ← Order history list
+│   ├── my_orders_controller.dart
+│   ├── track_order_view.dart     ← Live order tracking UI
+│   └── track_order_controller.dart
+│
+├── hana_ai/
+│   ├── hana_ai_view.dart         ← AI chat screen
+│   ├── hana_ai_controller.dart   ← Voice + text state
+│   └── widgets/
+│       ├── ai_message_bubble.dart
+│       ├── ai_product_card.dart
+│       ├── ai_recipe_card.dart
+│       └── voice_waveform.dart
+│
+└── settings/
+    ├── settings_view.dart         ← Settings hub
+    ├── account/                   ← Profile management
+    ├── address/                   ← Delivery addresses
+    ├── payment/                   ← Payment methods
+    ├── notifications/             ← Notification settings & list
+    ├── faq/                       ← FAQ accordion
+    ├── privacy/                   ← Privacy & sharing
+    ├── language/                  ← Language picker
+    ├── coupons/                   ← Coupon wallet
+    └── widgets/                   ← Shared settings widgets
+```
+
+---
+
+## 🎨 `assets/` — Static Resources
+
+```
+assets/
+├── data/
+│   └── products.json             ← Mock product catalogue (JSON)
+├── font/
+│   └── Manrope/
+│       └── static/               ← Manrope font weights (200–800)
+├── icons/
+│   ├── logo.png                  ← App logo
+│   ├── navi_icon/                ← Bottom navigation SVG icons
+│   ├── setting/                  ← Settings icon SVGs
+│   ├── home_screen image/        ← Home screen asset images
+│   ├── ai recom/                 ← AI recommendation icons
+│   ├── daily purchase/           ← Daily purchase icons
+│   └── catagory/                 ← Category icons (per category)
+│       ├── vegetables/
+│       ├── fruits/
+│       ├── dairy/
+│       ├── pantry/
+│       ├── beverage/
+│       ├── frozen/
+│       ├── household/
+│       └── snack&package/
+├── images/                       ← General images
+└── translations/                 ← Localization JSON files (9 languages)
+    ├── en_US.json
+    ├── en_GB.json
+    ├── de_DE.json
+    ├── es_ES.json
+    ├── fr_FR.json
+    ├── it_IT.json
+    ├── id_ID.json
+    └── ...
+```
+
+---
+
+## 🔧 `lib/constants/` — Global Constants
+
+```
+constants/
+├── ui.dart               ← All color tokens (primary, accent, semantic)
+├── text.dart          ← Typography scale (display → caption)
+└── app_config.dart               ← Feature flags & app configuration
+```
+
+---
+
+## 🔌 `lib/services/` — Infrastructure Services
+
+```
+services/
+├── cart_service.dart             ← Cart CRUD operations & persistence
+├── local_storage_service.dart    ← GetStorage wrapper
+├── navigation_service.dart       ← Custom navigation helper
+├── notification_service.dart     ← FCM notification handling
+└── profile_service.dart          ← User profile persistence
+```
+
+---
+
+## 📐 Naming Conventions
+
+| Type | Convention | Example |
+|------|-----------|---------|
+| Files | `snake_case.dart` | `product_list_view.dart` |
+| Classes | `PascalCase` | `ProductListView` |
+| Variables | `camelCase` | `selectedCategory` |
+| Constants | `camelCase` or `SCREAMING_SNAKE` | `kPrimaryColor` |
+| Routes | `kebab-case` | `/product-details` |
+| Assets | `snake_case` | `home_banner_1.png` |
+| Translations | `locale_REGION.json` | `en_US.json` |
+
+---
+
+:::tip GetX Pattern
+Every screen follows the **GetX MVC pattern**:
+- `*_view.dart` — Pure UI, uses `GetX<Controller>` or `Obx(() => ...)` for reactive UI
+- `*_controller.dart` — Business logic, extends `GetxController`
+- `*_binding.dart` — Dependency injection, extends `Bindings` (in `routes/pages.dart`)
+:::

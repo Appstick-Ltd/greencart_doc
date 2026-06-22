@@ -1,0 +1,160 @@
+---
+sidebar_position: 1
+title: Tech Stack
+description: Complete technology stack used in Hana Go — Flutter, GetX, Firebase, and all 20+ packages explained.
+---
+
+# 🏗️ Tech Stack
+
+Hana Go is built on a carefully chosen stack of battle-tested Flutter packages. Every dependency has a specific role.
+
+---
+
+## 🎯 Core Framework
+
+| Technology | Version | Role |
+|-----------|---------|------|
+| **Flutter SDK** | `^3.12.0` | Cross-platform UI framework |
+| **Dart SDK** | `^3.12.0` | Programming language |
+
+---
+
+## 📦 Full Dependencies Reference
+
+### State Management & Navigation
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `get` | `^4.6.6` | GetX — state management, routing, dependency injection, translations |
+
+GetX is the backbone of Hana Go. It handles:
+- **Reactive state** with `.obs` and `Obx()`
+- **Named routing** with page bindings
+- **Dependency injection** with `Get.put()` / `Get.find()`
+- **Translations** with `.tr` extension
+
+### Storage & Persistence
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `get_storage` | `^2.1.1` | Fast key-value storage for app state, cart, preferences |
+| `flutter_secure_storage` | `^9.0.0` | Encrypted storage for auth tokens (uses Keychain / Keystore) |
+| `hive_flutter` | `^1.1.0` | Lightweight NoSQL database for structured offline data |
+
+**When to use which:**
+- `get_storage` → Cart items, language preference, onboarding flag, theme
+- `flutter_secure_storage` → Auth tokens, user ID, sensitive session data
+- `hive_flutter` → Larger structured data sets like notification history
+
+### Networking
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `dio` | `^5.9.2` | HTTP client with interceptors, timeouts, and error handling |
+
+### UI & Responsiveness
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `flutter_screenutil` | `^5.9.3` | Responsive sizing — `.w`, `.h`, `.sp`, `.r` extensions |
+| `flutter_svg` | `^2.0.10+1` | Render SVG assets at any resolution |
+| `cached_network_image` | `^3.3.1` | Image caching with placeholder and error widget support |
+| `shimmer` | `^3.0.0` | Skeleton loading animation while content loads |
+| `pinput` | `^5.0.0` | Beautiful, customizable OTP PIN input field |
+
+### Firebase
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `firebase_core` | `^4.10.0` | Firebase initialization (required) |
+| `firebase_messaging` | `^16.3.0` | FCM push notification delivery |
+
+### Location & Maps
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `google_places_flutter` | `^2.0.8` | Google Places autocomplete for address input |
+| `country_code_picker` | `^3.0.0` | Country dial code selector for phone number inputs |
+
+### AI & Voice
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `speech_to_text` | `^7.3.0` | Real-time voice recognition for Hana AI voice input |
+
+### Media & Device
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `image_picker` | `^1.0.7` | Pick/capture profile photos from gallery or camera |
+| `permission_handler` | `^11.3.1` | Request runtime permissions (microphone, camera, notifications) |
+| `share_plus` | `^12.0.2` | Share products via native share sheet |
+| `url_launcher` | `^6.3.2` | Open URLs, phone dialer, email client |
+
+### Utilities
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `intl` | `^0.20.2` | Date/time formatting, number formatting, plurals |
+| `fluttertoast` | `^9.1.0` | Native toast messages for quick feedback |
+| `flutter_localizations` | SDK | Flutter's built-in localization delegates (Material, Widgets, Cupertino) |
+
+### Dev Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `flutter_launcher_icons` | `^0.14.1` | Generate app launcher icons for all platforms from one image |
+| `flutter_lints` | `^6.0.0` | Dart/Flutter recommended lint rules |
+
+---
+
+## 🔧 Flutter SDK Requirements
+
+```yaml
+# pubspec.yaml
+environment:
+  sdk: ^3.12.0
+```
+
+Hana Go requires **Flutter 3.12+** (Dart 3.0+ / null safety). Ensure you're on a stable or beta channel:
+
+```bash
+flutter channel stable
+flutter upgrade
+flutter --version  # Should show 3.12.x or higher
+```
+
+---
+
+## 📱 Platform Support
+
+| Platform | Status | Notes |
+|----------|--------|-------|
+| **Android** | ✅ Full support | Min SDK 21 (Android 5.0+) |
+| **iOS** | ✅ Full support | iOS 12.0+ |
+| **Web** | ⚠️ Partial | UI renders but some packages are mobile-only |
+| **Windows** | ⚠️ Partial | `speech_to_text` may have limitations |
+| **macOS** | ⚠️ Partial | Firebase setup differs on macOS |
+| **Linux** | ❌ Not tested | — |
+
+---
+
+## 🔍 Package Decision Rationale
+
+| Decision | Reason |
+|----------|--------|
+| **GetX over Bloc/Riverpod** | Less boilerplate for a UI template; integrated routing and DI reduce file count significantly |
+| **dio over http** | Interceptors for auth token injection; better error handling and multipart support |
+| **get_storage over SharedPreferences** | GetX-native, no async init required, reactive reads |
+| **flutter_secure_storage** | Platform Keychain/Keystore for token security — required for production |
+| **Manrope font** | Excellent readability at small sizes, wide weight range, Google Fonts license |
+
+---
+
+:::info Keeping Dependencies Updated
+Run periodically to check for newer versions:
+```bash
+flutter pub outdated
+flutter pub upgrade --major-versions  # Only after reviewing breaking changes
+```
+:::

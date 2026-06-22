@@ -1,0 +1,10 @@
+{
+  "label": "🎨 Customization",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Customize colors, typography, languages, assets, and connect your real backend API."
+  }
+}

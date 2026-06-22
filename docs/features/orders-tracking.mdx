@@ -1,0 +1,194 @@
+---
+sidebar_position: 7
+title: Orders & Tracking
+description: My Orders list and Track Order step-by-step delivery tracking screens in Hana Go.
+---
+
+# 📦 Orders & Tracking
+
+Hana Go includes a complete order history and real-time delivery tracking UI.
+
+---
+
+## 📁 Files
+
+```
+lib/pages/orders/
+├── my_orders_view.dart
+├── my_orders_controller.dart
+├── track_order_view.dart
+└── track_order_controller.dart
+```
+
+---
+
+## 📋 My Orders
+
+**Route:** `/my-orders`
+
+### Features
+- Chronological list of all past and active orders
+- Order card shows: order number, date, product thumbnails (max 3), item count, total, status badge
+- **Status badges** with color coding:
+
+| Status | Color |
+|--------|-------|
+| Pending | Yellow `#EAB308` |
+| Processing | Blue |
+| Shipped | Orange `#D96126` |
+| Delivered | Green `#22C55E` |
+| Cancelled | Red `#EF4444` |
+
+- Tap any order → opens Track Order view
+- Pull-to-refresh for latest orders
+
+### OrderModel
+
+```dart
+// lib/models/order_model.dart
+
+class OrderModel {
+  final String orderId;
+  final DateTime createdAt;
+  final List<CartItem> items;
+  final double totalAmount;
+  final OrderStatus status;
+  final DeliveryAddress deliveryAddress;
+  final DeliverySlot deliverySlot;
+  final String? trackingCode;
+  
+  // Computed helpers
+  int get itemCount => items.fold(0, (sum, i) => sum + i.quantity);
+  String get formattedDate => DateFormat('MMM d, yyyy').format(createdAt);
+}
+
+enum OrderStatus { pending, processing, shipped, delivered, cancelled }
+```
+
+### Loading Orders
+
+```dart
+// my_orders_controller.dart
+
+@override
+void onInit() {
+  super.onInit();
+  loadOrders();
+}
+
+Future<void> loadOrders() async {
+  isLoading.value = true;
+  try {
+    // Replace with your API:
+    final response = await _dio.get('/orders', queryParameters: {
+      'userId': _authService.currentUserId,
+      'page': 1,
+      'limit': 20,
+    });
+    orders.value = (response.data['data'] as List)
+        .map((e) => OrderModel.fromJson(e))
+        .toList();
+  } finally {
+    isLoading.value = false;
+  }
+}
+```
+
+---
+
+## 🗺️ Track Order
+
+**Route:** `/track-order`
+
+### Timeline Steps
+
+The tracking screen shows a vertical animated timeline with 5 steps:
+
+```
+Step 1: Order Placed      ✅ Completed
+Step 2: Order Confirmed   ✅ Completed
+Step 3: Packed            ✅ Completed
+Step 4: Out for Delivery  🔄 In Progress (animated pulse)
+Step 5: Delivered         ○  Pending
+```
+
+### Step Widget
+
+Each step renders:
+- **Icon**: checkmark (done), spinner (active), circle (pending)
+- **Label**: step name
+- **Timestamp**: when completed (empty if pending)
+- **Connector line**: solid (completed), dashed (pending)
+
+### Connecting Live Tracking
+
+```dart
+// track_order_controller.dart
+
+// Poll for updates every 30 seconds:
+late Timer _pollingTimer;
+
+@override
+void onInit() {
+  super.onInit();
+  order.value = Get.arguments as OrderModel;
+  _startPolling();
+}
+
+void _startPolling() {
+  _pollingTimer = Timer.periodic(
+    const Duration(seconds: 30),
+    (_) => _fetchLatestStatus(),
+  );
+}
+
+Future<void> _fetchLatestStatus() async {
+  final response = await _dio.get('/orders/${order.value.orderId}/status');
+  order.value = order.value.copyWith(
+    status: OrderStatus.values.byName(response.data['status']),
+    trackingSteps: (response.data['steps'] as List)
+        .map((s) => TrackingStep.fromJson(s))
+        .toList(),
+  );
+}
+
+@override
+void onClose() {
+  _pollingTimer.cancel();
+  super.onClose();
+}
+```
+
+---
+
+## 🔔 Order Notifications
+
+When order status changes, Firebase Cloud Messaging (FCM) sends a push notification. The `NotificationService` handles it:
+
+```dart
+// lib/services/notification_service.dart
+
+FirebaseMessaging.onMessage.listen((message) {
+  if (message.data['type'] == 'order_update') {
+    final orderId = message.data['orderId'];
+    final newStatus = message.data['status'];
+    
+    // Show in-app notification:
+    AppAlert.info(
+      title: 'Order Update',
+      message: 'Your order #$orderId is now $newStatus',
+    );
+    
+    // Refresh order list if on MyOrders screen:
+    if (Get.currentRoute == Routes.myOrdersView) {
+      Get.find<MyOrdersController>().loadOrders();
+    }
+  }
+});
+```
+
+---
+
+:::tip Mock Order Data
+During development, orders are seeded from `lib/data/seeds/orders_seed.dart`. Replace with real API calls once your backend is ready — the UI requires no changes.
+:::

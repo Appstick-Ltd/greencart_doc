@@ -1,0 +1,228 @@
+---
+sidebar_position: 2
+title: Typography
+description: Manrope font system and text styles in Hana Go — the complete typography scale and how to customize it.
+---
+
+# ✍️ Typography
+
+Hana Go uses **Manrope** — a modern, geometric sans-serif typeface — as its exclusive font. All text styles are defined in a single centralized file.
+
+---
+
+## 📁 File
+
+```
+lib/constants/text.dart
+assets/font/Manrope/static/     ← 7 font weight files
+```
+
+---
+
+## 🔤 Manrope Font
+
+[Manrope](https://fonts.google.com/specimen/Manrope) is an open-source font available on Google Fonts. It is designed for both display and body text, with excellent readability on mobile screens.
+
+### Included Weights
+
+| Weight | Value | File |
+|--------|-------|------|
+| ExtraLight | 200 | `Manrope-ExtraLight.ttf` |
+| Light | 300 | `Manrope-Light.ttf` |
+| Regular | 400 | `Manrope-Regular.ttf` |
+| Medium | 500 | `Manrope-Medium.ttf` |
+| SemiBold | 600 | `Manrope-SemiBold.ttf` |
+| Bold | 700 | `Manrope-Bold.ttf` |
+| ExtraBold | 800 | `Manrope-ExtraBold.ttf` |
+
+---
+
+## 📐 Typography Scale
+
+All text styles follow a consistent scale using `flutter_screenutil` (`sp` units for responsive font sizes):
+
+```dart
+// lib/constants/text.dart
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'ui.dart';
+
+abstract class AppTextStyles {
+  AppTextStyles._();
+
+  // ── Display ────────────────────────────────────────
+  static TextStyle get display => TextStyle(
+    fontSize: 32.sp, fontWeight: FontWeight.w800,
+    color: AppColors.black, height: 1.2,
+  );
+
+  // ── Headings ───────────────────────────────────────
+  static TextStyle get heading1 => TextStyle(
+    fontSize: 24.sp, fontWeight: FontWeight.w700,
+    color: AppColors.black, height: 1.3,
+  );
+
+  static TextStyle get heading2 => TextStyle(
+    fontSize: 20.sp, fontWeight: FontWeight.w700,
+    color: AppColors.black, height: 1.3,
+  );
+
+  static TextStyle get heading3 => TextStyle(
+    fontSize: 18.sp, fontWeight: FontWeight.w600,
+    color: AppColors.black, height: 1.4,
+  );
+
+  // ── Body ───────────────────────────────────────────
+  static TextStyle get bodyLarge => TextStyle(
+    fontSize: 16.sp, fontWeight: FontWeight.w400,
+    color: AppColors.grey800, height: 1.5,
+  );
+
+  static TextStyle get body => TextStyle(
+    fontSize: 14.sp, fontWeight: FontWeight.w400,
+    color: AppColors.grey600, height: 1.5,
+  );
+
+  static TextStyle get bodySmall => TextStyle(
+    fontSize: 12.sp, fontWeight: FontWeight.w400,
+    color: AppColors.grey600, height: 1.5,
+  );
+
+  // ── Label / UI ─────────────────────────────────────
+  static TextStyle get labelLarge => TextStyle(
+    fontSize: 14.sp, fontWeight: FontWeight.w600,
+    color: AppColors.black, letterSpacing: 0.1,
+  );
+
+  static TextStyle get label => TextStyle(
+    fontSize: 12.sp, fontWeight: FontWeight.w600,
+    color: AppColors.black, letterSpacing: 0.1,
+  );
+
+  static TextStyle get labelSmall => TextStyle(
+    fontSize: 10.sp, fontWeight: FontWeight.w500,
+    color: AppColors.grey600, letterSpacing: 0.5,
+  );
+
+  // ── Price ──────────────────────────────────────────
+  static TextStyle get price => TextStyle(
+    fontSize: 16.sp, fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+  );
+
+  static TextStyle get priceStrikethrough => TextStyle(
+    fontSize: 13.sp, fontWeight: FontWeight.w400,
+    color: AppColors.grey400,
+    decoration: TextDecoration.lineThrough,
+  );
+
+  static TextStyle get priceDiscount => TextStyle(
+    fontSize: 16.sp, fontWeight: FontWeight.w700,
+    color: AppColors.orangePrice,
+  );
+
+  // ── Button ─────────────────────────────────────────
+  static TextStyle get button => TextStyle(
+    fontSize: 15.sp, fontWeight: FontWeight.w600,
+    color: AppColors.white, letterSpacing: 0.2,
+  );
+
+  static TextStyle get buttonSecondary => TextStyle(
+    fontSize: 15.sp, fontWeight: FontWeight.w600,
+    color: AppColors.primary,
+  );
+
+  // ── Caption ────────────────────────────────────────
+  static TextStyle get caption => TextStyle(
+    fontSize: 11.sp, fontWeight: FontWeight.w400,
+    color: AppColors.grey400, height: 1.4,
+  );
+}
+```
+
+---
+
+## 📱 Usage Examples
+
+```dart
+// Page title
+Text('Fresh Vegetables', style: AppTextStyles.heading1)
+
+// Product name in card
+Text(product.name, style: AppTextStyles.labelLarge, maxLines: 2)
+
+// Price
+Text('\$${product.price}', style: AppTextStyles.price)
+
+// Original price (discounted)
+Text('\$${product.originalPrice}', style: AppTextStyles.priceStrikethrough)
+
+// Body description
+Text(product.description, style: AppTextStyles.body)
+
+// Small timestamp / category label
+Text('2 hours ago', style: AppTextStyles.caption)
+```
+
+---
+
+## 🔄 Changing the Font
+
+To use a different font (e.g., **Inter**):
+
+### Step 1 — Download the Font
+Download from [Google Fonts](https://fonts.google.com) and place `.ttf` files in `assets/font/Inter/static/`.
+
+### Step 2 — Declare in pubspec.yaml
+
+```yaml
+flutter:
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/font/Inter/static/Inter-Regular.ttf
+        - asset: assets/font/Inter/static/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/font/Inter/static/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/font/Inter/static/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/font/Inter/static/Inter-ExtraBold.ttf
+          weight: 800
+```
+
+### Step 3 — Update Theme
+
+```dart
+// lib/theme/app.dart
+ThemeData get lightTheme => ThemeData(
+  fontFamily: 'Inter',   // ← Change from 'Manrope'
+  ...
+);
+```
+
+All text throughout the app will immediately use the new font.
+
+---
+
+## 📐 Responsive Font Sizes
+
+Hana Go uses `flutter_screenutil`'s `.sp` extension for all font sizes. This ensures text scales correctly across:
+- Small phones (360dp width)
+- Standard phones (390–430dp width)
+- Large phones / tablets (768dp+)
+
+```dart
+// ✅ Correct — responsive
+Text('Hello', style: TextStyle(fontSize: 16.sp))
+
+// ❌ Avoid — fixed size
+Text('Hello', style: TextStyle(fontSize: 16))
+```
+
+---
+
+:::tip Consistent Text
+Always use `AppTextStyles.*` rather than defining `TextStyle` inline in widgets. This ensures visual consistency and makes global typography changes a one-file edit.
+:::

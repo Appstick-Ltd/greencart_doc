@@ -1,0 +1,297 @@
+---
+sidebar_position: 5
+title: Services
+description: Infrastructure services in Hana Go — CartService, LocalStorageService, NotificationService, ProfileService, and NavigationService.
+---
+
+# 🔧 Services
+
+Services are **persistent app-wide singletons** registered at startup. Unlike controllers (which are route-scoped), services live for the entire app session.
+
+---
+
+## 📁 Files
+
+```
+lib/services/
+├── cart_service.dart
+├── local_storage_service.dart
+├── navigation_service.dart
+├── notification_service.dart
+└── profile_service.dart
+```
+
+---
+
+## 🚀 Service Registration
+
+All services are initialized in `main.dart` before `runApp()`:
+
+```dart
+// lib/main.dart
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AppSingleton.instance.appInitialize();
+  AppTranslations.loadAll();
+  runApp(const HanaGoApp());
+}
+
+// Services are initialized via AppSingleton:
+// - LocalStorageService
+// - CartService
+// - NotificationService
+// - ProfileService
+// - NavigationService
+```
+
+---
+
+## 🛒 CartService
+
+Manages cart state with persistence across sessions.
+
+```dart
+// lib/services/cart_service.dart
+
+class CartService extends GetxService {
+  final RxList<CartItem> items = <CartItem>[].obs;
+
+  Future<CartService> init() async {
+    // Restore cart from storage
+    final saved = GetStorage().read<List>('cart') ?? [];
+    items.value = saved.map((e) => CartItem.fromJson(e)).toList();
+    return this;
+  }
+
+  // ── Cart Operations ──────────────────────────────────
+  void addToCart(ProductModel product, {int quantity = 1, String variant = ''}) {
+    final idx = items.indexWhere(
+      (i) => i.product.id == product.id && i.selectedVariant == variant
+    );
+    if (idx >= 0) {
+      items[idx].quantity += quantity;
+      items.refresh();
+    } else {
+      items.add(CartItem(product: product, quantity: quantity, selectedVariant: variant));
+    }
+    _persist();
+  }
+
+  void removeFromCart(String productId) {
+    items.removeWhere((i) => i.product.id == productId);
+    _persist();
+  }
+
+  void updateQuantity(String productId, int qty) {
+    if (qty <= 0) { removeFromCart(productId); return; }
+    final item = items.firstWhere((i) => i.product.id == productId);
+    item.quantity = qty;
+    items.refresh();
+    _persist();
+  }
+
+  void clearCart() {
+    items.clear();
+    _persist();
+  }
+
+  // ── Computed Properties ──────────────────────────────
+  double get subtotal => items.fold(0.0, (sum, i) => sum + i.lineTotal);
+  int get totalItems  => items.fold(0, (sum, i) => sum + i.quantity);
+  bool get isEmpty    => items.isEmpty;
+  bool get isNotEmpty => items.isNotEmpty;
+
+  bool isInCart(String productId) => items.any((i) => i.product.id == productId);
+
+  // ── Persistence ──────────────────────────────────────
+  void _persist() {
+    GetStorage().write('cart', items.map((i) => i.toJson()).toList());
+  }
+}
+```
+
+---
+
+## 💾 LocalStorageService
+
+Wrapper around `GetStorage` and `FlutterSecureStorage` with typed accessors:
+
+```dart
+// lib/services/local_storage_service.dart
+
+class LocalStorageService extends GetxService {
+  final _box = GetStorage();
+  final _secure = const FlutterSecureStorage();
+
+  Future<LocalStorageService> init() async => this;
+
+  // ── Auth ─────────────────────────────────────────────
+  Future<void> saveToken(String token) =>
+      _secure.write(key: 'auth_token', value: token);
+  Future<String?> getToken() => _secure.read(key: 'auth_token');
+  Future<bool> get isLoggedIn async => (await getToken()) != null;
+  Future<void> clearToken() => _secure.delete(key: 'auth_token');
+
+  // ── User ─────────────────────────────────────────────
+  void saveUser(UserModel user) => _box.write('user', user.toJson());
+  UserModel? getUser() {
+    final data = _box.read<Map>('user');
+    return data != null ? UserModel.fromJson(Map<String, dynamic>.from(data)) : null;
+  }
+
+  // ── Preferences ──────────────────────────────────────
+  bool get hasSeenOnboarding => _box.read<bool>('onboarding') ?? false;
+  void markOnboardingSeen() => _box.write('onboarding', true);
+
+  String get savedLocale => _box.read<String>('locale') ?? 'en_US';
+  void saveLocale(String code) => _box.write('locale', code);
+
+  // ── Full reset ───────────────────────────────────────
+  Future<void> clear() async {
+    await _box.erase();
+    await _secure.deleteAll();
+  }
+}
+```
+
+---
+
+## 🔔 NotificationService
+
+Handles FCM initialization, token management, and message routing:
+
+```dart
+// lib/services/notification_service.dart
+
+class NotificationService extends GetxService {
+  final RxList<NotificationModel> notifications = <NotificationModel>[].obs;
+  final RxInt unreadCount = 0.obs;
+
+  Future<NotificationService> init() async {
+    await _initFCM();
+    _loadLocalNotifications();
+    return this;
+  }
+
+  Future<void> _initFCM() async {
+    await FirebaseMessaging.instance.requestPermission();
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token != null) await _sendTokenToServer(token);
+
+    FirebaseMessaging.onTokenRefresh.listen(_sendTokenToServer);
+    FirebaseMessaging.onMessage.listen(_handleForeground);
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+  }
+
+  void markAllRead() {
+    for (final n in notifications) {
+      if (!n.isRead) notifications[notifications.indexOf(n)] = n.copyWith(isRead: true);
+    }
+    unreadCount.value = 0;
+    _persist();
+  }
+
+  void markRead(String id) {
+    final idx = notifications.indexWhere((n) => n.id == id);
+    if (idx >= 0) {
+      notifications[idx] = notifications[idx].copyWith(isRead: true);
+      unreadCount.value = notifications.where((n) => !n.isRead).length;
+      _persist();
+    }
+  }
+}
+```
+
+---
+
+## 👤 ProfileService
+
+Manages current user state across the app:
+
+```dart
+// lib/services/profile_service.dart
+
+class ProfileService extends GetxService {
+  final Rx<UserModel?> currentUser = Rx<UserModel?>(null);
+
+  Future<ProfileService> init() async {
+    currentUser.value = Get.find<LocalStorageService>().getUser();
+    return this;
+  }
+
+  Future<void> updateProfile(UserModel updated) async {
+    currentUser.value = updated;
+    Get.find<LocalStorageService>().saveUser(updated);
+    // Sync with server:
+    // await _dio.put('/users/${updated.id}', data: updated.toJson());
+  }
+
+  Future<void> updateProfilePhoto(String localPath) async {
+    // Upload to server, get URL back:
+    // final url = await _uploadService.upload(localPath);
+    // Then update user:
+    final updated = currentUser.value!.copyWith(profileImageUrl: localPath);
+    await updateProfile(updated);
+  }
+
+  String get currentUserId => currentUser.value?.id ?? '';
+  bool get isLoggedIn => currentUser.value != null;
+}
+```
+
+---
+
+## 🗺️ NavigationService
+
+Custom navigation helpers used by controllers that don't have `BuildContext`:
+
+```dart
+// lib/services/navigation_service.dart
+
+class NavigationService {
+  // Back navigation with optional result
+  static void goBack<T>({T? result}) => Get.back(result: result);
+
+  // Typed push with arguments
+  static Future<T?>? pushNamed<T>(String route, {dynamic arguments}) =>
+      Get.toNamed<T>(route, arguments: arguments);
+
+  // Show a modal bottom sheet (no context needed via GetX)
+  static Future<T?> showSheet<T>(Widget sheet) => Get.bottomSheet<T>(
+    sheet,
+    isScrollControlled: true,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    ),
+  );
+
+  // Show confirmation dialog
+  static Future<bool?> confirm({required String title, required String message}) =>
+    Get.dialog<bool>(ConfirmDialog(title: title, message: message));
+}
+```
+
+---
+
+## 📋 Service Dependency Map
+
+```
+main.dart (via AppSingleton)
+├── LocalStorageService   (no deps)
+├── CartService           (depends on: LocalStorageService)
+├── NotificationService   (depends on: Firebase, LocalStorageService)
+└── ProfileService        (depends on: LocalStorageService)
+```
+
+Services are initialized in dependency order. Later services can `Get.find<>()` earlier ones safely.
+
+---
+
+:::info Services vs Controllers
+**Services** = app-level shared state and infrastructure (registered once, live forever)
+**Controllers** = per-screen business logic (created on route entry, destroyed on route exit)
+
+Both use `GetxService`/`GetxController` but have different lifecycles.
+:::

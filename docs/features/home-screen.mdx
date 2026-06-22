@@ -1,0 +1,167 @@
+---
+sidebar_position: 2
+title: Home Screen
+description: Detailed breakdown of the Hana Go home screen — hero banner, categories, offers, AI strip, and daily purchase section.
+---
+
+# 🏠 Home Screen
+
+The Home Screen is the heart of Hana Go. It is composed of five distinct, independently scrollable sections — each backed by its own widget file in `lib/pages/home/widgets/`.
+
+---
+
+## 📁 Files
+
+| File | Responsibility |
+|------|----------------|
+| `lib/pages/home/home_view.dart` | Main screen shell, `CustomScrollView` orchestrator |
+| `lib/pages/home/home_controller.dart` | Location, product, and category state |
+| `lib/pages/home/widgets/home_hero_banner.dart` | Promotional banner slider |
+| `lib/pages/home/widgets/home_quick_categories.dart` | 8-category horizontal grid |
+| `lib/pages/home/widgets/home_limited_offers.dart` | Discount cards strip |
+| `lib/pages/home/widgets/home_ai_recommendations.dart` | AI suggestion product strip |
+| `lib/pages/home/widgets/home_daily_purchase.dart` | Repeat/frequent purchase cards |
+
+---
+
+## 🖼️ Hero Banner
+
+The hero banner (`home_hero_banner.dart`) is a full-width auto-sliding carousel with:
+
+- **Auto-play**: Slides advance every 3 seconds via a `Timer.periodic`
+- **Manual swipe**: User can swipe left/right
+- **Page indicators**: Animated dot indicators below the banner
+- **Content**: Title, subtitle, and CTA button per slide
+
+### Customizing Banner Content
+
+Banner slides are defined in the controller. To change them:
+
+```dart
+// lib/pages/home/home_controller.dart
+
+final List<BannerItem> banners = [
+  BannerItem(
+    title: 'Fresh Vegetables',
+    subtitle: 'Farm to table, every day',
+    imageAsset: 'assets/images/banner_1.png',
+    bgColor: AppColors.lightMint,
+    ctaText: 'Shop Now',
+    route: Routes.categoryView,
+  ),
+  // Add more slides...
+];
+```
+
+---
+
+## 📂 Quick Categories
+
+The quick categories section (`home_quick_categories.dart`) displays 8 grocery categories as horizontally scrollable icon + label cards.
+
+### Categories
+
+| # | Category | Icon Path |
+|---|----------|-----------|
+| 1 | Vegetables | `assets/icons/catagory/vegetables/` |
+| 2 | Fruits | `assets/icons/catagory/fruits/` |
+| 3 | Dairy | `assets/icons/catagory/dairy/` |
+| 4 | Pantry | `assets/icons/catagory/pantry/` |
+| 5 | Snacks & Packaged | `assets/icons/catagory/snack&package/` |
+| 6 | Beverages | `assets/icons/catagory/beverage/` |
+| 7 | Frozen | `assets/icons/catagory/frozen/` |
+| 8 | Household | `assets/icons/catagory/household/` |
+
+### Adding a New Category
+
+```dart
+// lib/pages/home/widgets/home_quick_categories.dart
+
+const _kQuickCategories = [
+  _QuickCategoryItem(label: 'Vegetables', iconPath: 'assets/icons/catagory/vegetables/veg.svg'),
+  // Add your new category:
+  _QuickCategoryItem(label: 'Baby Food', iconPath: 'assets/icons/catagory/baby/baby.svg'),
+];
+```
+
+---
+
+## 🏷️ Limited Offers
+
+The limited offers strip shows products with active discounts. Cards display:
+- Product image (via `cached_network_image` or local asset)
+- Product name & weight
+- Original price (struck through)
+- Discounted price in orange (`#D96126`)
+- Percentage discount badge
+- Add to cart button (+ icon)
+
+### Connecting Real Discount Data
+
+```dart
+// Replace mock offers in home_controller.dart:
+Future<void> loadLimitedOffers() async {
+  final response = await _apiService.get('/products?discount=true&limit=10');
+  limitedOffers.value = (response.data as List)
+      .map((e) => ProductModel.fromJson(e))
+      .toList();
+}
+```
+
+---
+
+## 🤖 AI Recommendations Strip
+
+The AI recommendations widget (`home_ai_recommendations.dart`) shows horizontally scrollable product cards suggested by the Hana AI engine. Each card includes:
+- Product image
+- Name & price
+- A subtle "AI Pick" badge
+- Tap → navigates to Product Details
+
+This section is pre-wired to receive a `List<ProductModel>` from the controller. To connect your AI backend:
+
+```dart
+// home_controller.dart
+Future<void> loadAiRecommendations(String userId) async {
+  final recs = await _aiService.getRecommendations(userId);
+  aiRecommendations.value = recs;
+}
+```
+
+---
+
+## 🛒 Daily Purchase
+
+The daily purchase section shows items the user frequently buys, enabling quick re-order. Cards display a compact layout with a large add button.
+
+---
+
+## 🎨 Home Screen Customization
+
+### Reorder Sections
+In `home_view.dart`, sections are `SliverToBoxAdapter` children in a `CustomScrollView`. Reorder by moving the widgets:
+
+```dart
+CustomScrollView(
+  slivers: [
+    SliverToBoxAdapter(child: HomeHeroBanner()),       // 1st
+    SliverToBoxAdapter(child: HomeQuickCategories()),  // 2nd
+    SliverToBoxAdapter(child: HomeLimitedOffers()),    // 3rd
+    SliverToBoxAdapter(child: HomeAiRecommendations()), // 4th
+    SliverToBoxAdapter(child: HomeDailyPurchase()),    // 5th
+  ],
+)
+```
+
+### Hide a Section
+Simply comment out the unwanted `SliverToBoxAdapter` or wrap with a conditional:
+
+```dart
+if (showAiSection) SliverToBoxAdapter(child: HomeAiRecommendations()),
+```
+
+---
+
+:::tip Performance
+The Home Screen uses `CachedNetworkImage` with shimmer placeholders for all product images. This ensures smooth scrolling even on slow networks. The shimmer effect matches the card skeleton dimensions exactly.
+:::

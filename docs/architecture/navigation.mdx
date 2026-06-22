@@ -1,0 +1,266 @@
+---
+sidebar_position: 3
+title: Navigation
+description: GetX navigation system in Hana Go — named routes, bottom navigation, page transitions, and routing patterns.
+---
+
+# 🧭 Navigation
+
+Hana Go uses **GetX named routing** — a declarative routing system with automatic binding injection, back-stack management, and argument passing.
+
+---
+
+## 📁 Files
+
+```
+lib/routes/
+├── routes.dart      ← Route name constants (all as kebab-case strings)
+└── pages.dart       ← Route definitions (page + binding per route)
+
+lib/navigator/
+├── app_navigator.dart          ← Bottom nav controller + scaffold shell
+└── navigator_controller.dart  ← Selected tab index
+```
+
+---
+
+## 🗺️ Route Constants
+
+All route strings are defined in `Routes` — never use bare strings:
+
+```dart
+// lib/routes/routes.dart
+
+abstract class Routes {
+  static const String splashPage          = '/splash';
+  static const String onboardingView      = '/onboarding';
+  static const String welcomeView         = '/welcome';
+  static const String loginView           = '/login';
+  static const String registerView        = '/register';
+  static const String forgotPasswordView  = '/forgot-password';
+  static const String otpVerificationView = '/otp-verification';
+  static const String newPasswordView     = '/new-password';
+  static const String homeView            = '/home';
+  static const String categoryView        = '/category';
+  static const String cartView            = '/cart';
+  static const String productListView     = '/product-list';
+  static const String productDetailsView  = '/product-details';
+  static const String allProductsView     = '/all-products';
+  static const String wishlistView        = '/wishlist';
+  static const String checkoutView        = '/checkout';
+  static const String dateAndTimeView     = '/date-and-time';
+  static const String orderConfirmedView  = '/order-confirmed';
+  static const String myOrdersView        = '/my-orders';
+  static const String trackOrderView      = '/track-order';
+  // ... settings routes
+}
+```
+
+---
+
+## 📄 Page Definitions
+
+```dart
+// lib/routes/pages.dart
+
+class AppPages {
+  static final List<GetPage> pages = [
+    GetPage(
+      name: Routes.homeView,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: Routes.productDetailsView,
+      page: () => const ProductDetailsView(),
+      binding: ProductDetailsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.checkoutView,
+      page: () => const CheckoutView(),
+      binding: CheckoutBinding(),
+      transition: Transition.downToUp,
+    ),
+    // ... all 26+ routes
+  ];
+}
+```
+
+---
+
+## 🔀 Navigation Methods
+
+### Push a new route
+```dart
+// Basic push:
+Get.toNamed(Routes.productDetailsView);
+
+// With arguments:
+Get.toNamed(Routes.productDetailsView, arguments: product);
+
+// With query parameters:
+Get.toNamed(Routes.productListView, parameters: {'category': 'vegetables'});
+```
+
+### Replace current route
+```dart
+// Replace (no back button):
+Get.offNamed(Routes.homeView);
+```
+
+### Clear entire stack and push
+```dart
+// After login success or logout:
+Get.offAllNamed(Routes.homeView);
+Get.offAllNamed(Routes.welcomeView);
+```
+
+### Go back
+```dart
+Get.back();
+
+// Go back with result:
+Get.back(result: selectedSlot);
+
+// In date picker, return value to checkout:
+final result = await Get.toNamed(Routes.dateAndTimeView);
+if (result != null) {
+  controller.setDeliverySlot(result as DeliverySlot);
+}
+```
+
+### Navigate until condition
+```dart
+// Pop until reaching home:
+Get.until((route) => route.settings.name == Routes.homeView);
+```
+
+---
+
+## 📨 Passing Arguments
+
+```dart
+// Controller-to-controller (via Get.arguments):
+Get.toNamed(Routes.productDetailsView, arguments: product);
+
+// In destination controller:
+@override
+void onInit() {
+  super.onInit();
+  final product = Get.arguments as ProductModel;
+  this.product.value = product;
+}
+```
+
+```dart
+// Map arguments (multiple values):
+Get.toNamed(Routes.productListView, arguments: {
+  'category': 'Fruits',
+  'title': 'Fresh Fruits',
+  'filterByOffer': true,
+});
+
+// Retrieve in controller:
+final category = Get.arguments['category'] as String;
+final title = Get.arguments['title'] as String;
+```
+
+---
+
+## 📱 Bottom Navigation
+
+The main app uses a persistent bottom navigation bar with 5 tabs. This is implemented as a shell/navigator widget:
+
+```dart
+// lib/navigator/app_navigator.dart
+
+class AppNavigator extends GetView<NavigatorController> {
+  const AppNavigator({super.key});
+
+  static final List<Widget> _tabs = [
+    const HomeView(),
+    const CategoryView(),
+    const HanaAiView(),
+    const WishlistView(),
+    const SettingsView(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Obx(() => _tabs[controller.selectedIndex.value]),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+        currentIndex: controller.selectedIndex.value,
+        onTap: controller.changeTab,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Category'),
+          BottomNavigationBarItem(icon: Icon(Icons.auto_awesome), label: 'AI'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Wishlist'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Settings'),
+        ],
+      )),
+    );
+  }
+}
+```
+
+### Programmatically Switch Tabs
+```dart
+// From any controller or widget:
+Get.find<NavigatorController>().changeTab(0); // Switch to Home tab
+```
+
+---
+
+## 🎬 Page Transitions
+
+Available transitions in GetX:
+
+| Transition | Description | Used For |
+|-----------|-------------|---------|
+| `Transition.fadeIn` | Fade in | Home, main tabs |
+| `Transition.rightToLeft` | Slide from right | Detail screens |
+| `Transition.leftToRight` | Slide from left | Back navigation |
+| `Transition.downToUp` | Slide up | Checkout, modals |
+| `Transition.upToDown` | Slide down | Dismiss sheets |
+| `Transition.zoom` | Scale in | Confirmation screens |
+| `Transition.noTransition` | Instant | Splash → Home |
+
+---
+
+## 🔒 Route Guards / Middleware
+
+Protect routes that require authentication:
+
+```dart
+// lib/routes/auth_middleware.dart
+
+class AuthMiddleware extends GetMiddleware {
+  @override
+  RouteSettings? redirect(String? route) {
+    if (!LocalStorageService.isLoggedIn) {
+      return const RouteSettings(name: Routes.welcomeView);
+    }
+    return null; // Allow navigation
+  }
+}
+
+// Apply to protected routes in pages.dart:
+GetPage(
+  name: Routes.checkoutView,
+  page: () => const CheckoutView(),
+  middlewares: [AuthMiddleware()],
+),
+```
+
+---
+
+:::tip Back Stack Strategy
+- Use `Get.toNamed()` for normal forward navigation (adds to stack, back button works)
+- Use `Get.offNamed()` to prevent back navigation (e.g., after login)
+- Use `Get.offAllNamed()` to clear stack completely (e.g., after logout)
+- Use `Get.back(result: ...)` to return data to the previous screen (e.g., date picker)
+:::

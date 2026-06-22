@@ -1,0 +1,242 @@
+---
+sidebar_position: 2
+title: State Management
+description: GetX state management in Hana Go — reactive state, controllers, bindings, and dependency injection patterns.
+---
+
+# 🔄 State Management
+
+Hana Go uses **GetX** for all state management. This section explains the exact patterns used throughout the app.
+
+---
+
+## 🧠 Core Concepts
+
+| Concept | GetX Feature | Example |
+|---------|-------------|---------|
+| Reactive state | `.obs` + `Obx()` | Cart item count badge |
+| Controller | `GetxController` | `HomeController`, `CartController` |
+| Service | `GetxService` | `CartService`, `WishlistService` |
+| Binding | `Bindings` | `HomeBinding` — injects controller on route |
+| Dependency retrieval | `Get.find<T>()` | Access CartService from any widget |
+
+---
+
+## 📦 Controller Pattern
+
+Every screen in Hana Go has a paired controller:
+
+```dart
+// lib/pages/home/home_controller.dart
+
+class HomeController extends GetxController {
+  // ── Dependencies ─────────────────────────────────────
+  final CartService _cartService = Get.find<CartService>();
+
+  // ── State (reactive) ────────────────────────────────
+  final RxList<ProductModel> limitedOffers = <ProductModel>[].obs;
+  final RxList<ProductModel> aiRecommendations = <ProductModel>[].obs;
+  final RxBool isLoading = false.obs;
+  final RxString selectedLocation = 'New York, NY'.obs;
+  final RxInt currentBannerIndex = 0.obs;
+
+  // ── Lifecycle ────────────────────────────────────────
+  @override
+  void onInit() {
+    super.onInit();
+    loadHomeData();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    // Called after the first frame is rendered
+  }
+
+  @override
+  void onClose() {
+    // Cancel timers, subscriptions
+    super.onClose();
+  }
+
+  // ── Methods ──────────────────────────────────────────
+  Future<void> loadHomeData() async {
+    isLoading.value = true;
+    try {
+      await Future.wait([
+        _loadLimitedOffers(),
+        _loadAiRecommendations(),
+      ]);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+}
+```
+
+---
+
+## 🔴 Reactive State with `.obs`
+
+Any variable suffixed with `.obs` becomes **reactive** — UI rebuilds automatically when the value changes:
+
+```dart
+// Controller:
+final RxInt counter = 0.obs;
+final RxList<String> items = <String>[].obs;
+final RxBool isLoading = false.obs;
+final Rx<ProductModel?> selectedProduct = Rx<ProductModel?>(null);
+
+// Shorthand:
+var counter = 0.obs;                    // RxInt
+var name = ''.obs;                      // RxString
+var items = <ProductModel>[].obs;       // RxList<ProductModel>
+var isVisible = false.obs;              // RxBool
+```
+
+---
+
+## 🎨 Reactive UI with `Obx`
+
+Wrap any widget that depends on reactive state with `Obx()`:
+
+```dart
+// Reactive cart badge:
+Obx(() => Badge(
+  label: Text('${cartService.totalItems}'),
+  child: const Icon(Icons.shopping_cart),
+))
+
+// Reactive loading state:
+Obx(() {
+  if (controller.isLoading.value) return const CircularProgressIndicator();
+  if (controller.limitedOffers.isEmpty) return const EmptyState();
+  return ProductList(products: controller.limitedOffers);
+})
+
+// Reactive button label:
+Obx(() => ElevatedButton(
+  onPressed: controller.isLoading.value ? null : controller.submitOrder,
+  child: controller.isLoading.value
+      ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator())
+      : Text('Place Order'),
+))
+```
+
+---
+
+## 🔗 Bindings — Dependency Injection Per Route
+
+`Bindings` inject controllers exactly when a route is opened and dispose them when the route is closed:
+
+```dart
+// lib/routes/pages.dart
+
+class HomeBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<HomeController>(() => HomeController());
+  }
+}
+
+// Route registration:
+GetPage(
+  name: Routes.homeView,
+  page: () => const HomeView(),
+  binding: HomeBinding(),
+),
+```
+
+`lazyPut` creates the controller only when `Get.find<HomeController>()` is first called — not on route push.
+
+---
+
+## ⚙️ Services — Persistent Singletons
+
+Services live for the entire app lifetime (unlike controllers which are tied to routes):
+
+```dart
+// Register at app start in main.dart:
+await Get.putAsync<CartService>(() => CartService().init());
+await Get.putAsync<WishlistService>(() => WishlistService().init());
+await Get.putAsync<NotificationService>(() => NotificationService().init());
+
+// Access anywhere:
+final cart = Get.find<CartService>();
+cart.addToCart(product);
+```
+
+**Service vs Controller:**
+
+| Aspect | Controller | Service |
+|--------|-----------|---------|
+| Lifecycle | Route-scoped | App-scoped |
+| Disposal | On route pop | Never |
+| Purpose | Screen state | Shared business logic |
+| Registration | `Get.lazyPut` in Binding | `Get.putAsync` in main |
+
+---
+
+## 📡 Workers — Reacting to State Changes
+
+GetX Workers fire callbacks when reactive values change:
+
+```dart
+// In a controller's onInit():
+
+// Fire once when value changes:
+ever(cartService.items, (_) => _updateCheckoutTotal());
+
+// Fire only the first time:
+once(isLoading, (_) => AppAlert.info(message: 'Loading for the first time'));
+
+// Debounce (wait 500ms after last change):
+debounce(
+  searchQuery,
+  (_) => _performSearch(),
+  time: const Duration(milliseconds: 500),
+);
+
+// Throttle (fire at most once per second):
+interval(
+  scrollOffset,
+  (_) => _checkPagination(),
+  time: const Duration(seconds: 1),
+);
+```
+
+---
+
+## 🔃 Updating Lists
+
+For `RxList`, call `.refresh()` after modifying items in-place:
+
+```dart
+// ✅ Correct — triggers UI rebuild
+final item = items.firstWhere((i) => i.id == id);
+item.quantity = 5;
+items.refresh();
+
+// ✅ Also correct — triggers UI rebuild
+items.add(newItem);
+items.remove(oldItem);
+items.assignAll(newList);
+
+// ❌ Wrong — UI does NOT rebuild
+items[0].quantity = 5;  // No notification sent
+```
+
+---
+
+:::tip Testing Controllers
+GetX controllers are plain Dart classes and easy to unit test:
+```dart
+test('cart adds item correctly', () async {
+  Get.put(CartService());
+  final service = Get.find<CartService>();
+  service.addToCart(mockProduct);
+  expect(service.items.length, 1);
+  expect(service.totalItems, 1);
+});
+```
+:::

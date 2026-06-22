@@ -1,0 +1,236 @@
+---
+sidebar_position: 3
+title: Authentication
+description: Complete authentication flow in Hana Go — Login, Register, Forgot Password, OTP Verification, and New Password screens.
+---
+
+# 🔐 Authentication
+
+Hana Go includes a **complete, ready-to-wire authentication UI** covering every step of the auth flow — from first launch through password recovery.
+
+---
+
+## 📁 Files
+
+```
+lib/pages/auth/
+├── welcome/
+│   ├── welcome_view.dart
+│   └── welcome_controller.dart
+├── login/
+│   ├── login_view.dart
+│   └── login_controller.dart
+├── register/
+│   ├── register_view.dart
+│   └── register_controller.dart
+├── forgot_password/
+│   ├── forgot_password_view.dart
+│   └── forgot_password_controller.dart
+├── otp_verification/
+│   ├── otp_verification_view.dart
+│   └── otp_verification_controller.dart
+└── new_password/
+    ├── new_password_view.dart
+    └── new_password_controller.dart
+```
+
+---
+
+## 🗺️ Auth Flow
+
+```
+App Launch
+    ↓
+Splash Screen (checks auth state via GetStorage)
+    ↓ (first time)                    ↓ (returning user)
+Onboarding                          Home Screen
+    ↓
+Welcome Screen
+    ↓               ↓
+  Login           Register
+    ↓                 ↓
+ [Success]         [Success]
+    └──────┬─────────┘
+           ↓
+       Home Screen
+
+Forgot Password Flow:
+Login → "Forgot Password?" → Enter Email → OTP Verification → New Password → Login
+```
+
+---
+
+## 👋 Welcome Screen
+
+**Route:** `/welcome`
+
+The landing screen after onboarding with two CTAs:
+- **Sign In** → navigates to `/login`
+- **Create Account** → navigates to `/register`
+
+Features a full-screen illustration with the Hana Go brand.
+
+---
+
+## 🔑 Login Screen
+
+**Route:** `/login` | **File:** `lib/pages/auth/login/login_view.dart`
+
+### Features
+- Email input with validation
+- Password input with show/hide toggle
+- **Country Code Picker** (`country_code_picker`) for phone-based login variant
+- "Remember Me" toggle (persisted via `get_storage`)
+- "Forgot Password?" link
+- Social login buttons (UI pre-built — wire to your OAuth provider)
+
+### Connecting Your Auth API
+
+```dart
+// lib/pages/auth/login/login_controller.dart
+
+Future<void> login() async {
+  if (!formKey.currentState!.validate()) return;
+  
+  isLoading.value = true;
+  try {
+    // Replace this with your API call:
+    final response = await _authService.login(
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+    
+    // Persist token
+    await LocalStorageService.saveToken(response.token);
+    await LocalStorageService.saveUser(response.user);
+    
+    Get.offAllNamed(Routes.homeView);
+  } catch (e) {
+    AppAlert.error(message: 'Invalid credentials. Please try again.');
+  } finally {
+    isLoading.value = false;
+  }
+}
+```
+
+---
+
+## 📝 Register Screen
+
+**Route:** `/register` | **File:** `lib/pages/auth/register/register_view.dart`
+
+### Form Fields
+- Full Name
+- Email Address
+- Phone Number (with country code picker)
+- Password + Confirm Password
+- Terms & Conditions checkbox
+
+### Validation Rules
+All fields use `TextFormField` validators:
+- Email: regex format check
+- Password: minimum 8 characters
+- Phone: digits only, 7–15 chars
+- Name: non-empty, max 50 chars
+
+---
+
+## 🔓 Forgot Password
+
+**Route:** `/forgot-password`
+
+Single email input field. On submit, triggers your backend to send an OTP/reset link.
+
+```dart
+// forgot_password_controller.dart
+Future<void> sendResetEmail() async {
+  final response = await _authService.forgotPassword(email: emailController.text);
+  if (response.success) {
+    Get.toNamed(Routes.otpVerificationView, arguments: emailController.text);
+  }
+}
+```
+
+---
+
+## 🔢 OTP Verification
+
+**Route:** `/otp-verification` | **Package:** `pinput ^5.0.0`
+
+### Features
+- 6-digit PIN input with animated focus states (via `pinput`)
+- Auto-submit on last digit entry
+- **Resend OTP** button with 60-second countdown timer
+- Receives email/phone from `Get.arguments`
+
+### Customizing OTP Length
+
+```dart
+// otp_verification_view.dart
+Pinput(
+  length: 6,           // Change to 4 for a 4-digit OTP
+  onCompleted: (pin) => controller.verifyOtp(pin),
+  defaultPinTheme: PinTheme(
+    width: 56.w,
+    height: 56.h,
+    decoration: BoxDecoration(
+      border: Border.all(color: AppColors.primary),
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+  ),
+)
+```
+
+---
+
+## 🔒 New Password
+
+**Route:** `/new-password`
+
+Password + Confirm Password fields with strength indicator. On success, navigates back to Login with a success toast.
+
+---
+
+## 💾 Auth State Persistence
+
+Hana Go uses `GetStorage` to persist auth state between app launches:
+
+```dart
+// lib/services/local_storage_service.dart
+
+class LocalStorageService {
+  static final _box = GetStorage();
+  
+  static Future<void> saveToken(String token) => _box.write('auth_token', token);
+  static String? getToken() => _box.read('auth_token');
+  static bool get isLoggedIn => getToken() != null;
+  
+  static Future<void> logout() => _box.erase();
+}
+```
+
+The `SplashController` checks `LocalStorageService.isLoggedIn` and routes accordingly:
+
+```dart
+// splash_controller.dart
+Future<void> _navigate() async {
+  await Future.delayed(const Duration(seconds: 2));
+  
+  if (LocalStorageService.isLoggedIn) {
+    Get.offAllNamed(Routes.homeView);
+  } else if (LocalStorageService.hasSeenOnboarding) {
+    Get.offAllNamed(Routes.welcomeView);
+  } else {
+    Get.offAllNamed(Routes.onboardingView);
+  }
+}
+```
+
+---
+
+:::warning Security Note
+Hana Go is a **UI template**. It includes mock auth logic for demo purposes. Before going to production, ensure you:
+1. Implement proper JWT/OAuth token validation on your server
+2. Use `flutter_secure_storage` (already included) for sensitive token storage — not `get_storage`
+3. Add SSL certificate pinning for your API calls via `dio`
+:::

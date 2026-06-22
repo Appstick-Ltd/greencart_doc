@@ -1,0 +1,223 @@
+---
+sidebar_position: 10
+title: Notifications
+description: Push notifications and in-app notification center in Hana Go — Firebase FCM setup, notification types, and management.
+---
+
+# 🔔 Notifications
+
+Hana Go has a complete notification system — Firebase Cloud Messaging (FCM) for push notifications and an in-app notification center.
+
+---
+
+## 📁 Files
+
+```
+lib/pages/settings/notifications/
+├── notification_view.dart              ← Notification list
+├── notification_details_view.dart      ← Full notification detail
+└── notification_controller.dart
+
+lib/services/
+└── notification_service.dart          ← FCM initialization & handling
+
+lib/models/
+└── notification_model.dart            ← Notification data model
+```
+
+---
+
+## 📬 NotificationModel
+
+```dart
+// lib/models/notification_model.dart
+
+enum NotificationCategory { order, promo, system, ai }
+
+class NotificationModel {
+  final String id;
+  final String title;
+  final String body;
+  final NotificationCategory category;
+  final bool isRead;
+  final DateTime receivedAt;
+  final String? imageUrl;        // Optional banner image
+  final Map<String, dynamic>? data; // Deep-link payload
+
+  String get timeAgo => _formatTimeAgo(receivedAt);
+}
+```
+
+---
+
+## 📱 Notification View
+
+**Route:** `/notification`
+
+### Features
+- Categorized tabs: **All | Orders | Promotions | System**
+- Unread count badge per tab
+- Each notification row shows: icon/image, title, short body, timestamp
+- **Swipe to dismiss** (mark as read or delete)
+- **"Mark all as read"** button in app bar
+- Pull-to-refresh
+- Tap → opens `NotificationDetailsView`
+
+### Category Icons
+
+| Category | Icon | Color |
+|----------|------|-------|
+| Order | 📦 | Primary Green |
+| Promo | 🏷️ | Yellow Accent |
+| System | ⚙️ | Gray |
+| AI | 🤖 | Purple |
+
+---
+
+## 📄 Notification Details
+
+**Route:** `/notification-details`
+
+Full-page view of a single notification:
+- Large banner image (if present)
+- Full title + body text
+- Received timestamp
+- Deep link action button (e.g., "View Order", "Shop Now")
+
+---
+
+## 🔥 Firebase Cloud Messaging Setup
+
+### 1. Initialize FCM
+
+```dart
+// lib/services/notification_service.dart
+
+class NotificationService extends GetxService {
+  final RxList<NotificationModel> notifications = <NotificationModel>[].obs;
+
+  Future<NotificationService> init() async {
+    // Request permission (iOS)
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    // Get FCM token (send to your server)
+    final token = await FirebaseMessaging.instance.getToken();
+    debugPrint('FCM Token: $token');
+    await _sendTokenToServer(token!);
+
+    // Handle foreground messages
+    FirebaseMessaging.onMessage.listen(_handleForeground);
+
+    // Handle background tap (notification opened app)
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+
+    // Handle terminated state tap
+    final initial = await FirebaseMessaging.instance.getInitialMessage();
+    if (initial != null) _handleTap(initial);
+
+    return this;
+  }
+
+  void _handleForeground(RemoteMessage message) {
+    final notification = _parseMessage(message);
+    notifications.insert(0, notification);
+    // Show in-app banner:
+    AppAlert.info(title: message.notification?.title ?? '', message: message.notification?.body ?? '');
+  }
+
+  void _handleTap(RemoteMessage message) {
+    final type = message.data['type'];
+    switch (type) {
+      case 'order_update':
+        Get.toNamed(Routes.myOrdersView);
+        break;
+      case 'promo':
+        Get.toNamed(Routes.categoryView);
+        break;
+      default:
+        Get.toNamed(Routes.notificationView);
+    }
+  }
+}
+```
+
+### 2. Send FCM Token to Server
+
+```dart
+Future<void> _sendTokenToServer(String token) async {
+  await _dio.post('/users/fcm-token', data: {
+    'userId': _authService.currentUserId,
+    'token': token,
+    'platform': Platform.isIOS ? 'ios' : 'android',
+  });
+}
+```
+
+### 3. Send a Test Notification (from Firebase Console)
+
+1. Go to **Firebase Console → Cloud Messaging → Send your first message**
+2. Enter a notification title and body
+3. Select your app target
+4. Click **Send test message** → enter your device's FCM token
+
+---
+
+## 📊 FCM Message Payload Format
+
+For proper deep-linking and categorization, structure your FCM payloads as:
+
+```json
+{
+  "to": "<device_fcm_token>",
+  "notification": {
+    "title": "Your order is on the way! 🚚",
+    "body": "Order #HG-00123 is out for delivery. Expected by 5:00 PM."
+  },
+  "data": {
+    "type": "order_update",
+    "orderId": "HG-00123",
+    "status": "shipped",
+    "category": "order"
+  }
+}
+```
+
+---
+
+## 🔕 Notification Preferences
+
+Users can control notification categories from the Settings → Notifications screen:
+
+```dart
+// notification_controller.dart
+final RxBool orderNotifications = true.obs;
+final RxBool promoNotifications = true.obs;
+final RxBool systemNotifications = true.obs;
+
+void toggleCategory(NotificationCategory category, bool value) {
+  switch (category) {
+    case NotificationCategory.order:
+      orderNotifications.value = value;
+      break;
+    // ...
+  }
+  GetStorage().write('notif_prefs', {
+    'orders': orderNotifications.value,
+    'promos': promoNotifications.value,
+    'system': systemNotifications.value,
+  });
+}
+```
+
+---
+
+:::info APNs Configuration (iOS)
+For iOS push notifications to work:
+1. Enable **Push Notifications** capability in Xcode (Runner → Signing & Capabilities)
+2. Enable **Background Modes → Remote notifications**
+3. Upload your APNs key or certificate in Firebase Console → Project Settings → Cloud Messaging → iOS app
+:::

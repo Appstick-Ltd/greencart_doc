@@ -1,0 +1,211 @@
+---
+sidebar_position: 1
+title: Installation
+description: Step-by-step guide to install Flutter, set up your environment, and get Hana Go running on Android and iOS.
+---
+
+# ⚙️ Installation Guide
+
+This guide walks you through everything you need to set up your development environment and run **Hana Go** on Android and iOS simulators or physical devices.
+
+---
+
+## 📋 Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+| Tool | Required Version | Download |
+|------|-----------------|---------|
+| **Flutter SDK** | `^3.12.0` | [flutter.dev](https://docs.flutter.dev/get-started/install) |
+| **Dart SDK** | Bundled with Flutter | — |
+| **Android Studio** | Latest stable | [developer.android.com](https://developer.android.com/studio) |
+| **Xcode** (macOS only) | 15.0+ | Mac App Store |
+| **VS Code** (optional) | Latest | [code.visualstudio.com](https://code.visualstudio.com) |
+| **Git** | Any recent | [git-scm.com](https://git-scm.com) |
+| **Node.js** | 18+ (for docs only) | [nodejs.org](https://nodejs.org) |
+
+---
+
+## 🛠️ Step 1 — Install Flutter
+
+### Windows
+
+```bash
+# 1. Download Flutter SDK from https://docs.flutter.dev/get-started/install/windows
+# 2. Extract to C:\flutter
+# 3. Add to PATH
+setx PATH "%PATH%;C:\flutter\bin"
+
+# Verify installation
+flutter --version
+```
+
+### macOS
+
+```bash
+# Using Homebrew
+brew install --cask flutter
+
+# Or manually — add to ~/.zshrc or ~/.bash_profile
+export PATH="$HOME/flutter/bin:$PATH"
+
+# Verify
+flutter --version
+```
+
+### Linux
+
+```bash
+# Download the .tar.xz from flutter.dev and extract
+export PATH="$PATH:`pwd`/flutter/bin"
+
+# Verify
+flutter --version
+```
+
+---
+
+## 🔍 Step 2 — Run Flutter Doctor
+
+`flutter doctor` checks your environment for missing dependencies:
+
+```bash
+flutter doctor
+```
+
+Resolve any issues it reports. A healthy output looks like:
+
+```
+✓ Flutter (Channel stable, 3.22.x)
+✓ Android toolchain - develop for Android devices
+✓ Xcode - develop for iOS and macOS (Xcode 15.x)
+✓ Android Studio (version 2024.x)
+✓ VS Code (version 1.9x.x)
+✓ Connected device (2 available)
+✓ Network resources
+```
+
+:::warning Common Issues
+- **Android licenses not accepted**: Run `flutter doctor --android-licenses` and accept all.
+- **Xcode not found**: Install Xcode from the Mac App Store and run `sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer`.
+- **CocoaPods missing**: Run `sudo gem install cocoapods`.
+:::
+
+---
+
+## 📱 Step 3 — Set Up an Emulator or Device
+
+### Android Emulator
+1. Open **Android Studio** → **Device Manager**
+2. Click **Create Device**
+3. Choose a device (e.g., Pixel 8) → API 34+ → **Finish**
+4. Click ▶ to launch the emulator
+
+### iOS Simulator (macOS only)
+```bash
+# List available simulators
+xcrun simctl list devices
+
+# Open a simulator
+open -a Simulator
+```
+
+### Physical Device
+- **Android**: Enable Developer Options → USB Debugging → connect via USB
+- **iOS**: Trust the computer when prompted, or use wireless development in Xcode 14+
+
+---
+
+## 📦 Step 4 — Install Dependencies
+
+After cloning the project (see [Quick Start](./quick-start)), install all Flutter packages:
+
+```bash
+flutter pub get
+```
+
+This reads `pubspec.yaml` and downloads all 20+ packages. Expected output:
+
+```
+Resolving dependencies...
+Got dependencies!
+```
+
+---
+
+## 🔑 Step 5 — Configure Firebase (Required for Push Notifications)
+
+Hana Go uses Firebase for push notifications. Follow the [Firebase Setup Guide](../firebase-setup) or:
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com)
+2. Create a new project or use existing
+3. Add Android app (`com.yourcompany.hanago`) → download `google-services.json` → place in `android/app/`
+4. Add iOS app → download `GoogleService-Info.plist` → add in Xcode under Runner target
+
+:::info Skip Firebase for UI-only testing
+If you only want to explore the UI without push notifications, you can defer Firebase setup. The app will run without it — just expect a Firebase initialization warning in debug logs.
+:::
+
+---
+
+## ✅ Step 6 — Run the App
+
+```bash
+# Run on connected device/emulator (debug mode)
+flutter run
+
+# Run on a specific device
+flutter run -d <device-id>
+
+# List available devices
+flutter devices
+
+# Run in release mode (faster, no debug overlay)
+flutter run --release
+```
+
+---
+
+## 🏗️ Build for Production
+
+### Android APK
+```bash
+flutter build apk --release
+# Output: build/app/outputs/flutter-apk/app-release.apk
+```
+
+### Android App Bundle (for Play Store)
+```bash
+flutter build appbundle --release
+# Output: build/app/outputs/bundle/release/app-release.aab
+```
+
+### iOS Archive (macOS only)
+```bash
+flutter build ios --release
+# Then open Xcode → Product → Archive → Distribute App
+```
+
+---
+
+## 🔧 IDE Setup (Recommended)
+
+### VS Code Extensions
+Install these for the best Flutter development experience:
+
+- **Flutter** (by Dart Code) — required
+- **Dart** (by Dart Code) — required
+- **Pubspec Assist** — for managing pub dependencies
+- **Flutter Widget Snippets** — code snippets
+- **Error Lens** — inline error highlighting
+
+### Android Studio Plugins
+- **Flutter** (bundled with recent versions)
+- **Dart** (bundled with recent versions)
+
+---
+
+:::tip Hot Reload & Hot Restart
+- **Hot Reload** (`r` in terminal or `⌘R`/`Ctrl+R`): Updates UI instantly without losing state — great for UI tweaks.
+- **Hot Restart** (`R` in terminal or `⌘⇧R`/`Ctrl+Shift+R`): Full restart, resets state — use when changing controllers or bindings.
+:::

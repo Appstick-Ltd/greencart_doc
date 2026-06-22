@@ -1,40 +1,31 @@
 // @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
-// There are various equivalent ways to declare your Docusaurus config.
-// See: https://docusaurus.io/docs/api/docusaurus-config
-
 import {themes as prismThemes} from 'prism-react-renderer';
-
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Hana Go',
-  tagline: 'The Complete Documentation & Tutorial for Hana Go',
-  favicon: 'img/favicon.ico',
+  title: 'Hana Go — Flutter Grocery App',
+  tagline: 'Complete UI Template with AI Assistant, GetX Architecture & 26+ Screens',
+  favicon: 'img/logo.png',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
+  url: 'https://hanago-docs.netlify.app',
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'AppstickLtd',
+  projectName: 'hana-go',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownImages: 'warn',
+    },
+  },
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -47,26 +38,9 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          routeBasePath: '/',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -77,34 +51,83 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/social-card.png',
       colorMode: {
+        defaultMode: 'light',
         respectPrefersColorScheme: true,
       },
       navbar: {
         title: 'Hana Go',
         logo: {
           alt: 'Hana Go Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.png',
         },
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'mainSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: '📖 Documentation',
+          },
+          {
+            href: 'https://codecanyon.net',
+            label: '🛒 Buy on CodeCanyon',
+            position: 'right',
           },
         ],
       },
       footer: {
         style: 'dark',
-        links: [],
-        copyright: `Copyright © ${new Date().getFullYear()} Hana Go, Inc.`,
+        links: [
+          {
+            title: 'Getting Started',
+            items: [
+              { label: 'Introduction', to: '/' },
+              { label: 'Installation', to: '/getting-started/installation' },
+              { label: 'Quick Start', to: '/getting-started/quick-start' },
+              { label: 'Project Structure', to: '/getting-started/project-structure' },
+            ],
+          },
+          {
+            title: 'Features',
+            items: [
+              { label: 'Screens Overview', to: '/features/screens-overview' },
+              { label: 'Hana AI Assistant', to: '/features/hana-ai' },
+              { label: 'Cart & Checkout', to: '/features/cart-checkout' },
+              { label: 'Authentication', to: '/features/authentication' },
+            ],
+          },
+          {
+            title: 'Architecture',
+            items: [
+              { label: 'Tech Stack', to: '/architecture/tech-stack' },
+              { label: 'State Management', to: '/architecture/state-management' },
+              { label: 'Navigation', to: '/architecture/navigation' },
+              { label: 'Data Models', to: '/architecture/models' },
+            ],
+          },
+          {
+            title: 'Support',
+            items: [
+              { label: 'FAQ', to: '/reference/faq' },
+              { label: 'Changelog', to: '/reference/changelog' },
+              { label: 'Get Support', to: '/reference/support' },
+            ],
+          },
+        ],
+        copyright: `Copyright © ${new Date().getFullYear()} Hana Go — Flutter Grocery E-Commerce Template. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['dart', 'bash', 'json', 'yaml'],
+      },
+      announcementBar: {
+        id: 'codecanyon_promo',
+        content: '🎉 <strong>Hana Go</strong> — Premium Flutter Grocery App Template. <a href="https://codecanyon.net" target="_blank"><strong>Buy on CodeCanyon →</strong></a>',
+        backgroundColor: '#004B30',
+        textColor: '#D2F6D2',
+        isCloseable: true,
       },
     }),
 };

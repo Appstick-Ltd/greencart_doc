@@ -1,0 +1,237 @@
+---
+sidebar_position: 4
+title: Product Catalog
+description: Hana Go product catalog — Categories, Product List with filters, Product Details, and All Products screens.
+---
+
+# 🛍️ Product Catalog
+
+Hana Go's product catalog includes a fully featured browsing experience — category navigation, advanced filtering, search, sort, and detailed product pages.
+
+---
+
+## 📁 Files
+
+```
+lib/pages/
+├── category/
+│   ├── category_view.dart
+│   └── category_controller.dart
+├── product/
+│   ├── product_list/
+│   │   ├── product_list_view.dart
+│   │   └── product_list_controller.dart
+│   └── product_details/
+│       ├── product_details_view.dart
+│       └── product_details_controller.dart
+└── all_products/
+    ├── all_products_view.dart
+    └── all_products_controller.dart
+```
+
+---
+
+## 📂 Category View
+
+**Route:** `/category`
+
+The Category screen is the main browse entry point, accessible from:
+- Bottom navigation bar (2nd tab)
+- Quick category cards on Home Screen
+
+### Features
+- 8 main categories in a scrollable grid/list
+- Sub-category filter chips within each category
+- Product count badge per category
+- Tap a category → navigates to `ProductListView` with that category pre-filtered
+
+### 8 Categories
+
+| Category | Sub-categories |
+|----------|----------------|
+| 🥦 Vegetables | Leafy, Root, Organic, Seasonal |
+| 🍎 Fruits | Tropical, Berries, Citrus, Exotic |
+| 🥛 Dairy | Milk, Cheese, Butter, Yogurt |
+| 🌾 Pantry | Rice, Pasta, Oils, Condiments |
+| 🍟 Snacks & Packaged | Chips, Biscuits, Nuts, Sweets |
+| 🥤 Beverages | Juices, Water, Tea, Coffee |
+| 🧊 Frozen | Frozen Veg, Ice Cream, Ready Meals |
+| 🏠 Household | Cleaning, Paper, Personal Care |
+
+---
+
+## 📋 Product List
+
+**Route:** `/product-list`
+
+A powerful product browsing screen with multiple view modes and filtering.
+
+### Features
+
+#### View Modes
+- **Grid View**: 2-column responsive product cards
+- **List View**: Horizontal card layout with more details
+- Toggle button in the top-right corner
+
+#### Search
+Real-time search filtering as the user types, filtering the displayed product list by name or description.
+
+#### Filter Drawer
+Slide-in filter panel with:
+- Category multi-select chips
+- Price range slider (min/max)
+- Rating filter (1–5 stars)
+- Availability toggle (In Stock only)
+- Brand filter (if applicable)
+- **Apply** and **Clear All** buttons
+
+#### Sort Options
+Bottom sheet with sort options:
+- Price: Low to High
+- Price: High to Low
+- Newest First
+- Best Rated
+- Most Popular
+
+### Product Card (`lib/components/product_card.dart`)
+
+Each product card shows:
+- Product image (with shimmer loading)
+- Name (max 2 lines)
+- Weight/Size variant
+- Price (with discount strike-through)
+- Rating stars
+- Wishlist heart icon
+- Add to cart button
+
+### Passing Arguments to Product List
+
+```dart
+// Navigate to product list with a category pre-selected:
+Get.toNamed(
+  Routes.productListView,
+  arguments: {
+    'category': 'Vegetables',
+    'title': 'Fresh Vegetables',
+  },
+);
+```
+
+---
+
+## 📦 Product Details
+
+**Route:** `/product-details`
+
+The full product detail page is the most feature-rich screen in the catalog.
+
+### Sections
+1. **Image Gallery** — Swipeable product images with zoom support
+2. **Product Header** — Name, brand, rating with review count
+3. **Price Block** — Current price, original price, discount %, per-unit price
+4. **Variant Selector** — Weight/size options (e.g., 250g, 500g, 1kg)
+5. **Stock Status** — In Stock / Low Stock / Out of Stock badge
+6. **Description** — Full product description (expandable)
+7. **Nutritional Info** — Key nutritional data (if available)
+8. **Related Products** — Horizontal strip of similar items
+9. **Add to Cart** — Quantity selector + Add to Cart button (sticky bottom bar)
+
+### Navigating to Product Details
+
+```dart
+// Pass a ProductModel as argument:
+Get.toNamed(
+  Routes.productDetailsView,
+  arguments: product, // ProductModel instance
+);
+```
+
+### Accessing Passed Arguments
+
+```dart
+// product_details_controller.dart
+@override
+void onInit() {
+  super.onInit();
+  product.value = Get.arguments as ProductModel;
+}
+```
+
+---
+
+## 🗂️ All Products
+
+**Route:** `/all-products`
+
+A simple grid showing every product in the catalogue, with real-time search. Used as a "see all" destination from the Home Screen.
+
+---
+
+## 📊 ProductModel
+
+All screens use a unified `ProductModel`:
+
+```dart
+// lib/models/product_model.dart
+
+class ProductModel {
+  final String id;
+  final String name;
+  final String brand;
+  final String category;
+  final String imageUrl;
+  final List<String> imageUrls;    // Gallery images
+  final double price;
+  final double? originalPrice;     // null if no discount
+  final String weight;             // e.g. "500g"
+  final List<String> variants;     // e.g. ["250g", "500g", "1kg"]
+  final double rating;
+  final int reviewCount;
+  final bool inStock;
+  final int stockQuantity;
+  final String description;
+  final bool isAiRecommended;
+
+  const ProductModel({...});
+  
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ...;
+  Map<String, dynamic> toJson() => ...;
+}
+```
+
+---
+
+## 🔌 Connecting to a Real Product API
+
+Replace the JSON asset loader with a `dio` HTTP call:
+
+```dart
+// lib/data/loaders/product_loader.dart
+
+class ProductLoader {
+  final Dio _dio;
+  
+  // BEFORE (mock):
+  Future<List<ProductModel>> loadAll() async {
+    final String json = await rootBundle.loadString('assets/data/products.json');
+    final List data = jsonDecode(json);
+    return data.map((e) => ProductModel.fromJson(e)).toList();
+  }
+
+  // AFTER (real API):
+  Future<List<ProductModel>> loadAll() async {
+    final response = await _dio.get('https://api.yourstore.com/products');
+    return (response.data as List)
+        .map((e) => ProductModel.fromJson(e))
+        .toList();
+  }
+}
+```
+
+The controllers and views remain **unchanged** — they only depend on the `List<ProductModel>` that the loader returns.
+
+---
+
+:::tip Search Performance
+The product search uses Dart's built-in `String.contains()` for case-insensitive filtering on the in-memory list. For large catalogues (1000+ products), consider implementing server-side search with a debounced `dio` call.
+:::

@@ -1,0 +1,127 @@
+---
+sidebar_position: 1
+title: FAQ
+description: Frequently asked questions about Hana Go Flutter grocery app template.
+---
+
+# ❓ Frequently Asked Questions
+
+---
+
+## 🛒 Purchasing & Licensing
+
+### What license do I need?
+
+| License | Use Case |
+|---------|----------|
+| **Regular License** | One end product used by you or one client, not sold/distributed |
+| **Extended License** | Multiple clients, SaaS products, or selling the end product |
+
+For most freelancers building for a single client: **Regular License** is sufficient.
+
+### Can I use Hana Go for multiple client projects?
+You need a separate Regular License per client project, OR purchase an Extended License for multiple use.
+
+### Is the source code included?
+Yes. You receive the complete Flutter source code, including all Dart files, assets, and this documentation site.
+
+---
+
+## 🚀 Setup & Installation
+
+### What Flutter version do I need?
+**Flutter 3.12.0 or higher** on the stable channel. Run `flutter upgrade` to get the latest.
+
+### The app won't run on my machine. What should I check?
+Run `flutter doctor` and resolve all issues. Common fixes:
+- Accept Android licenses: `flutter doctor --android-licenses`
+- Install CocoaPods (macOS): `sudo gem install cocoapods`
+- Ensure a device/emulator is connected: `flutter devices`
+
+### Do I need Firebase to run the app?
+**No** — Firebase is optional for the initial run. The app will launch without it (push notifications won't work). See [Firebase Setup](../firebase-setup) when ready.
+
+### Why do I get a Google Places API error?
+You need to add your **Google Places API key** in the appropriate config file. See the [Configuration](../configuration) guide.
+
+---
+
+## 🎨 Customization
+
+### How do I change the primary color?
+Edit `lib/constants/ui.dart` → change `AppColors.primary` to any `Color(0xFFHHHHHH)`. Hot reload instantly updates all 26+ screens.
+
+### Can I remove the Hana AI screen?
+Yes. In `lib/navigator/app_navigator.dart`, remove the AI tab from the `_tabs` list and `bottomNavigationBar` items. Also remove the `hana_ai` route from `lib/routes/pages.dart`.
+
+### How do I add a new language?
+See the [Localization Guide](../customization/localization) — add a JSON file in `assets/translations/`, declare it in `pubspec.yaml`, and add the locale to `kSupportedLanguages`.
+
+### How do I replace the font?
+See the [Typography Guide](../customization/typography). Add your font files to `assets/font/`, declare them in `pubspec.yaml`, and change `fontFamily` in `lib/theme/app.dart`.
+
+### Can I add more product categories?
+Yes. Add category items to the `_kQuickCategories` list in `home_quick_categories.dart` and add the corresponding icon SVG to `assets/icons/catagory/<your_category>/`.
+
+---
+
+## 🔌 Backend Integration
+
+### Is a backend included?
+No — Hana Go is a **Flutter UI template**. It ships with mock data and is designed to connect to any REST API or Firebase backend.
+
+### What backend stack is recommended?
+Any REST API works. Popular choices:
+- **Node.js + Express + MongoDB** — flexible, easy to deploy
+- **Firebase Firestore** — fast setup, real-time, no server management
+- **Supabase** — PostgreSQL with REST/realtime, generous free tier
+- **Django REST Framework** — great for Python teams
+
+### How do I connect to my API?
+See the [Mock Data → Real API](../customization/mock-data) guide. Replace data loaders in `lib/data/loaders/` with `dio` HTTP calls — no UI changes needed.
+
+### Does it support GraphQL?
+Not out of the box, but you can swap `dio` for the `graphql_flutter` package. The architecture (loaders + controllers + views) supports it cleanly.
+
+---
+
+## 📱 Platform & Device
+
+### Does it work on iOS and Android?
+Yes — Hana Go is built with Flutter and runs natively on both platforms.
+
+### What Android API level is required?
+**Minimum SDK 21** (Android 5.0, Lollipop). This covers 99%+ of active Android devices.
+
+### What iOS version is required?
+**iOS 12.0+**.
+
+### Can I publish to the App Store and Play Store?
+Yes. Hana Go is production-ready from a UI standpoint. You need to:
+1. Connect a real backend
+2. Configure Firebase (for push notifications)
+3. Sign the app with your certificates/keystores
+4. Update bundle IDs and app name
+
+---
+
+## 🤖 Hana AI
+
+### Does the AI assistant actually work?
+The **UI is fully built** — voice input, chat bubbles, product cards, recipe cards. The AI responses are mocked. Connect to any LLM API (OpenAI, Gemini, Claude) to make it live. See [Hana AI](../features/hana-ai).
+
+### Can I remove voice input?
+Yes. In `hana_ai_view.dart`, remove or hide the microphone FAB button. The text input works independently.
+
+---
+
+## 🆘 Getting Help
+
+### Something is broken. Where do I report it?
+Contact support via the **[Support page](./support)** with your item purchase code and a description of the issue.
+
+### Where can I find code examples?
+Throughout this documentation — every feature page includes real Dart code snippets with explanations.
+
+### Is the documentation available offline?
+Yes! This Docusaurus documentation site is included in your download package. Run it locally with `npm start` in the `hana_go_docs/` directory.

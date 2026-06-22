@@ -1,0 +1,2207 @@
+---
+sidebar_position: 2
+title: Screens & Code
+description: Every Hana Go screen paired with its source code — screenshot on the left, key code on the right.
+---
+
+# 🖥️ Screens & Code
+
+Every screen in **Hana Go** paired with its source code. Screenshot references point to `/img/screenshots/` — add your own screenshots to see them rendered here.
+
+---
+
+## 🌟 Splash & Onboarding
+
+### 1. Splash Screen
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Splash Screen](/img/screenshots/splash.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/splash/splash_view.dart"
+class SplashView extends StatelessWidget {
+  const SplashView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SplashViewController>(
+      init: SplashViewController(),
+      builder: (controller) => Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFFD2F6D2), Colors.white],
+            ),
+          ),
+          child: Center(
+            child: Image.asset(AppImages.logo, width: 160.w),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Gradient splash with centered logo — auto-navigates to onboarding or home after 2 seconds.
+
+---
+
+### 2. Onboarding Page 1
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Onboarding 1](/img/screenshots/onboarding_1.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/onboarding/onboarding_view.dart"
+class _OnboardingPageOne extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<OnboardingViewController>();
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: ShaderMask(
+            shaderCallback: (bounds) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.black, Colors.transparent],
+              stops: [0.6, 0.95],
+            ).createShader(bounds),
+            blendMode: BlendMode.dstIn,
+            child: Image.asset(AppImages.onboarding1, fit: BoxFit.cover),
+          ),
+        ),
+        SafeArea(
+          child: Column(
+            children: [
+              const Spacer(),
+              Text('Welcome to HanaGo', style: AppTextStyles.onboardingTitleStyle),
+              // Subtitle + Sign In / Next buttons
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Full-bleed background image with shader mask fade, title, subtitle, and dual action buttons.
+
+---
+
+### 3. Onboarding Page 2
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Onboarding 2](/img/screenshots/onboarding_2.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/onboarding/onboarding_view.dart"
+class _OnboardingPageTwo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<OnboardingViewController>();
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(color: Constants.primaryColor),
+        SafeArea(
+          child: Column(
+            children: [
+              Expanded(child: Image.asset(AppImages.onboarding2)),
+              Text('All in one place', style: AppTextStyles.onboardingTitleStyle),
+              // Subtitle + Get Started button
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Solid green background with illustration, tagline, and a single "Get Started" CTA.
+
+---
+
+## 🔐 Authentication
+
+### 4. Welcome Screen
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Welcome](/img/screenshots/welcome.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/auth/welcome/welcome_view.dart"
+class WelcomeView extends StatefulWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFD2F6D2), Colors.white],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(flex: 5, child: Image.asset(AppImages.logo)),
+              CustomStretchedTextButtonWidget(
+                buttonText: 'Login',
+                backgroundColor: Constants.primaryColor,
+                onTap: () => AppNavigationService.toLogin(),
+              ),
+              _RegisterOutlinedButton(onTap: () => AppNavigationService.toRegister()),
+              // Terms & Service Agreement text
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Gradient welcome with brand logo, Login + Register buttons, and terms disclaimer.
+
+---
+
+### 5. Login
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Login](/img/screenshots/login.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/auth/login/login_view.dart"
+class LoginView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<LoginViewController>(
+      builder: (controller) => Scaffold(
+        backgroundColor: Constants.primaryColor,
+        body: SafeArea(
+          child: Column(
+            children: [
+              // "Welcome Back!" green header
+              Expanded(child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    TabBar(/* Phone Number | Email tabs */),
+                    PhoneNumberInputField(/* ... */),
+                    TextFormInputField(label: 'Password', obscureText: true),
+                    // Forgot Password link + Login button + Social logins
+                  ],
+                ),
+              )),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Split layout: dark green header with "Welcome Back!" and a white card with phone/email tab, password, social login.
+
+---
+
+### 6. Register
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Register](/img/screenshots/register.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/auth/register/register_view.dart"
+class _RegisterViewState extends State<RegisterView>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<RegisterViewController>(
+      init: RegisterViewController(),
+      builder: (controller) => Scaffold(
+        backgroundColor: Constants.primaryColor,
+        body: SafeArea(
+          bottom: false,
+          child: Column(children: [
+            // "Join HanaGo Today!" green header section
+            Expanded(child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              child: SingleChildScrollView(child: Column(children: [
+                TabBar(tabs: [
+                  Tab(text: 'Phone Number'),
+                  Tab(text: 'Email'),
+                ]),
+                PhoneNumberInputField(labelText: 'Phone Number'),
+                TextFormInputField(label: 'Password', obscureText: true),
+                // Register button + Terms/Privacy links
+                // "Already have an account? Login" footer
+              ])),
+            )),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Registration form mirroring the Login layout with full name, email, phone, and password fields.
+
+---
+
+### 7. Forgot Password
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Forgot Password](/img/screenshots/forgot_password.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/auth/forgot_password/forgot_password_view.dart"
+class ForgotPasswordView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ForgotPasswordViewController>(
+      init: ForgotPasswordViewController(),
+      builder: (controller) => Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(child: Column(children: [
+          Expanded(child: SidePaddedWidget(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HanaBackButton(),
+              Text('Forgot Password', style: AppTextStyles.bigLargeBoldTextStyle),
+              Text('Select verification method...'),
+              _buildMethodCard(
+                method: 'email', title: 'Email',
+                subtitle: '********@mail.com',
+                icon: Icons.mail_outline_rounded,
+                isSelected: controller.selectedMethod == 'email',
+                onTap: () => controller.selectMethod('email'),
+              ),
+              _buildMethodCard(
+                method: 'phone', title: 'Phone Number',
+                subtitle: '**** **** **** 0999',
+                icon: Icons.phone_outlined,
+                isSelected: controller.selectedMethod == 'phone',
+                onTap: () => controller.selectMethod('phone'),
+              ),
+            ],
+          ))),
+          HanaButton('Send Code', onTap: controller.handleSend),
+        ])),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Single input screen to request an OTP code via email or phone.
+
+---
+
+### 8. OTP Verification
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![OTP Verification](/img/screenshots/otp.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/auth/otp_verification/otp_verification_view.dart"
+class OtpVerificationView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<OtpVerificationViewController>(
+      init: OtpVerificationViewController(),
+      builder: (controller) => Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(child: Column(children: [
+          Expanded(child: SidePaddedWidget(child: Column(children: [
+            const HanaBackButton(),
+            Text('Verify Your Email', style: AppTextStyles.bigLargeBoldTextStyle),
+            Text("We've sent a 6-digit code to ${controller.emailOrPhone}"),
+            Center(child: Pinput(
+              length: 5,
+              defaultPinTheme: PinTheme(
+                height: 56, width: 56,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFFE5E7EB)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              focusedPinTheme: PinTheme(
+                height: 56, width: 56,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFF10B981), width: 2.0),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onCompleted: (pin) => controller.onPinComplete(pin),
+            )),
+            // "Haven't received the code? Resend" link
+          ]))),
+          // Bottom "Resend Code" button with refresh icon
+        ])),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> 6-digit OTP entry using `pinput` package with countdown timer and resend option.
+
+---
+
+### 9. New Password
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![New Password](/img/screenshots/new_password.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/auth/new_password/new_password_view.dart"
+class NewPasswordView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final NewPasswordController controller = Get.put(NewPasswordController());
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(top: false, child: Column(children: [
+        // Header with HanaBackButton
+        Padding(
+          padding: EdgeInsets.fromLTRB(24, statusBarHeight + 16, 24, 8),
+          child: const HanaBackButton(),
+        ),
+        Expanded(child: SingleChildScrollView(child: Column(children: [
+          Text('New Password', style: AppTextStyles.titleBoldTextStyle),
+          Text('Create a new password that is safe and easy to remember'),
+          ObscurePasswordField(
+            label: 'New Password',
+            hint: 'Enter new password',
+            controller: controller.newTextController,
+          ),
+          ObscurePasswordField(
+            label: 'Confirm New password',
+            hint: 'Confirm your new password',
+            controller: controller.confirmTextController,
+          ),
+        ]))),
+        Obx(() => HanaButton(
+          'Save Changes',
+          onTap: controller.isLoading.value
+              ? null : () => controller.saveChanges(context),
+          isLoading: controller.isLoading.value,
+        )),
+      ])),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Password reset form with new password and confirmation fields.
+
+---
+
+## 🏠 Home Screen
+
+### 10. Home (Full)
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Home](/img/screenshots/home.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/home/home_view.dart"
+class HomeView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeViewController>(
+      builder: (controller) {
+        return SidePaddedWidget(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const HomeHeader(),
+                const HomeSearchBar(),
+                const HomeQuickCategories(),
+                const HomeHeroBanner(),
+                const HomeCategoriesGrid(),
+                const HomeLimitedOffers(),
+                HomeProductList(title: 'Vegetables', products: controller.vegetables),
+                const HomeMiddleBanner(),
+                const HomeAIRecommendations(),
+                HomeProductList(title: 'Snacks', products: controller.snacks),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Main home screen with header, search, categories, hero banner, offers, product lists, and AI strip.
+
+---
+
+### 11. Home — Hero Banner
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Home Banner](/img/screenshots/home_banner.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/home/widgets/home_hero_banner.dart"
+class HomeHeroBanner extends StatelessWidget {
+  const HomeHeroBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 214.h,
+      decoration: BoxDecoration(
+        color: const Color(0xFF00422B),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(children: [
+        Positioned(left: 20, top: 16, bottom: 16, child: SizedBox(
+          width: 170,
+          child: Column(children: [
+            _SeasonBadge(),   // "Autumn Fresh Deals" pill badge
+            _buildHeading(),  // "Up to 40% Off Fresh Groceries"
+            _ShopNowButton(), // White rounded "Shop Now" button
+          ]),
+        )),
+        Positioned(right: 0, bottom: 0, child: HanaImage(
+          AppImages.homeCardGirl, height: 150.h, fit: BoxFit.contain,
+        )),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Auto-advancing hero banner carousel with gradient overlay and page indicators.
+
+---
+
+### 12. Home — Categories
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Home Categories](/img/screenshots/home_categories.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/home/widgets/home_categories_grid.dart"
+const List<_CategoryItem> _kCategories = [
+  _CategoryItem(title: 'Vegetables', image: AppImages.catVegetables),
+  _CategoryItem(title: 'Fruits', image: AppImages.catFruits),
+  _CategoryItem(title: 'Diary', image: AppImages.catDairy),
+  _CategoryItem(title: 'Pantry', image: AppImages.catPantry),
+  _CategoryItem(title: 'Snacks', image: AppImages.catSnacks),
+  _CategoryItem(title: 'Beverages', image: AppImages.catBeverages),
+  _CategoryItem(title: 'Frozen', image: AppImages.catFrozen),
+  _CategoryItem(title: 'Household', image: AppImages.catHousehold),
+];
+
+class HomeCategoriesGrid extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final gridConfig = R.categoryGridConfig(context);
+    return Column(children: [
+      SectionHeader(title: 'Categories', subtitle: 'Shop fresh fruits, veggies, dairy etc',
+        onSeeAll: () => AppNavigationService.toCategory()),
+      GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: _kCategories.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: gridConfig.crossAxisCount,
+          mainAxisSpacing: 16, crossAxisSpacing: 12,
+        ),
+        itemBuilder: (_, index) => _CategoryGridCard(item: _kCategories[index]),
+      ),
+    ]);
+  }
+}
+```
+
+</div>
+</div>
+
+> Horizontal scroll of quick-category chips linking to filtered product lists.
+
+---
+
+### 13. Home — Offers
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Home Offers](/img/screenshots/home_offers.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/home/widgets/home_limited_offers.dart"
+const List<_OfferItem> _kOffers = [
+  _OfferItem(title: 'Vegetable', subtitle: 'Veggie Shop', image: AppImages.banVeg),
+  _OfferItem(title: 'Fruits', subtitle: 'Aomori Mart', image: AppImages.banFruits),
+  _OfferItem(title: 'Snacks', subtitle: 'OishiiBox', image: AppImages.banSnacks),
+  _OfferItem(title: 'Fast Food', subtitle: 'Express Eats', image: AppImages.banFastFood),
+];
+
+class HomeLimitedOffers extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      SectionHeader(title: 'Limited Time Offer',
+        onSeeAll: () => AppNavigationService.toAllProducts()),
+      SizedBox(height: 160, child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemExtent: 113.0,
+        itemCount: _kOffers.length,
+        itemBuilder: (_, index) => _OfferCard(offer: _kOffers[index]),
+      )),
+    ]);
+  }
+}
+
+class _OfferCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(width: 105, decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12)), clipBehavior: Clip.antiAlias,
+      child: Stack(children: [
+        Positioned.fill(child: HanaImage(offer.image, fit: BoxFit.cover)),
+        Positioned.fill(child: Container(decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter,
+            colors: [Color(0xFF004B30).withValues(alpha: 0.95), Colors.transparent])))),
+        Positioned(top: 14, left: 18, right: 18, child: Column(children: [
+          Text(offer.title, style: AppTextStyles.offerTitleTextStyle),
+          Text(offer.subtitle, style: AppTextStyles.offerSubtitleTextStyle),
+        ])),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Horizontally scrollable limited-offer cards with discount badges.
+
+---
+
+### 14. Home — AI Strip
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Home AI](/img/screenshots/home_ai.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/home/widgets/home_ai_recommendations.dart"
+const List<_AiItem> _kAiItems = [
+  _AiItem(title: 'Fresh Produce', image: AppImages.aiRecomFreshFood),
+  _AiItem(title: 'Home & Personal Care', image: AppImages.aiRecomHomeCare),
+  _AiItem(title: 'Dairy & Bakery', image: AppImages.aiRecomDairy),
+  _AiItem(title: 'Snacks & Drinks', image: AppImages.aiRecomSnacks),
+  _AiItem(title: 'Pantry Essentials', image: AppImages.aiRecomPantry),
+];
+
+class HomeAIRecommendations extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      _buildHeader(), // AI icon + "AI Recommendation for delivery"
+      Wrap(spacing: 8, runSpacing: 10,
+        children: _kAiItems.map((item) => _AiChip(item: item)).toList()),
+    ]);
+  }
+}
+
+class _AiChip extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [Constants.primaryColor, Constants.yellowColor]),
+        borderRadius: BorderRadius.circular(30)),
+      padding: const EdgeInsets.all(1.5),
+      child: Container(decoration: BoxDecoration(
+        color: Colors.white, borderRadius: BorderRadius.circular(28.5)),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          _AiChipIcon(image: item.image), // Circular icon with border
+          Text(item.title, style: AppTextStyles.smallBTextBoldStyle),
+        ]),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> AI-curated product suggestions displayed as a horizontal strip on the home screen.
+
+---
+
+## 🛍️ Product Catalog
+
+### 15. Category View
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Category](/img/screenshots/category.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/category/category_view.dart"
+class _CategoryViewState extends State<CategoryView>
+    with SingleTickerProviderStateMixin {
+  final _searchController = TextEditingController();
+  final _searchQuery = RxString('');
+  final _controller = HomeViewController.instance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Constants.primaryColor,
+      body: FadeTransition(opacity: _fadeAnim, child: Column(children: [
+        _buildHeader(),  // Green header with "Browse" title
+        Expanded(child: Container(decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
+          child: SingleChildScrollView(child: Column(children: [
+            _buildSearchBar(),         // Search + filter icon
+            CategoryTabs(controller: _controller),  // Category tab selector
+            _buildDailyPurchaseSection(),  // Daily quick-picks grid
+            CategoryProductGrid(controller: _controller, searchQuery: _searchQuery),
+          ])),
+        )),
+      ])),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Two-pane category browser with category rail and subcategory grid.
+
+---
+
+### 16. Product List
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Product List](/img/screenshots/product_list.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/product/product_list_view.dart"
+class ProductListView extends GetView<ProductListController> {
+  static const Map<String, _CatTheme> _themes = {
+    'Vegetables': _CatTheme(
+      gradient: [Color(0xFF22C55E), Color(0xFF15803D)],
+      lightBg: Color(0xFFECFDF5), emoji: '🥦', tagLine: 'Farm-fresh picks'),
+    'Fruits': _CatTheme(
+      gradient: [Color(0xFFFB923C), Color(0xFFEA580C)],
+      lightBg: Color(0xFFFFF7ED), emoji: '🍎', tagLine: 'Naturally sweet'),
+    'Dairy': _CatTheme(
+      gradient: [Color(0xFF60A5FA), Color(0xFF2563EB)],
+      lightBg: Color(0xFFEFF6FF), emoji: '🥛', tagLine: 'Pure & creamy'),
+    'Snacks': _CatTheme(
+      gradient: [Color(0xFFA78BFA), Color(0xFF7C3AED)],
+      lightBg: Color(0xFFF5F3FF), emoji: '🍿', tagLine: 'Munch anytime'),
+    // ... 8 category themes total
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return GreenHeaderScaffold(
+      header: Obx(() => _buildHeader(context, _getTheme(controller.categoryName.value))),
+      body: Column(children: [
+        // Active filter chips row (category + sort + clear)
+        Expanded(child: Obx(() {
+          final filtered = controller.filteredProducts;
+          return filtered.isEmpty ? _buildEmptyState(theme)
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: gridConfig.crossAxisCount),
+                itemCount: filtered.length,
+                itemBuilder: (ctx, i) => ProductCard(product: filtered[i]),
+              );
+        })),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Filterable, sortable product grid/list with toggle view and filter drawer.
+
+---
+
+### 17. Product Details
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Product Details](/img/screenshots/product_details.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/product/product_details_view.dart"
+class _ProductDetailsViewState extends State<ProductDetailsView> {
+  String? _selectedPackSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final dynamic args = Get.arguments;
+    final ProductModel product = (args is ProductModel) ? args
+        : (args is String)
+            ? HomeViewController.safeInstance?.getProductDetailsById(args)
+            : ProductModel.fromJson(Map<String, dynamic>.from(args));
+
+    final double multiplier = calculateSizeMultiplier(baseProductSize, _selectedPackSize!);
+
+    return GreenHeaderScaffold(
+      maxWidth: 850, safeAreaTop: false,
+      header: _buildHeader(context, product, categoryTag),
+      body: SingleChildScrollView(child: Column(children: [
+        ProductImageCarousel(product: product),
+        ProductInfoSection(product: product, multiplier: multiplier),
+        // Variant selector chips (pack size)
+        ProductRelatedSection(product: product),
+      ])),
+      bottomBar: ProductAddToCartBar(product: product, multiplier: multiplier),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Full product detail page with image gallery, variant picker, and sticky add-to-cart bar.
+
+---
+
+### 18. All Products
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![All Products](/img/screenshots/all_products.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/all_products/all_products_view.dart"
+class AllProductsView extends GetView<AllProductsController> {
+  @override
+  Widget build(BuildContext context) {
+    return GreenHeaderScaffold(
+      backgroundColor: const Color(0xFF00422B),
+      maxWidth: 1200,
+      header: _buildHeader(statusBarHeight),  // Back + "All Products" + Cart
+      body: Column(children: [
+        _buildSearchBar(),      // HanaSearchBar for filtering
+        _buildCategoryChips(),  // Horizontal category filter chips
+        Padding(child: Obx(() => Text(
+          '${controller.filteredProducts.length} products found'))),
+        Expanded(child: Obx(() {
+          final products = controller.filteredProducts;
+          return products.isEmpty
+            ? EmptyState(emoji: '🛒', title: 'No products found')
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: gridConfig.crossAxisCount),
+                itemCount: products.length,
+                itemBuilder: (ctx, i) => ProductCard(product: products[i]),
+              );
+        })),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Browse all products in the catalog with search and pagination.
+
+---
+
+## 🤖 Hana AI
+
+### 19. AI Chat (Text)
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Hana AI](/img/screenshots/hana_ai.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/hana_ai/hana_ai_view.dart"
+class HanaAIView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(-0.8, -1.0),
+          end: Alignment(0.6, 1.0),
+          colors: [Constants.aiGradientStart, Constants.aiGradientEnd],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text('Hana AI'.toCurrentLanguage()),
+          actions: [_buildPopupMenu(context, controller)],
+        ),
+        body: Stack(
+          children: [
+            const AIMessageList(),  // Chat bubbles
+            const AIInputBar(),     // Text input at bottom
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Gradient AI chat screen with message list, text input bar, and popup menu (new/clear/suggested).
+
+---
+
+### 20. AI Voice Input
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Hana AI Voice](/img/screenshots/hana_ai_voice.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/hana_ai/hana_ai_controller.dart"
+void toggleMic() {
+  if (isListening) {
+    speech.stop();
+    isListening = false;
+  } else {
+    speech.listen(
+      onResult: (result) {
+        voiceText = result.recognizedWords;
+        update();
+      },
+    );
+    isListening = true;
+  }
+  update();
+}
+```
+
+</div>
+</div>
+
+> Voice input using `speech_to_text` — tap mic to start/stop, recognized words appear in input.
+
+---
+
+### 21. AI Product Card
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![AI Product Card](/img/screenshots/ai_product_card.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/hana_ai/widgets/ai_product_card.dart"
+class AIProductCard extends StatelessWidget {
+  final ProductModel product;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<HanaAIController>();
+    return Container(
+      width: R.w(140),
+      padding: EdgeInsets.all(R.w(10)),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(R.r(16)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: R.r(4), offset: Offset(0, R.h(2)))],
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(child: Center(child: Image.asset(product.assetPath,
+          width: R.w(60), height: R.h(60), fit: BoxFit.contain))),
+        Text(product.name, maxLines: 1, overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.productNameTextStyle),
+        Text('\$${product.price.toStringAsFixed(2)}',
+          style: AppTextStyles.aiCarouselPriceTextStyle),
+        Obx(() {
+          final qty = CartService.instance.quantity(product.id);
+          if (!product.inStock) return Text('Sold Out');
+          if (qty == 0) return HanaButton('Add',
+            onTap: () => controller.addToCartAndViewCart(product.id),
+            size: HanaButtonSize.small);
+          return QuantityStepper(quantity: qty,
+            onIncrement: () => CartService.instance.increment(product.id),
+            onDecrement: () => CartService.instance.decrement(product.id));
+        }),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Inline product recommendation card rendered inside an AI chat bubble.
+
+---
+
+## 🛒 Cart & Checkout
+
+### 22. Cart View
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Cart](/img/screenshots/cart.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/cart/cart_view.dart"
+class CartView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final cart = CartService.instance;
+    return GreenHeaderScaffold(
+      header: _buildHeader(context),
+      body: Obx(() {
+        final cartItems = cart.items;
+        if (cartItems.isEmpty) return _buildEmptyState();
+        return Column(
+          children: [
+            Expanded(child: _buildCartItemsList(cartItems, context)),
+            _buildPriceDetailsPanel(context),
+          ],
+        );
+      }),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Cart with quantity stepper, price breakdown, empty state, and "Proceed to Checkout" button.
+
+---
+
+### 23. Checkout
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Checkout](/img/screenshots/checkout.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/checkout/checkout_view.dart"
+class _CheckoutViewState extends State<CheckoutView> {
+  String _selectedDateTimeText = 'Choose date and time';
+  double _promoDiscount = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return GreenHeaderScaffold(
+      header: _buildHeader(context),  // Back + "Checkout" title
+      body: SingleChildScrollView(child: Column(children: [
+        CheckoutAddressSection(),      // Delivery address selector
+        CheckoutDeliverySchedule(      // Date & time slot picker
+          onChoose: _selectDateTime,
+          displayText: _selectedDateTimeText),
+        CheckoutPaymentSection(),       // Payment method selector
+        CheckoutOrderSummary(           // Subtotal, delivery, discount, total
+          promoDiscount: _promoDiscount),
+        CheckoutPromoInput(             // Voucher code input
+          onApply: _applyPromoCode,
+          onRemove: _removePromo),
+        HanaButton('Place Order', onTap: _placeOrder),
+      ])),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Full checkout with address, date/time, payment method, and order summary sections.
+
+---
+
+### 24. Date & Time Picker
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Date Time](/img/screenshots/date_time.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/checkout/date_and_time_view.dart"
+class _DateAndTimeViewState extends State<DateAndTimeView> {
+  late DateTime _selectedDate;
+  late TimeOfDay _selectedTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = DateTime.now().add(const Duration(days: 1));
+    _selectedTime = const TimeOfDay(hour: 10, minute: 0);
+  }
+
+  Future<void> _selectDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 7)),
+      builder: (ctx, child) => Theme(data: Theme.of(ctx).copyWith(
+        colorScheme: ColorScheme.light(primary: Constants.primaryColor)),
+        child: child!),
+    );
+    if (picked != null) setState(() => _selectedDate = picked);
+  }
+
+  Future<void> _selectTime() async {
+    // Bottom sheet with CupertinoPicker-style hour/minute wheels
+    // and AM/PM toggle, returns selected TimeOfDay
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Column(children: [
+      SubPageHeader(title: 'Date & Time'),
+      // Date card (tap to open date picker)
+      // Time card (tap to open time bottom sheet)
+      HanaButton('Confirm', onTap: () => Get.back(result: _formatted)),
+    ]));
+  }
+}
+```
+
+</div>
+</div>
+
+> Delivery date and time slot picker for scheduling order delivery.
+
+---
+
+### 25. Order Confirmed
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Order Confirmed](/img/screenshots/order_confirmed.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/checkout/order_confirmed_view.dart"
+class OrderConfirmedView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final String orderNo = arguments?['orderNo'] ?? '#GOC-23456757';
+    final String userName = arguments?['userName'] ?? 'Megumi';
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        AppNavigationService.toNavigator();
+      },
+      child: Scaffold(
+        backgroundColor: Constants.primaryColor,
+        body: SafeArea(child: Column(children: [
+          HanaBackButton.translucent(onTap: () => AppNavigationService.toNavigator()),
+          const Spacer(flex: 3),
+          Icon(Icons.done_all_rounded, size: 96,
+            color: const Color(0xFFFBBF24)),  // Gold double-tick
+          Text('Order Confirmed!', style: AppTextStyles.confirmationTitleTextStyle),
+          Text('Order No: {orderNo}'),
+          const Spacer(flex: 2),
+          OutlinedButton(onPressed: () => AppNavigationService.toMyOrders(),
+            child: Text('View Order')),
+          HanaButton('Share', icon: Icon(Icons.share_outlined),
+            backgroundColor: Colors.white, textColor: Constants.primaryColor),
+          Text('Thank you, {userName}! We\'re preparing your order.'),
+          // "Having issues? Contact us" footer
+        ])),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Order success screen with confirmation animation, order ID, and next-action buttons.
+
+---
+
+## 📦 Orders & Tracking
+
+### 26. My Orders
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![My Orders](/img/screenshots/my_orders.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/orders/my_orders_view.dart"
+class MyOrdersView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MyOrdersController>(
+      init: MyOrdersController(),
+      builder: (controller) => Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(children: [
+          const SubPageHeader(title: 'My orders'),
+          Expanded(child: Builder(builder: (context) {
+            final orders = controller.orders;
+            if (orders.isEmpty) return Center(
+              child: Text('No orders found.'));
+            return ListView.builder(
+              itemCount: orders.length,
+              itemBuilder: (context, index) =>
+                _buildOrderCard(orders[index]),
+            );
+          })),
+        ]),
+      ),
+    );
+  }
+
+  Widget _buildOrderCard(Map<String, dynamic> order) {
+    final String status = order['status'] as String;
+    Color statusColor; Color statusBgColor;
+    switch (status) {
+      case 'Order placed': statusColor = Constants.primaryColor; break;
+      case 'Out for Delivery': statusColor = Color(0xFFF59E0B); break;
+      case 'Delivered': statusColor = Color(0xFF16A34A); break;
+      case 'Cancelled': statusColor = Color(0xFFEF4444); break;
+    }
+    return GestureDetector(
+      onTap: () => AppNavigationService.toTrackOrder(order),
+      child: Container(/* order card with status badge */),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Order history with status tabs (active, past, cancelled) and order detail navigation.
+
+---
+
+### 27. Track Order
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Track Order](/img/screenshots/track_order.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/orders/track_order/track_order_view.dart"
+class TrackOrderView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<TrackOrderController>(
+      init: TrackOrderController(),
+      builder: (controller) => Scaffold(
+        backgroundColor: Constants.primaryColor,
+        body: Column(children: [
+          // Green header with translucent back button + "Track Order"
+          Expanded(child: Container(decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24), topRight: Radius.circular(24))),
+            child: SingleChildScrollView(child: Column(children: [
+              Text('Reference ID: ${controller.order['referenceId']}'),
+              // Status timeline steps:
+              // Order Placed → Processing → Packed → Shipped → Delivered
+              // Each step: icon + label + timestamp
+              // Active step highlighted in primary color
+              _buildTimeline(controller.order['timeline']),
+              // Order summary + delivery address card
+            ])),
+          )),
+        ]),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Order tracking with visual status timeline showing current delivery progress.
+
+---
+
+## ❤️ Wishlist
+
+### 28. Wishlist
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Wishlist](/img/screenshots/wishlist.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/wishlist/wishlist_view.dart"
+class WishlistView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<HomeViewController>();
+    return Scaffold(
+      body: Column(
+        children: [
+          SubPageHeader(title: 'Wishlist'),
+          Expanded(
+            child: Obx(() {
+              final items = controller.wishlistItems;
+              if (items.isEmpty) {
+                return const EmptyState(
+                  icon: Icons.favorite_border_rounded,
+                  title: 'Your wishlist is empty',
+                );
+              }
+              return WishlistGrid(items: items);
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Grid of wishlisted products with empty state, heart toggle, and move-to-cart action.
+
+---
+
+## ⚙️ Settings
+
+### 29. Settings Hub
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Settings](/img/screenshots/settings.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/settings_view.dart"
+class SettingsView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GreenHeaderScaffold(
+      backgroundColor: Constants.primaryColor,
+      header: SettingsProfileCard(controller: controller),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Quick actions: Orders, Carts
+            SettingsMenuSection(title: 'Account', items: [
+              SettingsMenuTile(icon: 'account', label: 'My Account'),
+              SettingsMenuTile(icon: 'address', label: 'Delivery Address'),
+              SettingsMenuTile(icon: 'payment', label: 'Payment Method'),
+            ]),
+            // More sections: Notifications, Language, FAQ, Coupons, Logout
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Settings hub with profile card, quick-action buttons, and categorized menu sections.
+
+---
+
+### 30. Account / Profile
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Account](/img/screenshots/account.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/account/account_view.dart"
+class _AccountViewState extends State<AccountView> {
+  final ProfileService _profileService = ProfileService.instance;
+  late final TextEditingController _nameController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _dobController;
+  String _selectedDialCode = '+1';
+  String _localImagePath = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return GreenHeaderScaffold(
+      header: SubPageHeader(title: 'Account'),
+      body: SingleChildScrollView(child: Column(children: [
+        AccountProfileAvatar(   // Circular avatar + camera icon tap
+          imagePath: _localImagePath,
+          onTap: () => AccountImagePickerSheet.show(context)),
+        TextFormInputField(label: 'Full Name', controller: _nameController),
+        PhoneNumberInputField(  // Dial code + phone input
+          dialCode: _selectedDialCode, controller: _phoneController),
+        TextFormInputField(label: 'Email', controller: _emailController),
+        TextFormInputField(label: 'Date of Birth', controller: _dobController,
+          onTap: () => _selectDate(context)),
+        HanaButton('Save Changes', onTap: _saveProfile, isLoading: _isLoading),
+      ])),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Profile management with editable fields and photo picker.
+
+---
+
+### 31. Delivery Address
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Delivery Address](/img/screenshots/delivery_address.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/address/delivery_address_view.dart"
+class DeliveryAddressView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DeliveryAddressController>();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(children: [
+        const SubPageHeader(title: 'Delivery Address'),
+        Expanded(child: Obx(() {
+          if (controller.addresses.isEmpty) {
+            return Center(child: Column(children: [
+              Icon(Icons.location_off_outlined, size: 64),
+              Text('No addresses saved yet.'),
+              InkWell(onTap: () => controller.showAddDialog(context),
+                child: Text('Add New Location')),
+            ]));
+          }
+          return SingleChildScrollView(child: Column(children: [
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: controller.addresses.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemBuilder: (_, i) => _buildAddressCard(
+                controller.addresses[i], controller, context)),
+            HanaButton('+ Add New Location',
+              onTap: () => controller.showAddDialog(context)),
+          ]));
+        })),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Saved delivery addresses with add/edit/delete and default address selection.
+
+---
+
+### 32. Payment Method
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Payment Method](/img/screenshots/payment_method.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/payment_method/payment_method_view.dart"
+class PaymentMethodView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<PaymentMethodController>();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(children: [
+        const SubPageHeader(title: 'Payment Method'),
+        Expanded(child: SingleChildScrollView(child: Column(children: [
+          Text('Credit Card', style: AppTextStyles.semiSmallXBoldTextStyle),
+          Obx(() => ListView.separated(
+            shrinkWrap: true,
+            itemCount: controller.cards.length,
+            itemBuilder: (_, i) {
+              final card = controller.cards[i];
+              return Obx(() => _buildPaymentCard(
+                title: card.title, subtitle: card.subtitle,
+                isSelected: controller.selectedMethod.value == card.id,
+                onTap: () => controller.selectMethod(card.id),
+                logoWidget: card.type == 'visa'
+                  ? _buildVisaLogo() : _buildMastercardLogo(),
+              ));
+            },
+          )),
+          // "Add New Card" form + Cash on Delivery option
+          HanaButton('Add New Card', onTap: () => controller.showAddCardDialog()),
+        ]))),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Payment method management with saved cards and cash-on-delivery option.
+
+---
+
+### 33. Notifications
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Notifications](/img/screenshots/notifications.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/notification/notification_view.dart"
+class NotificationView extends StatelessWidget {
+  final _filter = NotifFilter.all.obs;
+
+  List<NotificationModel> _filtered(List<NotificationModel> all) {
+    switch (_filter.value) {
+      case NotifFilter.unread: return all.where((n) => !n.isRead).toList();
+      case NotifFilter.read: return all.where((n) => n.isRead).toList();
+      case NotifFilter.all: return all;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ctrl = Get.find<NotificationController>();
+    return Scaffold(
+      backgroundColor: const Color(0xFFFAFAFA),
+      body: Column(children: [
+        SubPageHeader(title: 'Notifications'),
+        NotificationFilterTabs(filter: _filter),  // All / Unread / Read tabs
+        Expanded(child: Obx(() {
+          final filtered = _filtered(ctrl.notifications);
+          if (filtered.isEmpty) return EmptyState(
+            icon: Icons.notifications_off_outlined,
+            title: 'No notifications');
+          return NotificationList(notifications: filtered);
+        })),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Notification center with categorized badges and read/unread state management.
+
+---
+
+### 34. Language
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Language](/img/screenshots/language.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/language/language_view.dart"
+class LanguageView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = LanguageController.instance;
+    final languages = [
+      {'name': 'English (US)', 'flag': 'us', 'code': 'en_US'},
+      {'name': 'Deutsch', 'flag': 'de', 'code': 'de'},
+      {'name': 'Espanol', 'flag': 'es', 'code': 'es'},
+      {'name': 'Bahasa Indonesia', 'flag': 'id', 'code': 'id'},
+      {'name': 'Francais', 'flag': 'fr', 'code': 'fr'},
+      {'name': 'Italiano', 'flag': 'it', 'code': 'it'},
+      // ... 8 languages total
+    ];
+
+    return Obx(() {
+      final selectedCode = controller.selectedLanguage.value;
+      return Scaffold(body: Column(children: [
+        const SubPageHeader(title: 'Language'),
+        Expanded(child: ListView.builder(
+          itemCount: languages.length,
+          itemBuilder: (_, i) {
+            final isSelected = selectedCode == languages[i]['code'];
+            return GestureDetector(
+              onTap: () => controller.changeLanguage(languages[i]['code']!),
+              child: Container(
+                decoration: BoxDecoration(color: Colors.white,
+                  borderRadius: BorderRadius.circular(16)),
+                child: Row(children: [
+                  Image.asset('flags/${languages[i]['flag']}.png',
+                    width: 32, height: 22),  // Flag icon
+                  Text(languages[i]['name']!),
+                  // Green checkbox indicator when selected
+                ]),
+              ),
+            );
+          },
+        )),
+      ]));
+    });
+  }
+}
+```
+
+</div>
+</div>
+
+> Language picker with flag icons and radio selection, persists choice across sessions.
+
+---
+
+### 35. Coupons
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Coupons](/img/screenshots/coupons.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/coupons/coupons_view.dart"
+class CouponsView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9FAFB),
+      body: Column(children: [
+        const SubPageHeader(title: 'Coupons'),
+        Expanded(child: ListView.builder(
+          itemCount: kDefaultCoupons.length,
+          itemBuilder: (context, i) =>
+            _buildCouponCard(context, kDefaultCoupons[i]),
+        )),
+      ]),
+    );
+  }
+
+  Widget _buildCouponCard(BuildContext context, CouponModel coupon) {
+    final discountText = coupon.code == 'FREESHIP' ? 'FREE'
+        : coupon.isPercentage
+          ? '${coupon.discountAmount.toInt()}%'
+          : '\$${coupon.discountAmount.toInt()}';
+    return Container(
+      decoration: BoxDecoration(color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Color(0xFFECEFF2))),
+      child: Row(children: [
+        // Left discount badge section (big % or $ amount)
+        Container(width: 90, child: Text(discountText)),
+        // Right: coupon code (copyable), description, expiry, Apply button
+        Expanded(child: Column(children: [
+          Text(coupon.code, style: AppTextStyles.couponCodeStyle),
+          Text(coupon.description),
+          Text('Min: \$${coupon.minPurchase}'),
+        ])),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Coupon wallet showing available and expired coupons with apply action.
+
+---
+
+### 36. FAQ
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![FAQ](/img/screenshots/faq.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/faq/faq_view.dart"
+class FaqView extends StatelessWidget {
+  static const List<_FaqSection> _sections = [
+    _FaqSection(title: 'Getting Started', items: [
+      _FaqItem(question: 'What is HanaGo?',
+        answer: 'HanaGo is an AI-powered grocery delivery app...'),
+      _FaqItem(question: 'How do I place an order?',
+        answer: 'Browse products by category or search...'),
+      _FaqItem(question: 'What are your delivery hours?',
+        answer: 'Delivery is available from 8 AM to 10 PM daily...'),
+      _FaqItem(question: 'How much is the delivery fee?',
+        answer: 'A flat \$2 delivery fee applies...'),
+      // ... more FAQ items
+    ]),
+    _FaqSection(title: 'Hana AI Assistant', items: [
+      _FaqItem(question: 'What is Hana AI?',
+        answer: 'Hana is your smart grocery assistant...'),
+      // ... more FAQ items
+    ]),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Column(children: [
+      const SubPageHeader(title: 'FAQ'),
+      Expanded(child: ListView.builder(
+        itemCount: _sections.length,
+        itemBuilder: (_, i) => _buildSection(_sections[i]),
+      )),
+    ]));
+  }
+}
+```
+
+</div>
+</div>
+
+> FAQ accordion with expandable question/answer pairs.
+
+---
+
+## 🧩 Shared Components
+
+### 37. Product Card
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Product Card](/img/screenshots/product_card.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/components/product_card.dart"
+class ProductCard extends StatelessWidget {
+  final ProductModel product;
+  final String? heroTag;
+
+  const ProductCard({super.key, required this.product, this.heroTag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final qty = CartService.instance.quantity(product.id);
+      final inWishlist = HomeViewController.instance.isInWishlist(product.id);
+
+      return GestureDetector(
+        onTap: () => AppNavigationService.toProductDetails(product),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(R.r(16)),
+            border: Border.all(color: const Color(0xFFECEFF2)),
+            boxShadow: [BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: R.r(14), offset: Offset(0, R.h(5)))],
+          ),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(flex: 5, child: Stack(children: [
+              // Light mint green background tint
+              // Centered product image with Hero animation
+              // Wishlist heart icon (top-right)
+              // Stock/discount badge (top-left)
+            ])),
+            Expanded(flex: 4, child: Padding(child: Column(children: [
+              Text(product.name, style: AppTextStyles.productNameTextStyle),
+              Text(product.sizeText, style: AppTextStyles.productSizeTextStyle),
+              Row(children: [
+                Text('\$${product.price.toStringAsFixed(2)}',
+                  style: AppTextStyles.productPriceTextStyle),
+                if (product.originalPrice > product.price)
+                  Text('\$${product.originalPrice.toStringAsFixed(2)}',
+                    style: AppTextStyles.productOriginalPriceStyle),
+                const Spacer(),
+                // Add-to-cart button / QuantityStepper when qty > 0
+              ]),
+            ]))),
+          ]),
+        ),
+      );
+    });
+  }
+}
+```
+
+</div>
+</div>
+
+> Shared product card component used across all product display screens.
+
+---
+
+### 38. Bottom Nav Bar
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Bottom Nav](/img/screenshots/bottom_nav.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/navigator/bottom_nav_bar.dart"
+class AppBottomNavBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final activeIndex = controller.currentIndex.value;
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(top: BorderSide(color: Constants.primaryBorder)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildNavItem(AppImages.navHome, 'Home', 0),
+            _buildNavItem(AppImages.navCategory, 'Category', 1),
+            _buildNavItem(AppImages.navHanaAI, 'HanaAI', 2),
+            _buildNavItem(AppImages.settingsCart, 'Cart', 3),
+            _buildNavItem(AppImages.navProfile, 'Profile', 4),
+          ],
+        ),
+      );
+    });
+  }
+}
+```
+
+</div>
+</div>
+
+> 5-tab bottom navigation: Home, Category, HanaAI, Cart, Profile with active state indicator.
+
+---
+
+### 39. Green Header Scaffold
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Green Header](/img/screenshots/green_header.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/components/green_header_scaffold.dart"
+class GreenHeaderScaffold extends StatelessWidget {
+  final Widget header;
+  final Widget body;
+  final double borderRadius;
+  final Color? backgroundColor;
+  final Color? bodyColor;
+  final bool resizeToAvoidBottomInset;
+  final double? maxWidth;
+  final bool safeAreaTop;
+  final bool safeAreaBottom;
+
+  const GreenHeaderscaffold({
+    super.key,
+    required this.header,
+    required this.body,
+    this.borderRadius = 26.0,
+    this.backgroundColor,
+    this.bodyColor,
+    this.resizeToAvoidBottomInset = true,
+    this.maxWidth,
+    this.safeAreaTop = false,
+    this.safeAreaBottom = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final effectiveBgColor = backgroundColor ?? Constants.primaryColor;
+    final effectiveMaxWidth = maxWidth ?? R.maxContentWidth(context);
+
+    return Scaffold(
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      backgroundColor: effectiveBgColor,
+      body: Center(child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: effectiveMaxWidth),
+        child: Column(children: [
+          header,
+          Expanded(child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: bodyColor ?? Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(borderRadius.r))),
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(borderRadius.r)),
+              child: body,
+            ),
+          )),
+        ]),
+      )),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Shared scaffold with green header and rounded white body — used across most sub-pages.
+
+---
+
+:::tip Adding Your Screenshots
+Place your screenshots in `static/img/screenshots/` using the filenames shown above. The images will render in the grid layouts automatically. See the [Screenshots Gallery](./screenshots) for the full filename reference.
+:::

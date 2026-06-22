@@ -1,0 +1,242 @@
+---
+sidebar_position: 5
+title: Cart & Checkout
+description: Complete cart management and multi-step checkout flow in Hana Go — cart, address, delivery time, payment, and order confirmation.
+---
+
+# 🛒 Cart & Checkout
+
+Hana Go features a complete, multi-step checkout experience from cart management to order confirmation.
+
+---
+
+## 📁 Files
+
+```
+lib/pages/cart/
+├── cart_view.dart
+└── cart_controller.dart
+
+lib/pages/checkout/
+├── checkout_view.dart
+├── checkout_controller.dart
+├── date_and_time_view.dart
+└── order_confirmed_view.dart
+
+lib/services/
+└── cart_service.dart
+
+lib/components/
+└── price_row.dart
+```
+
+---
+
+## 🛒 Cart Screen
+
+**Route:** `/cart`
+
+### Features
+- Full list of cart items with product image, name, variant, quantity
+- **Quantity controls**: Tap `+` / `–` to adjust, zero removes item
+- **Swipe to delete**: Swipe left on item to remove
+- **Price summary**: Subtotal, delivery fee, taxes, total
+- **Promo code field** inline in cart (or accessible from checkout)
+- **Proceed to Checkout** sticky button at bottom
+
+### CartService — Core Cart Logic
+
+The `CartService` (`lib/services/cart_service.dart`) manages all cart state reactively:
+
+```dart
+class CartService extends GetxService {
+  final RxList<CartItem> items = <CartItem>[].obs;
+
+  // Add or increment quantity
+  void addToCart(ProductModel product, {int quantity = 1}) {
+    final existing = items.firstWhereOrNull((i) => i.product.id == product.id);
+    if (existing != null) {
+      existing.quantity += quantity;
+      items.refresh();
+    } else {
+      items.add(CartItem(product: product, quantity: quantity));
+    }
+    _persist();
+  }
+
+  void removeFromCart(String productId) {
+    items.removeWhere((i) => i.product.id == productId);
+    _persist();
+  }
+
+  void updateQuantity(String productId, int quantity) {
+    if (quantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+    final item = items.firstWhere((i) => i.product.id == productId);
+    item.quantity = quantity;
+    items.refresh();
+    _persist();
+  }
+
+  double get subtotal => items.fold(0, (sum, i) => sum + (i.product.price * i.quantity));
+  int get totalItems => items.fold(0, (sum, i) => sum + i.quantity);
+  bool get isEmpty => items.isEmpty;
+
+  // Persist cart to GetStorage between sessions
+  void _persist() => GetStorage().write('cart', items.map((i) => i.toJson()).toList());
+}
+```
+
+### Accessing Cart from Anywhere
+
+```dart
+// Any widget or controller:
+final cartService = Get.find<CartService>();
+
+// Reactive total item count (for badge):
+Obx(() => Text('${cartService.totalItems}'))
+```
+
+---
+
+## 💳 Checkout Screen
+
+**Route:** `/checkout`
+
+The checkout screen is a **single scrollable page** with distinct collapsible sections:
+
+### Section 1 — Delivery Address
+- Displays saved addresses from `DeliveryAddressService`
+- Select with radio button
+- "+ Add New Address" → opens `EditAddressView`
+
+### Section 2 — Delivery Schedule
+- Shows selected date and time slot
+- Tap → opens `DateAndTimeView`
+- Pre-selected options: Today, Tomorrow, or custom date
+
+### Section 3 — Order Summary
+- Itemized list of cart products
+- Quantity and line-item price per product
+
+### Section 4 — Coupon / Promo Code
+- Text field + "Apply" button
+- Displays discount amount when applied
+- Error state for invalid codes
+
+```dart
+// checkout_controller.dart
+void applyCoupon(String code) {
+  final coupon = _couponsService.findByCode(code);
+  if (coupon == null) {
+    AppAlert.error(message: 'Invalid coupon code');
+    return;
+  }
+  activeCoupon.value = coupon;
+  AppAlert.success(message: 'Coupon applied! You save \$${coupon.discountAmount}');
+}
+```
+
+### Section 5 — Price Details
+
+```
+Subtotal:           $42.50
+Delivery Fee:        $2.99
+Discount (SAVE10): –$4.25
+─────────────────────────
+Total:              $41.24
+```
+
+Powered by the `PriceRow` component (`lib/components/price_row.dart`).
+
+### Section 6 — Payment Method
+- Select saved card or "Cash on Delivery"
+- "+ Add New Card" option
+
+### Place Order Button
+Sticky bottom bar. Disabled until address and payment method are selected.
+
+---
+
+## 📅 Date & Time Picker
+
+**Route:** `/date-and-time`
+
+An elegant delivery scheduler with:
+- **Horizontal date scroller**: 7-day window (Today + next 6 days)
+- **Time slot grid**: Available slots in 1-hour blocks (e.g., 9AM–10AM, 10AM–11AM)
+- Unavailable slots shown greyed out
+- Selected slot highlighted in primary green
+- "Confirm" saves selection back to `CheckoutController`
+
+```dart
+// Returns selected slot to checkout:
+Get.back(result: DeliverySlot(
+  date: selectedDate.value,
+  timeSlot: selectedSlot.value,
+));
+```
+
+---
+
+## ✅ Order Confirmed
+
+**Route:** `/order-confirmed`
+
+An animated success screen shown after a successful order:
+- Lottie-style animated checkmark (CSS animation)
+- Order number display
+- Summary: delivery address, estimated time
+- **Track Order** button → `/track-order`
+- **Continue Shopping** → clears back stack → `/home`
+
+```dart
+// order_confirmed_view.dart — clear cart on reach
+@override
+void initState() {
+  super.initState();
+  Get.find<CartService>().clearCart();
+}
+```
+
+---
+
+## 📦 My Orders
+
+**Route:** `/my-orders`
+
+Order history list with:
+- Order number, date, item count
+- Status badge: `Pending` / `Processing` / `Shipped` / `Delivered` / `Cancelled`
+- Total amount
+- Tap → Order detail / Track Order
+
+---
+
+## 🗺️ Track Order
+
+**Route:** `/track-order`
+
+Step-by-step order tracking UI:
+
+```
+✅ Order Placed        — Mon, 10 Jun 2026 09:15 AM
+✅ Order Confirmed     — Mon, 10 Jun 2026 09:20 AM
+✅ Packed              — Mon, 10 Jun 2026 11:00 AM
+🔄 Out for Delivery    — Mon, 10 Jun 2026 02:30 PM
+○  Delivered           — Expected: Mon, 10 Jun 2026 05:00 PM
+```
+
+Each step has an icon, label, timestamp, and a connecting animated progress line.
+
+---
+
+:::tip Connecting a Real Payment Gateway
+To integrate Stripe, Razorpay, or PayPal:
+1. Add the SDK to `pubspec.yaml`
+2. Replace the `_processPayment()` stub in `checkout_controller.dart`
+3. On success callback → call `Get.offAllNamed(Routes.orderConfirmedView)`
+4. The rest of the UI flow works automatically
+:::
