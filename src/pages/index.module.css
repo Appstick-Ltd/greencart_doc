@@ -1,23 +1,469 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
+  padding: 6rem 0;
+  text-align: left;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(145deg, #073527 0%, #031510 100%);
+  color: white;
+}
+
+.heroContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.heroContent {
+  flex: 1;
+  max-width: 600px;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 2rem;
+}
+
+.heroImageContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.glowCircle {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: rgba(16, 185, 129, 0.25);
+  filter: blur(80px);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Smartphone Device Wrapper (Adds side buttons & structure) */
+.phoneWrapper {
+  position: relative;
+  padding: 0 12px;
+  z-index: 2;
+}
+
+.volumeUp, .volumeDown {
+  position: absolute;
+  left: 4px;
+  width: 8px;
+  background: #333333;
+  border-radius: 4px 0 0 4px;
+  z-index: 1;
+  border-right: 1px solid #1a1a1a;
+}
+
+.volumeUp {
+  top: 120px;
+  height: 50px;
+}
+
+.volumeDown {
+  top: 185px;
+  height: 50px;
+}
+
+.powerButton {
+  position: absolute;
+  right: 4px;
+  top: 150px;
+  width: 8px;
+  height: 75px;
+  background: #333333;
+  border-radius: 0 4px 4px 0;
+  z-index: 1;
+  border-left: 1px solid #1a1a1a;
+}
+
+/* Premium Phone Mockup Frame */
+.phoneMockup {
+  position: relative;
+  width: 320px;
+  height: 640px;
+  background: #ffffff;
+  /* Outer metal rim + inner screen border */
+  border: 12px solid #1a1a1a;
+  border-radius: 46px;
+  box-shadow: 
+    0 0 0 2px #444444, 
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    inset 0 0 4px rgba(0,0,0,0.4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #111111;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none;
+}
+
+/* Speaker Grill above dynamic island */
+.speakerGrill {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: #222222;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+/* Status Bar & Notch */
+.notchContainer {
+  height: 35px;
+  background: #ffffff;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 20px 0 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #000000;
+  z-index: 5;
+}
+
+.notch {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 24px;
+  background: #000000;
+  border-radius: 14px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.cameraLens {
+  width: 6.5px;
+  height: 6.5px;
+  background: #111111;
+  border: 1px solid #222222;
+  border-radius: 50%;
+  box-shadow: inset 0 0 2px #4e9a06;
+}
+
+.statusBarRight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* App Header & Location */
+.phoneHeader {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deliverLabel {
+  font-size: 0.65rem;
+  color: #666666;
+  font-weight: 500;
+}
+
+.locationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.locationBadge {
+  background: #0B5A43;
+  color: white;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shopSelector {
+  border: 1px solid #dcdcdc;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: #333333;
+}
+
+.phoneSearchBox {
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Scrollable Screen Content */
+.phoneBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 1rem;
+  background: #ffffff;
+}
+
+/* Custom Scrollbar for Phone Body */
+.phoneBody::-webkit-scrollbar {
+  width: 4px;
+}
+.phoneBody::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* Horizontal Cards (Grocery, Top Deals, Fresh Picks) */
+.horizontalPills {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.horizontalPills::-webkit-scrollbar {
+  display: none;
+}
+
+.pillCard {
+  min-width: 100px;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  height: 65px;
+}
+
+.pillTitle {
+  font-weight: 700;
+  font-size: 0.65rem;
+  color: #111111;
+}
+
+.pillDesc {
+  font-size: 0.5rem;
+  color: #666666;
+  margin-top: 2px;
+}
+
+.pillCard1 { background: #e8f5e9; }
+.pillCard2 { background: #fff3e0; }
+.pillCard3 { background: #e0f2f1; }
+
+/* Main Autumn Banner */
+.mainBanner {
+  background: #0B5A43;
+  color: white;
+  border-radius: 18px;
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bannerTag {
+  background: rgba(255, 255, 255, 0.2);
+  color: #a7f3d0;
+  font-size: 0.5rem;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 2px 6px;
+  width: fit-content;
+}
+
+.bannerHeading {
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 4px 0;
+}
+
+.bannerBtn {
+  background: white;
+  color: #0B5A43;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  border: none;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.bannerIllustration {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  font-size: 3.5rem;
+  opacity: 0.9;
+}
+
+/* Category Grid */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0 8px 0;
+}
+
+.sectionTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+.seeAll {
+  font-size: 0.65rem;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.categoryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.categoryIconBox {
+  width: 44px;
+  height: 44px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.categoryLabel {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+/* Bottom Nav Bar & Home Bar */
+.bottomNav {
+  height: 45px;
+  border-top: 1px solid #f3f4f6;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 2px;
+}
+
+.homeIndicator {
+  height: 4.5px;
+  width: 110px;
+  background: #000000;
+  border-radius: 10px;
+  margin: 4px auto 6px auto;
+  opacity: 0.8;
+  z-index: 100;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.navItemActive {
+  color: #0B5A43;
+}
+
+.navIcon {
+  font-size: 1.1rem;
+}
+
+.navLabel {
+  font-size: 0.55rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.featuresSection {
+  padding: 6rem 0;
+  background: var(--ifm-background-color);
+}
+
+.featuresTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: var(--ifm-color-emphasis-900);
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 4rem 1.5rem;
+    text-align: center;
   }
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .heroContainer {
+    flex-direction: column;
+  }
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  .heroImageContainer {
+    margin-top: 2rem;
+  }
 }

@@ -2,56 +2,39 @@
 sidebar_position: 2
 ---
 
-# Create a Document
+# Managing Products
 
-Documents are **groups of pages** connected through:
+This guide explains how products are structured, categorized, and added to the Hana Go grocery catalog.
 
-- a **sidebar**
-- **previous/next navigation**
-- **versioning**
+## Product Schema
 
-## Create your first Doc
+Each product in Hana Go contains the following attributes:
 
-Create a Markdown file at `docs/hello.md`:
-
-```md title="docs/hello.md"
-# Hello
-
-This is my **first Hana Go document**!
+```json
+{
+  "id": "prod_veg_cauliflower_01",
+  "name": "Fresh Cauliflower",
+  "category": "Vegetables",
+  "unit": "1 pc",
+  "originalPrice": 45.00,
+  "discountedPrice": 35.00,
+  "inStock": true,
+  "image": "assets/images/products/cauliflower.png",
+  "tags": ["Fresh", "Organic", "Vegetables"]
+}
 ```
 
-A new document is now available at [http://localhost:3000/docs/hello](http://localhost:3000/docs/hello).
-
-## Configure the Sidebar
-
-Hana Go automatically **creates a sidebar** from the `docs` folder.
-
-Add metadata to customize the sidebar label and position:
-
-```md title="docs/hello.md" {1-4}
----
-sidebar_label: 'Hi!'
-sidebar_position: 3
 ---
 
-# Hello
+## Adding a New Product
 
-This is my **first Hana Go document**!
-```
+To add a new product to the inventory:
 
-It is also possible to create your sidebar explicitly in `sidebars.js`:
+### 1. Place the Image Asset
+Save the product image under the static directory `static/img/products/`. Recommended resolution is `500x500` pixels with a transparent background.
 
-```js title="sidebars.js"
-export default {
-  tutorialSidebar: [
-    'intro',
-    // highlight-next-line
-    'hello',
-    {
-      type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial-basics/create-a-document'],
-    },
-  ],
-};
-```
+### 2. Update the Inventory DB
+Navigate to the product service and insert the new item entry.
+
+### 3. Verify on the UI
+Search for the item under the **Categories** grid (e.g., *Vegetables* or *Fruits*) to verify that the price, discount tag, and unit are displayed correctly.
