@@ -4,32 +4,29 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'Fresh & Organic Produce',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Direct partnerships with local farms ensure that the highest quality fruits, vegetables, and pantry essentials reach your home fresh every day.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Express Local Delivery',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Get your daily groceries and essentials delivered right to your doorstep within hours using our smart geolocated delivery system.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Smart Shopping Experience',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Browse curated recipe recommendations, filter by fresh categories, and checkout in seconds with our optimized and user-friendly interface.
       </>
     ),
   },

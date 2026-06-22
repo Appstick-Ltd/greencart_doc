@@ -2,46 +2,42 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Hana Go Documentation
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Welcome to the official **Hana Go** documentation! Here you will find guide details, app architecture, and API references for the Hana Go grocery e-commerce app.
 
-## Getting Started
+Hana Go is a premium grocery e-commerce mobile application designed to connect users with fresh farm produce, pantry essentials, and household items.
 
-Get started by **creating a new site**.
+---
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## App Screens & Features
 
-### What you'll need
+Explore the user flow and design structure based on our official UI layout:
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+### 1. Home Screen
+The main portal for users, featuring:
+- **Location Selector**: Let users set their delivery address easily.
+- **Top Deals Banner**: Visual promotions like **"Up to 40% Off Fresh Groceries"** to boost conversions.
+- **Dynamic Categories**: Quick access to *Vegetables*, *Fruits*, *Dairy*, *Pantry*, *Snacks*, *Beverages*, *Frozen*, and *Household*.
+- **Limited Time Offers**: Promoted products with time-sensitive deals.
+- **Recommendations**: Personalized food items and grocery suggestions based on user shopping history.
 
-## Generate a new site
+### 2. Browse & Search Screen
+A dedicated search and filter panel allowing customers to:
+- Browse structured sub-categories (e.g., *Daily Purchases* like Onions, Garlic, Ginger, Coriander).
+- View item grids for vegetables (e.g., Cabbage, Potato, Herbs, Tomato, Capsicum, Cauliflower).
+- Filter items by price, discount, and availability.
 
-Generate a new Docusaurus site using the **classic template**.
+### 3. Shopping Cart & Checkout
+Allows users to review items, adjust quantities, apply coupon codes, and select their preferred delivery slot.
 
-The classic template will automatically be added to your project after you run the command:
+### 4. Recipes & Meal Prep
+Integrates smart grocery shopping with meal preparation by suggesting recipes and letting users add all needed ingredients directly to their shopping cart in one tap.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+---
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## Key Modules
 
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+- **Location & Delivery API**: Manages geo-coordinates and estimates delivery times for nearby hubs.
+- **Product Catalog Management**: Handles inventory levels, category structures, and discount tags.
+- **Order Processing**: Secures payments and triggers delivery driver assignments.
