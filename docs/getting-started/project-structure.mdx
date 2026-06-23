@@ -1,239 +1,620 @@
 ---
 sidebar_position: 3
 title: Project Structure
-description: Complete breakdown of the Hana Go Flutter project folder architecture and file organization.
+description: How the Hana Go project was built, folder by folder, with screenshots and marked files to customize.
 ---
 
-# 📂 Project Structure
+# Project Structure
 
-Hana Go follows a **feature-first, clean architecture** pattern. Every folder has a single responsibility, making navigation and customization intuitive. This page walks you through the entire project layout so you know exactly where to find things and how the code is organized.
+This page explains **how I built this project** — folder by folder, layer by layer. Every section has a folder screenshot so you know exactly what you are looking at in your code editor. Files that **you need to change** are clearly marked.
+
+> **Follow the order below.** Each step builds on the previous one.
 
 ---
 
-## 🗺️ Architecture Overview
+## Step 1: The Project Root
 
-> Before diving into individual folders, take a moment to understand how everything connects. This is the big picture — the full project tree showing every major folder and its role in the app. Use this as a map to navigate the codebase.
+When you first extract the downloaded `.zip` and open the project, this is what you see:
 
 <div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/architecture_overview.png" alt="Architecture Overview" style={{width: '100%', height: '500px', objectFit: 'contain'}} />
-
+<img src="/img/project-structure/architecture_overview.png" alt="Project root folder" style={{width: '100%', height: '500px', objectFit: 'contain'}} />
 </div>
 
-**Complete project tree:**
+| Folder / File | What It Is |
+|---------------|-----------|
+| `android/` | Android phone build settings |
+| `ios/` | iPhone build settings |
+| `assets/` | All images, icons, fonts, translations |
+| `lib/` | All the app code — this is the main folder |
+| `pubspec.yaml` | **CHANGE THIS** — the app's config file |
+| `test/` | Automated tests (you can ignore this) |
+
+---
+
+## Step 2: The Config File — `pubspec.yaml`
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/pubspec_yaml_file.png" alt="pubspec.yaml overview" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml dependencies" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/pubspec_yaml_file3.png" alt="pubspec.yaml fonts and icons" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+:::warning CHANGE THIS FILE
+This is the **first file you should open**. It controls the app version, dependencies, and which image folders are included.
+:::
+
+### What to Change
+
+**Line 1 — App Name:**
+```yaml
+name: hana_go
 ```
-hana_go/
-├── android/                    ← Android native config (Gradle, manifests, signing)
-├── ios/                        ← iOS native config (Xcode, Info.plist, certificates)
-├── assets/                     ← Static resources (fonts, icons, images, translations)
-│   ├── data/                   ← Mock product catalog (products.json)
-│   ├── font/                   ← Manrope font family (weights 200–800)
-│   ├── icons/                  ← App logo, navigation SVGs, category icons
-│   ├── images/                 ← General images
-│   └── translations/           ← Localization files (9 languages)
-├── lib/                        ← ⭐ All Dart/Flutter source code
-│   ├── main.dart               ← App entry point (initializes GetX, routing)
-│   ├── components/             ← Shared reusable widgets
-│   ├── constants/              ← Colors, typography, feature flags
-│   ├── data/                   ← Data layer (loaders, repositories, seeds)
-│   ├── domain/                 ← Business logic entities
-│   ├── managers/               ← System-level managers
-│   ├── models/                 ← Dart data models
-│   ├── navigator/              ← Navigation controller & bottom nav
-│   ├── pages/                  ← Feature screens (13 feature folders)
-│   ├── routes/                 ← Route definitions & page bindings
-│   ├── services/               ← Cart, storage, navigation, notifications
-│   ├── theme/                  ← Material 3 theme config
-│   └── utils/                  ← Helper utilities & extensions
-├── test/                       ← Unit & widget tests
-├── pubspec.yaml                ← Package dependencies & asset declarations
-└── analysis_options.yaml       ← Dart linter configuration
+Change `hana_go` to your app's name (lowercase, no spaces). This is the internal package name.
+
+**Line 19 — Version:**
+```yaml
+version: 1.0.0+1
 ```
+- `1.0.0` — the version shown to users (e.g. `1.2.0`)
+- `+1` — the build number (increment this with each release, e.g. `+2`, `+3`)
 
-**How the layers connect:**
-| Layer | Folders | Responsibility |
-|-------|---------|----------------|
-| **Presentation** | `pages/`, `components/`, `theme/` | UI widgets, layouts, styling |
-| **Business Logic** | `pages/*_controller.dart`, `domain/` | State management, data transformation |
-| **Data** | `data/`, `services/`, `models/` | API calls, local storage, data models |
-| **Configuration** | `constants/`, `routes/`, `navigator/` | App settings, routing, navigation |
-| **Resources** | `assets/`, `translations/` | Fonts, icons, images, localization |
-
----
-
-## 🗂️ Root Directory
-
-> This is what you see when you open the project in VS Code or Android Studio. The root directory is the starting point — it holds the Android and iOS platform folders, the `lib/` source code, `assets/` for images and fonts, and `pubspec.yaml` where all package dependencies are declared. If you're new to the project, start here to get your bearings.
-
-<div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/root_directory.png" alt="Root Directory" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-
-</div>
-
-**Key files at root level:**
-- `pubspec.yaml` — All Flutter/Dart dependencies, asset declarations, and app metadata
-- `analysis_options.yaml` — Dart linter rules and code quality settings
-- `android/` — Native Android configuration (Gradle, manifests, signing)
-- `ios/` — Native iOS configuration (Xcode project, Info.plist, certificates)
-
----
-
-## 📁 `lib/` — Source Code Architecture
-
-> This is where all the Dart code lives. Every feature, service, model, and utility is organized into its own folder under `lib/`. The structure follows a clean architecture pattern — UI code stays in `pages/`, business logic lives in controllers, data access happens in `services/`, and shared utilities sit in `utils/`. When you need to modify a feature, you'll almost always be working inside this folder.
-
-<div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/lib_source.png" alt="lib/ Source Code" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-
-</div>
-
-**Folder breakdown:**
-| Folder | Purpose |
-|--------|---------|
-| `main.dart` | App entry point — initializes GetX, sets up routing, runs the app |
-| `components/` | Shared reusable widgets used across multiple screens |
-| `constants/` | App-wide constants — colors, text styles, feature flags |
-| `data/` | Data layer — loaders, repositories, seed data |
-| `domain/` | Business logic entities and use cases |
-| `managers/` | System-level managers (permissions, lifecycle) |
-| `models/` | Dart data models for API responses and app state |
-| `navigator/` | Navigation controller and bottom navigation bar |
-| `pages/` | Feature screens — each screen has its own folder |
-| `routes/` | Route definitions and page bindings |
-| `services/` | Infrastructure services (cart, storage, notifications) |
-| `theme/` | Material 3 theme configuration |
-| `utils/` | Helper utilities and extensions |
-
----
-
-## 📱 `lib/pages/` — Feature Screens
-
-> Every screen in the app is organized as its own folder under `pages/`. This is the feature-first approach — instead of grouping by file type (all views together, all controllers together), we group by feature. So `auth/` contains everything related to login and registration, `home/` contains the home screen and its widgets, `cart/` contains the shopping cart. This makes it easy to find, modify, or remove entire features without breaking other parts of the app.
-
-<div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/pages_features.png" alt="Pages Features" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-
-</div>
-
-**Each feature folder follows this pattern:**
+**Lines 103–123 — Asset Folders:**
+```yaml
+flutter:
+  assets:
+    - assets/
+    - assets/images/
+    - assets/icons/
+    - assets/icons/setting/
+    - assets/icons/home_screen image/
+    - assets/icons/navi_icon/
+    - assets/icons/catagory/dairy/
+    ... (more folders)
+    - assets/data/
+    - assets/translations/
 ```
-feature_name/
-├── feature_name_view.dart        ← UI code (widgets, layouts, styling)
-├── feature_name_controller.dart  ← Business logic (state, API calls, navigation)
-└── widgets/                      ← Screen-specific sub-components (optional)
-    ├── custom_header.dart
-    └── product_card.dart
+When you add a new image folder, add its path here. Then run `flutter pub get`.
+
+**Lines 151–166 — Font:**
+```yaml
+fonts:
+  - family: Manrope
+    fonts:
+      - asset: assets/font/Manrope/static/Manrope-Regular.ttf
+      - asset: assets/font/Manrope/static/Manrope-Bold.ttf
+        weight: 700
+```
+The app uses the **Manrope** font. You can replace it by swapping the `.ttf` files in `assets/font/Manrope/static/` and updating this section.
+
+**Lines 70–89 — App Icon:**
+```yaml
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/logo.png"
+  adaptive_icon_background: "#0D3D31"
+  adaptive_icon_foreground: "assets/icons/logo.png"
+```
+To change the app icon, replace `assets/icons/logo.png` with your own image, then run:
+```bash
+dart run flutter_launcher_icons
 ```
 
-**Available feature folders:**
-| Folder | What's Inside |
-|--------|---------------|
-| `splash/` | App splash screen with logo animation and auto-navigation |
-| `onboarding/` | 2-page onboarding carousel for first-time users |
-| `auth/` | Login, register, forgot password, OTP verification, new password |
-| `home/` | Main home screen with banner, categories, offers, AI strip |
-| `category/` | Category browser with subcategory filters |
-| `product/` | Product list (grid/list view) and product details page |
-| `all_products/` | Browse all products with search and filters |
-| `cart/` | Shopping cart with quantity steppers and price breakdown |
-| `wishlist/` | Saved products with heart toggle |
-| `checkout/` | Multi-step checkout with address, payment, order confirmation |
-| `orders/` | Order history and real-time order tracking |
-| `hana_ai/` | AI chat interface with voice input and product cards |
-| `settings/` | Settings hub, account, addresses, payments, notifications, language |
+---
+
+## Step 3: Assets — Images, Icons, Fonts, Translations
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/assets_resources.png" alt="Assets folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+This folder holds everything that is **not code** — pictures, icons, fonts, and language files.
+
+### Folder Breakdown
+
+```
+assets/
+├── data/
+│   └── products.json           ← All product data (name, price, image, category)
+├── font/
+│   └── Manrope/static/         ← App font files
+├── icons/
+│   ├── logo.png                ← App icon (used on splash, login, phone home screen)
+│   ├── catagory/               ← Product category icons
+│   │   ├── dairy/
+│   │   ├── fruits/
+│   │   ├── vegetables/
+│   │   ├── pantry/
+│   │   ├── beverage/
+│   │   ├── frozen/
+│   │   ├── household/
+│   │   ├── snacks/
+│   │   └── snack&package/
+│   ├── home_screen image/      ← Home screen banners and images
+│   ├── navi_icon/              ← Bottom navigation bar icons
+│   ├── setting/                ← Settings screen icons
+│   ├── daily purchase/         ← Daily purchase feature icons
+│   └── ai recom/               ← AI recommendation icons
+├── images/
+│   ├── Logo.png                ← Logo used on screens
+│   ├── login_page.logo.png     ← Logo on login screen
+│   ├── onboarding1.png         ← Onboarding slide 1
+│   └── onboarding2.png         ← Onboarding slide 2
+├── translations/               ← Language files (9 languages)
+│   ├── en_US.json              ← English (default)
+│   ├── fr.json                 ← French
+│   ├── es.json                 ← Spanish
+│   ├── de.json                 ← German
+│   └── ... (4 more)
+└── profile_image.png           ← Default profile picture
+```
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/icons_folder.png" alt="Icons folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/translations_folder.png" alt="Translations folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+:::warning CHANGE THESE FILES
+- **`assets/icons/logo.png`** — Replace with your logo (app icon + splash screen)
+- **`assets/images/Logo.png`** — Replace with your logo (in-app screens)
+- **`assets/images/onboarding1.png`** — Replace with your onboarding image
+- **`assets/images/onboarding2.png`** — Replace with your onboarding image
+- **`assets/data/products.json`** — Replace with your product data
+- **`assets/translations/`** — Edit to change all text in the app
+:::
 
 ---
 
-## 🎨 `assets/` — Static Resources
-
-> This folder contains everything the app displays but doesn't generate at runtime — fonts for the Manrope typeface, SVG icons for navigation and categories, product images, the mock product catalog in JSON format, and translation files for 9 languages. When you need to add a new icon, update a product image, or add a new language, this is where you go.
+## Step 4: The App Code — `lib/`
 
 <div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/assets_resources.png" alt="Assets Resources" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-
+<img src="/img/project-structure/lib_source.png" alt="lib folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-**Subfolder breakdown:**
-| Folder | Contents |
-|--------|----------|
-| `data/` | `products.json` — Mock product catalog with all product data |
-| `font/` | Manrope font family (weights 200–800) for consistent typography |
-| `icons/` | App logo, navigation icons, category icons, settings icons |
-| `images/` | General images used across the app |
-| `translations/` | Localization files for 9 languages (en_US, de_DE, es_ES, fr_FR, etc.) |
+This is the main working folder. Every screen, every button, every feature lives here.
+
+### How I Built It — Layer by Layer
+
+```
+Layer 1: main.dart          →  App starts here
+Layer 2: theme/             →  Colors, fonts, visual style
+Layer 3: constants/         →  All design values in one place
+Layer 4: models/            →  Data shapes (what a Product, User, etc. look like)
+Layer 5: assets/data/       →  Product data loaded from JSON
+Layer 6: data/              →  How data is loaded and stored
+Layer 7: services/          →  Background workers (cart, profile, storage)
+Layer 8: components/        →  Reusable UI pieces (buttons, cards, inputs)
+Layer 9: pages/             →  Every screen the user sees
+Layer 10: routes/           →  Maps screen names to screens
+Layer 11: navigator/        →  Bottom navigation bar
+```
 
 ---
 
-## 🔧 `lib/constants/` — Global Constants
-
-> These are the values that stay the same across the entire app — the primary green color, the typography scale from display to caption, feature flags, and app configuration. Change a value here and it updates everywhere the app uses it. This is the single source of truth for design tokens and app settings.
+## Step 5: `main.dart` — The Starting Point
 
 <div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/constants_folder.png" alt="Constants Folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-
+<img src="/img/project-structure/main_dart_file.png" alt="main.dart" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
 </div>
 
-**Files and what they control:**
-| File | Controls |
-|------|----------|
-| `ui.dart` | All color tokens — primary green, accent yellow, semantic colors (success, error, warning) |
-| `text.dart` | Typography scale — display, headline, title, body, caption styles with font sizes and weights |
-| `app_config.dart` | Feature flags, app version, API endpoints, and configuration constants |
-| `gaps.dart` | Consistent spacing values used throughout the app |
-| `images.dart` | Asset path constants so image references are centralized and typo-free |
-| `mock_data.dart` | Mock data constants for development and testing |
+This is the very first file Flutter runs. Here is what happens in order:
+
+1. **Initialize storage** — loads saved settings (language, theme)
+2. **Load translations** — loads all 9 language files
+3. **Start the app** — opens the Splash screen
+
+The app uses **GetX** as its state management and navigation framework. The key line:
+
+```dart
+initialRoute: Routes.splashPage,
+```
+
+This tells the app to start at the Splash screen. The Splash screen then automatically navigates to Onboarding (first run) or Home (returning users).
 
 ---
 
-## 🔌 `lib/services/` — Infrastructure Services
-
-> These are the behind-the-scenes workers that handle tasks no single screen owns. The cart service manages adding, removing, and persisting items across the app. The navigation service wraps GetX routing with helper methods. The notification service handles Firebase Cloud Messaging. The profile service manages user data persistence. These services are injected into controllers and used across multiple screens.
+## Step 6: `constants/` — All Design Values
 
 <div style={{textAlign: 'center'}}>
-
-<img src="/img/project-structure/services_folder.png" alt="Services Folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-
+<img src="/img/project-structure/constants_folder.png" alt="Constants folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-**Available services:**
+This folder is the **single source of truth** for the app's visual design. Change a value here and it updates everywhere.
+
+### Files
+
+| File | What It Controls |
+|------|-----------------|
+| `ui.dart` | All colors (primary green, yellow accent, backgrounds, borders) |
+| `text.dart` | All font sizes and text weights |
+| `gaps.dart` | All spacing values (padding, margins) |
+| `images.dart` | Central list of every image path in the app |
+| `app_config.dart` | App name, AI settings, pricing rules |
+| `mock_data.dart` | Sample data for testing |
+
+:::warning CHANGE THESE FILES
+- **`ui.dart`** — Change `primaryColor` (`#004B30`) to your brand color
+- **`app_config.dart`** — Change `appName`, `supportEmail`, `aiName`, pricing thresholds
+- **`images.dart`** — Update paths if you rename image files
+:::
+
+### Key Colors in `ui.dart`
+
+| Variable | Hex | Used For |
+|----------|-----|----------|
+| `primaryColor` | `#004B30` | Main brand green — buttons, headers |
+| `mintGreen` | `#D2F6D2` | Light green backgrounds |
+| `yellowColor` | `#EAB308` | Accent yellow — icons, highlights |
+| `bgColor` | `#FAFAFA` | Screen backgrounds |
+| `successColor` | `#22C55E` | Success messages |
+| `errorColor` | `#EA3A2D` | Error messages |
+
+### Config Values in `app_config.dart`
+
+| Variable | Current Value | What to Change |
+|----------|--------------|----------------|
+| `appName` | `'HanaGo'` | Your app name |
+| `appTagline` | `'Smart Grocery Shopping'` | Your tagline |
+| `supportEmail` | `'support@hanago.com'` | Your support email |
+| `aiName` | `'Hana AI'` | Your AI assistant name |
+| `freeShippingThreshold` | `50.0` | Free shipping minimum |
+| `shippingCharge` | `2.0` | Shipping cost |
+
+---
+
+## Step 7: `models/` — Data Blueprints
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/models_folder.png" alt="Models folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+Models define **what a piece of data looks like**. They are blueprints, not the data itself.
+
+| Model | What It Describes |
+|-------|------------------|
+| `product_model.dart` | A product — name, price, image, category, description, stock status |
+| `cart_item_model.dart` | An item in the cart — product + quantity |
+| `user_model.dart` | A user — name, email, phone, avatar |
+| `coupon_model.dart` | A coupon — code, discount, expiry |
+| `notification_model.dart` | A notification — title, message, time |
+| `hana_ai_message.dart` | A chat message — user input + bot response |
+
+> **You rarely need to edit these** unless you want to add new data fields (like "rating" or "brand" to products).
+
+---
+
+## Step 8: `data/` — Loading Product Data
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/data_folder.png" alt="Data folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+### How Product Data Works
+
+The app loads products from a JSON file: `assets/data/products.json`
+
+The loading happens in `lib/data/loaders/product_data_loader.dart`. It reads the JSON, converts each entry into a `ProductModel`, and caches everything in memory.
+
+### Data Flow
+
+```
+assets/data/products.json
+        │
+        ▼
+lib/data/loaders/product_data_loader.dart   ← Reads and parses JSON
+        │
+        ▼
+lib/data/repositories/product_repository_impl.dart   ← Provides data to screens
+        │
+        ▼
+lib/domain/repositories/product_repository.dart   ← Defines what operations exist
+        │
+        ▼
+Screens use the data
+```
+
+### Seed Data (Default Data)
+
+The `lib/data/seeds/` folder contains default data that ships with the app:
+
+| File | What It Provides |
+|------|-----------------|
+| `default_addresses.dart` | Pre-filled delivery addresses |
+| `default_coupons.dart` | Available coupon codes |
+| `default_notifications.dart` | Welcome notifications |
+| `default_orders.dart` | Sample order data |
+| `default_payment_cards.dart` | Saved payment methods |
+
+:::warning CHANGE THIS FILE
+- **`assets/data/products.json`** — Replace with your own product data. Keep the same JSON structure (id, name, price, assetPath, categoryLabel, etc.)
+:::
+
+---
+
+## Step 9: `services/` — Background Workers
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/services_folder.png" alt="Services folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+Services handle things that happen **behind the scenes**.
+
 | Service | What It Does |
-|---------|--------------|
-| `cart_service.dart` | Cart CRUD operations, quantity management, local persistence |
-| `local_storage_service.dart` | GetStorage wrapper for reading/writing app data locally |
-| `navigation_service.dart` | Custom navigation helper with named route shortcuts |
-| `notification_service.dart` | Firebase Cloud Messaging setup and push notification handling |
-| `profile_service.dart` | User profile persistence and retrieval |
+|---------|-------------|
+| `cart_service.dart` | Adds/removes items from cart, calculates totals |
+| `profile_service.dart` | Saves and loads user profile info |
+| `notification_service.dart` | Handles push notifications (Firebase) |
+| `local_storage_service.dart` | Remembers settings on the phone (language, login state) |
+| `navigation_service.dart` | Shortcuts for moving between screens |
+
+> **You rarely need to edit these** unless you are adding a new background feature.
 
 ---
 
-## 📐 Naming Conventions
+## Step 10: `components/` — Reusable Building Blocks
 
-> Consistent naming makes the codebase predictable. When you see a file name, you immediately know what type of code it contains. These conventions are followed throughout the entire project.
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/components_folder.png" alt="Components folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
 
-| Type | Convention | Example |
-|------|-----------|---------|
-| Files | `snake_case.dart` | `product_list_view.dart` |
-| Classes | `PascalCase` | `ProductListView` |
-| Variables | `camelCase` | `selectedCategory` |
-| Constants | `camelCase` or `SCREAMING_SNAKE` | `kPrimaryColor` |
-| Routes | `kebab-case` | `/product-details` |
-| Assets | `snake_case` | `home_banner_1.png` |
-| Translations | `locale_REGION.json` | `en_US.json` |
+These are pre-built pieces used across many screens. Instead of building the same button 20 times, it is built once here and reused everywhere.
+
+### Key Components
+
+| Component | What It Is | Used On |
+|-----------|-----------|---------|
+| `hana_button.dart` | Main green action button | Every screen with a submit/continue button |
+| `product_card.dart` | Product card with image, price, add-to-cart | Home, Category, Search, Wishlist |
+| `hana_search_bar.dart` | Search input field | Home, All Products |
+| `empty_state.dart` | "Nothing here yet" illustration | Empty cart, empty wishlist |
+| `form_input.dart` | Text input fields | Login, Register, Checkout |
+| `quantity_stepper.dart` | +/- quantity controls | Cart, Product Details |
+| `stock_badge.dart` | "In Stock" / "Out of Stock" badge | Product Cards |
+| `green_header_scaffold.dart` | Green header layout | Many screens |
+| `loader.dart` | Loading spinner | While data is loading |
+| `alert.dart` | Confirmation popups | Delete actions, errors |
+| `user_avatar.dart` | Circular profile picture | Profile, Account |
+| `filter_modal.dart` | Filter bottom sheet | All Products |
+
+:::warning CHANGE THIS FILE IF NEEDED
+- **`hana_button.dart`** — Change button style (border radius, padding, colors) to match your brand
+- **`product_card.dart`** — Change how product cards look
+:::
 
 ---
 
-:::tip GetX Pattern
-Every screen follows the **GetX MVC pattern**:
-- `*_view.dart` — Pure UI, uses `GetX<Controller>` or `Obx(() => ...)` for reactive UI
-- `*_controller.dart` — Business logic, extends `GetxController`
-- `*_binding.dart` — Dependency injection, extends `Bindings` (in `routes/pages.dart`)
+## Step 11: `pages/` — Every Screen in the App
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/pages_folder.png" alt="Pages folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+This is the **largest folder**. Every screen the user sees is here.
+
+### Complete Screen Map
+
+| Folder | What It Contains |
+|--------|-----------------|
+| `splash/` | Loading screen — logo + loading animation |
+| `onboarding/` | Welcome slides for new users (2 slides) |
+| `auth/welcome/` | Welcome screen with Login and Register buttons |
+| `auth/login/` | Login screen (email + password) |
+| `auth/register/` | Registration screen (name, email, phone, password) |
+| `auth/forgot_password/` | Forgot password screen (enter email) |
+| `auth/otp_verification/` | OTP verification (6-digit code) |
+| `auth/new_password/` | Set new password screen |
+| `home/` | Main home screen — banners, categories, daily purchases, AI recommendations, offers |
+| `category/` | Browse products by category (dairy, fruits, vegetables, etc.) |
+| `product/` | Product list and product detail page |
+| `all_products/` | Search and browse all products with filters |
+| `cart/` | Shopping cart with quantity controls and totals |
+| `wishlist/` | Saved and liked products |
+| `checkout/` | Address selection, delivery date/time, payment, order confirmation |
+| `orders/` | Order history list and live order tracking |
+| `hana_ai/` | AI chat assistant — type or use voice to get product recommendations |
+| `settings/` | Account, language, notifications, FAQ, privacy, address, payment, coupons |
+
+### How to Add a New Screen
+
+**Step 1:** Create your screen in `lib/pages/my_screen/my_screen_view.dart`
+
+**Step 2:** Add a route name in `routes/routes.dart`:
+```dart
+static const String myScreenView = '/my-screen';
+```
+
+**Step 3:** Connect it in `routes/pages.dart`:
+```dart
+_p(Routes.myScreenView, () => const MyScreenView()),
+```
+
+**Step 4:** Navigate to it from anywhere:
+```dart
+Get.toNamed(Routes.myScreenView);
+```
+
+---
+
+## Step 12: `routes/` — Screen Navigation Map
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/routes_folder.png" alt="Routes folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+Two files that connect screen names to actual screens:
+
+| File | What It Does |
+|------|-------------|
+| `routes.dart` | Lists all screen names (e.g. `'/home'`, `'/cart'`) |
+| `pages.dart` | Connects each name to the actual screen widget |
+
+---
+
+## Step 13: `navigator/` — Bottom Navigation Bar
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/navigator_folder.png" alt="Navigator folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+The 5-tab bar at the bottom of the screen:
+
+| Tab | What It Opens |
+|-----|--------------|
+| Home | Home screen |
+| Category | Browse by category |
+| AI | AI chat assistant |
+| Cart | Shopping cart |
+| Profile | Account and settings |
+
+:::warning CHANGE THIS FILE
+- **`lib/navigator/bottom_nav_bar.dart`** — Change tab icons, labels, or reorder tabs
 :::
 
-:::tip Adding Your Screenshots
-Place your project structure screenshots in `static/img/project-structure/` using the filenames shown above. The images will render automatically.
+---
+
+## Step 14: `theme/` — App Visual Style
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/theme_folder.png" alt="Theme folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
+</div>
+
+One file — `app.dart` — controls the overall look: button shapes, card styles, input field styles, and font.
+
+It reads colors from `constants/ui.dart`, so to change the theme, edit `ui.dart` first.
+
+---
+
+## Step 15: Android & iOS Settings
+
+### Android
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/android_folder1.png" alt="Android folder overview" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
+</div>
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/anroid_folder.png" alt="Android folder details" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
+</div>
+
+:::warning CHANGE THESE FILES
+- **`android/app/src/main/AndroidManifest.xml`** (line 8) — Change `android:label="hana_go"` to your app name
+- **`android/app/build.gradle.kts`** (line 19) — Change `applicationId = "com.appstick.hanago.hana_go"` to your package ID
 :::
+
+### iOS
+
+<div style={{textAlign: 'center'}}>
+<img src="/img/project-structure/ios_folder.png" alt="iOS folder" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
+</div>
+
+:::warning CHANGE THESE FILES
+- **`ios/Runner/Info.plist`** (line 10) — Change `CFBundleDisplayName` to your app name
+- **`ios/Runner/Info.plist`** (line 18) — Change `CFBundleName` to your app name
+:::
+
+---
+
+## Complete List: Files You Need to Change
+
+Here is every file you should customize, in the order you should do it:
+
+### Branding (Do First)
+
+| # | File | What to Change |
+|---|------|---------------|
+| 1 | `assets/icons/logo.png` | Replace with your logo |
+| 2 | `assets/images/Logo.png` | Replace with your logo |
+| 3 | `assets/images/login_page.logo.png` | Replace with your logo |
+| 4 | `assets/images/onboarding1.png` | Replace with your onboarding image |
+| 5 | `assets/images/onboarding2.png` | Replace with your onboarding image |
+| 6 | `assets/profile_image.png` | Replace with default profile picture |
+
+### Colors & Config (Do Second)
+
+| # | File | What to Change |
+|---|------|---------------|
+| 7 | `lib/constants/ui.dart` | Change `primaryColor` and other brand colors |
+| 8 | `lib/constants/app_config.dart` | Change `appName`, `supportEmail`, `aiName`, pricing rules |
+| 9 | `lib/constants/images.dart` | Update paths if you rename image files |
+
+### Text & Translations (Do Third)
+
+| # | File | What to Change |
+|---|------|---------------|
+| 10 | `assets/translations/en_US.json` | Change all English text |
+| 11 | Other translation files | Translate to your languages |
+
+### Product Data (Do Fourth)
+
+| # | File | What to Change |
+|---|------|---------------|
+| 12 | `assets/data/products.json` | Replace with your product data |
+
+### Platform Settings (Do Last)
+
+| # | File | What to Change |
+|---|------|---------------|
+| 13 | `android/app/src/main/AndroidManifest.xml` | App name on Android |
+| 14 | `android/app/build.gradle.kts` | Android package ID |
+| 15 | `ios/Runner/Info.plist` | App name on iPhone |
+| 16 | `pubspec.yaml` | App version, asset folders |
+
+### Navigation (If Customizing)
+
+| # | File | What to Change |
+|---|------|---------------|
+| 17 | `lib/navigator/bottom_nav_bar.dart` | Tab icons, labels, order |
+| 18 | `lib/routes/routes.dart` | Add/remove screen routes |
+| 19 | `lib/routes/pages.dart` | Connect new routes to screens |
+
+---
+
+## Quick Reference
+
+:::tip What to Change vs. What to Leave Alone
+| Change These | Leave These Alone |
+|-------------|-------------------|
+| `assets/icons/logo.png` | `lib/main.dart` |
+| `assets/images/*.png` | `lib/services/` |
+| `assets/data/products.json` | `lib/models/` |
+| `assets/translations/*.json` | `lib/data/loaders/` |
+| `lib/constants/ui.dart` | `lib/data/repositories/` |
+| `lib/constants/app_config.dart` | `lib/domain/` |
+| `lib/navigator/bottom_nav_bar.dart` | `lib/utils/` |
+| `android/` and `ios/` settings | `lib/theme/app.dart` |
+| `pubspec.yaml` (version, assets) | `lib/routes/` |
+:::
+
+---
+
+## The Build Order
+
+Here is the exact order I built this project, and the order you should follow when customizing:
+
+```
+1.  Set up Flutter environment (see Installation guide)
+2.  Run the app as-is to see it work
+3.  Replace logos and images (Step 3: Assets)
+4.  Change colors (Step 6: Constants → ui.dart)
+5.  Update app config (Step 6: Constants → app_config.dart)
+6.  Edit translations (Step 3: Assets → translations/)
+7.  Replace product data (Step 8: Data)
+8.  Update Android/iOS settings (Step 15)
+9.  Update pubspec.yaml version (Step 2)
+10. Test on a real device
+```
+
+> **After each change, run `flutter run` to see the result immediately.**
