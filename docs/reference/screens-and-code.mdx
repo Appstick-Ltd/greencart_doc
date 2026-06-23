@@ -14,6 +14,8 @@ Every screen in **Hana Go** paired with its source code. Screenshot references p
 
 ### 1. Splash Screen
 
+> Gradient splash with centered logo — auto-navigates to onboarding or home after 2 seconds.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -56,11 +58,11 @@ class SplashView extends StatelessWidget {
 </div>
 </div>
 
-> Gradient splash with centered logo — auto-navigates to onboarding or home after 2 seconds.
-
 ---
 
 ### 2. Onboarding Page 1
+
+> Full-bleed background image with shader mask fade, title, subtitle, and dual action buttons.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -113,11 +115,11 @@ class _OnboardingPageOne extends StatelessWidget {
 </div>
 </div>
 
-> Full-bleed background image with shader mask fade, title, subtitle, and dual action buttons.
-
 ---
 
 ### 3. Onboarding Page 2
+
+> Solid green background with illustration, tagline, and a single "Get Started" CTA.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -158,13 +160,13 @@ class _OnboardingPageTwo extends StatelessWidget {
 </div>
 </div>
 
-> Solid green background with illustration, tagline, and a single "Get Started" CTA.
-
 ---
 
 ## 🔐 Authentication
 
 ### 4. Welcome Screen
+
+> Gradient welcome with brand logo, Login + Register buttons, and terms disclaimer.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -220,6 +222,8 @@ class WelcomeView extends StatefulWidget {
 
 ### 5. Login
 
+> Split layout: dark green header with "Welcome Back!" and a white card with phone/email tab, password, social login.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -272,11 +276,11 @@ class LoginView extends StatelessWidget {
 </div>
 </div>
 
-> Split layout: dark green header with "Welcome Back!" and a white card with phone/email tab, password, social login.
-
 ---
 
 ### 6. Register
+
+> Registration form mirroring the Login layout with full name, email, phone, and password fields.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -335,11 +339,11 @@ class _RegisterViewState extends State<RegisterView>
 </div>
 </div>
 
-> Registration form mirroring the Login layout with full name, email, phone, and password fields.
-
 ---
 
 ### 7. Forgot Password
+
+> Single input screen to request an OTP code via email or phone.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -395,11 +399,11 @@ class ForgotPasswordView extends StatelessWidget {
 </div>
 </div>
 
-> Single input screen to request an OTP code via email or phone.
-
 ---
 
 ### 8. OTP Verification
+
+> 6-digit OTP entry using `pinput` package with countdown timer and resend option.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -457,11 +461,11 @@ class OtpVerificationView extends StatelessWidget {
 </div>
 </div>
 
-> 6-digit OTP entry using `pinput` package with countdown timer and resend option.
-
 ---
 
 ### 9. New Password
+
+> Password reset form with new password and confirmation fields.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -525,6 +529,8 @@ class NewPasswordView extends StatelessWidget {
 
 ### 10. Home (Full)
 
+> Main home screen with header, search, categories, hero banner, offers, product lists, and AI strip.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -569,8 +575,6 @@ class HomeView extends StatelessWidget {
 
 </div>
 </div>
-
-> Main home screen with header, search, categories, hero banner, offers, product lists, and AI strip.
 
 ---
 
@@ -621,8 +625,6 @@ class HomeHeroBanner extends StatelessWidget {
 
 </div>
 </div>
-
-> Auto-advancing hero banner carousel with gradient overlay and page indicators.
 
 ---
 
@@ -676,8 +678,6 @@ class HomeCategoriesGrid extends StatelessWidget {
 
 </div>
 </div>
-
-> Horizontal scroll of quick-category chips linking to filtered product lists.
 
 ---
 
@@ -741,8 +741,6 @@ class _OfferCard extends StatelessWidget {
 
 </div>
 </div>
-
-> Horizontally scrollable limited-offer cards with discount badges.
 
 ---
 
@@ -811,6 +809,8 @@ class _AiChip extends StatelessWidget {
 
 ### 15. Category View
 
+> Two-pane category browser with category rail and subcategory grid.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -855,11 +855,11 @@ class _CategoryViewState extends State<CategoryView>
 </div>
 </div>
 
-> Two-pane category browser with category rail and subcategory grid.
-
 ---
 
 ### 16. Product List
+
+> Filterable, sortable product grid/list with toggle view and filter drawer.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -916,11 +916,11 @@ class ProductListView extends GetView<ProductListController> {
 </div>
 </div>
 
-> Filterable, sortable product grid/list with toggle view and filter drawer.
-
 ---
 
 ### 17. Product Details
+
+> Full product detail page with image gallery, variant picker, and sticky add-to-cart bar.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -966,11 +966,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 </div>
 </div>
 
-> Full product detail page with image gallery, variant picker, and sticky add-to-cart bar.
-
 ---
 
 ### 18. All Products
+
+> Browse all products in the catalog with search and pagination.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1025,6 +1025,8 @@ class AllProductsView extends GetView<AllProductsController> {
 
 ### 19. AI Chat (Text)
 
+> Gradient AI chat screen with message list, text input bar, and popup menu (new/clear/suggested).
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -1071,11 +1073,11 @@ class HanaAIView extends StatelessWidget {
 </div>
 </div>
 
-> Gradient AI chat screen with message list, text input bar, and popup menu (new/clear/suggested).
-
 ---
 
 ### 20. AI Voice Input
+
+> Voice input using `speech_to_text` � tap mic to start/stop, recognized words appear in input.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1115,6 +1117,8 @@ void toggleMic() {
 ---
 
 ### 21. AI Product Card
+
+> Inline product recommendation card rendered inside an AI chat bubble.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1178,6 +1182,8 @@ class AIProductCard extends StatelessWidget {
 
 ### 22. Cart View
 
+> Cart with quantity stepper, price breakdown, empty state, and "Proceed to Checkout" button.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -1215,11 +1221,11 @@ class CartView extends StatelessWidget {
 </div>
 </div>
 
-> Cart with quantity stepper, price breakdown, empty state, and "Proceed to Checkout" button.
-
 ---
 
 ### 23. Checkout
+
+> Full checkout with address, date/time, payment method, and order summary sections.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1263,11 +1269,11 @@ class _CheckoutViewState extends State<CheckoutView> {
 </div>
 </div>
 
-> Full checkout with address, date/time, payment method, and order summary sections.
-
 ---
 
 ### 24. Date & Time Picker
+
+> Delivery date and time slot picker for scheduling order delivery.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1326,11 +1332,11 @@ class _DateAndTimeViewState extends State<DateAndTimeView> {
 </div>
 </div>
 
-> Delivery date and time slot picker for scheduling order delivery.
-
 ---
 
 ### 25. Order Confirmed
+
+> Order success screen with confirmation animation, order ID, and next-action buttons.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1391,6 +1397,8 @@ class OrderConfirmedView extends StatelessWidget {
 
 ### 26. My Orders
 
+> Order history with status tabs (active, past, cancelled) and order detail navigation.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -1448,11 +1456,11 @@ class MyOrdersView extends StatelessWidget {
 </div>
 </div>
 
-> Order history with status tabs (active, past, cancelled) and order detail navigation.
-
 ---
 
 ### 27. Track Order
+
+> Order tracking with visual status timeline showing current delivery progress.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1508,6 +1516,8 @@ class TrackOrderView extends StatelessWidget {
 
 ### 28. Wishlist
 
+> Grid of wishlisted products with empty state, heart toggle, and move-to-cart action.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -1559,6 +1569,8 @@ class WishlistView extends StatelessWidget {
 
 ### 29. Settings Hub
 
+> Settings hub with profile card, quick-action buttons, and categorized menu sections.
+
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
@@ -1599,11 +1611,11 @@ class SettingsView extends StatelessWidget {
 </div>
 </div>
 
-> Settings hub with profile card, quick-action buttons, and categorized menu sections.
-
 ---
 
 ### 30. Account / Profile
+
+> Profile management with editable fields and photo picker.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1651,11 +1663,11 @@ class _AccountViewState extends State<AccountView> {
 </div>
 </div>
 
-> Profile management with editable fields and photo picker.
-
 ---
 
 ### 31. Delivery Address
+
+> Saved delivery addresses with add/edit/delete and default address selection.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1707,11 +1719,11 @@ class DeliveryAddressView extends StatelessWidget {
 </div>
 </div>
 
-> Saved delivery addresses with add/edit/delete and default address selection.
-
 ---
 
 ### 32. Payment Method
+
+> Payment method management with saved cards and cash-on-delivery option.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1762,11 +1774,11 @@ class PaymentMethodView extends StatelessWidget {
 </div>
 </div>
 
-> Payment method management with saved cards and cash-on-delivery option.
-
 ---
 
 ### 33. Notifications
+
+> Notification center with categorized badges and read/unread state management.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1816,11 +1828,11 @@ class NotificationView extends StatelessWidget {
 </div>
 </div>
 
-> Notification center with categorized badges and read/unread state management.
-
 ---
 
 ### 34. Language
+
+> Language picker with flag icons and radio selection, persists choice across sessions.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1881,11 +1893,11 @@ class LanguageView extends StatelessWidget {
 </div>
 </div>
 
-> Language picker with flag icons and radio selection, persists choice across sessions.
-
 ---
 
 ### 35. Coupons
+
+> Coupon wallet showing available and expired coupons with apply action.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1943,11 +1955,11 @@ class CouponsView extends StatelessWidget {
 </div>
 </div>
 
-> Coupon wallet showing available and expired coupons with apply action.
-
 ---
 
 ### 36. FAQ
+
+> FAQ accordion with expandable question/answer pairs.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
@@ -1998,198 +2010,50 @@ class FaqView extends StatelessWidget {
 </div>
 </div>
 
-> FAQ accordion with expandable question/answer pairs.
-
 ---
 
-## 🧩 Shared Components
+### 37. Change Password
 
-### 37. Product Card
+> Password change form with current and new password fields.
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
 <div>
 
 #### 📱 Frontend
 
-![Product Card](/img/screenshots/product_card.png)
+![Change Password](/img/screenshots/change_password.png)
 
 </div>
 <div>
 
 #### 💻 Code
 
-```dart title="lib/components/product_card.dart"
-class ProductCard extends StatelessWidget {
-  final ProductModel product;
-  final String? heroTag;
-
-  const ProductCard({super.key, required this.product, this.heroTag});
-
+```dart title="lib/pages/settings/change_password/change_password_view.dart"
+class ChangePasswordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final qty = CartService.instance.quantity(product.id);
-      final inWishlist = HomeViewController.instance.isInWishlist(product.id);
-
-      return GestureDetector(
-        onTap: () => AppNavigationService.toProductDetails(product),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(R.r(16)),
-            border: Border.all(color: const Color(0xFFECEFF2)),
-            boxShadow: [BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: R.r(14), offset: Offset(0, R.h(5)))],
-          ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(flex: 5, child: Stack(children: [
-              // Light mint green background tint
-              // Centered product image with Hero animation
-              // Wishlist heart icon (top-right)
-              // Stock/discount badge (top-left)
-            ])),
-            Expanded(flex: 4, child: Padding(child: Column(children: [
-              Text(product.name, style: AppTextStyles.productNameTextStyle),
-              Text(product.sizeText, style: AppTextStyles.productSizeTextStyle),
-              Row(children: [
-                Text('\$${product.price.toStringAsFixed(2)}',
-                  style: AppTextStyles.productPriceTextStyle),
-                if (product.originalPrice > product.price)
-                  Text('\$${product.originalPrice.toStringAsFixed(2)}',
-                    style: AppTextStyles.productOriginalPriceStyle),
-                const Spacer(),
-                // Add-to-cart button / QuantityStepper when qty > 0
-              ]),
-            ]))),
-          ]),
+    final controller = Get.find<ChangePasswordController>();
+    return GreenHeaderScaffold(
+      header: SubPageHeader(title: 'Change Password'),
+      body: SingleChildScrollView(child: Column(children: [
+        Text('Enter your current password and set a new one'),
+        ObscurePasswordField(
+          label: 'Current Password',
+          hint: 'Enter current password',
+          controller: controller.currentController,
         ),
-      );
-    });
-  }
-}
-```
-
-</div>
-</div>
-
-> Shared product card component used across all product display screens.
-
----
-
-### 38. Bottom Nav Bar
-
-<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
-<div>
-
-#### 📱 Frontend
-
-![Bottom Nav](/img/screenshots/bottom_nav.png)
-
-</div>
-<div>
-
-#### 💻 Code
-
-```dart title="lib/navigator/bottom_nav_bar.dart"
-class AppBottomNavBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      final activeIndex = controller.currentIndex.value;
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(color: Constants.primaryBorder)),
+        ObscurePasswordField(
+          label: 'New Password',
+          hint: 'Enter new password',
+          controller: controller.newController,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildNavItem(AppImages.navHome, 'Home', 0),
-            _buildNavItem(AppImages.navCategory, 'Category', 1),
-            _buildNavItem(AppImages.navHanaAI, 'HanaAI', 2),
-            _buildNavItem(AppImages.settingsCart, 'Cart', 3),
-            _buildNavItem(AppImages.navProfile, 'Profile', 4),
-          ],
+        ObscurePasswordField(
+          label: 'Confirm New Password',
+          hint: 'Confirm your new password',
+          controller: controller.confirmController,
         ),
-      );
-    });
-  }
-}
-```
-
-</div>
-</div>
-
-> 5-tab bottom navigation: Home, Category, HanaAI, Cart, Profile with active state indicator.
-
----
-
-### 39. Green Header Scaffold
-
-<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
-<div>
-
-#### 📱 Frontend
-
-![Green Header](/img/screenshots/green_header.png)
-
-</div>
-<div>
-
-#### 💻 Code
-
-```dart title="lib/components/green_header_scaffold.dart"
-class GreenHeaderScaffold extends StatelessWidget {
-  final Widget header;
-  final Widget body;
-  final double borderRadius;
-  final Color? backgroundColor;
-  final Color? bodyColor;
-  final bool resizeToAvoidBottomInset;
-  final double? maxWidth;
-  final bool safeAreaTop;
-  final bool safeAreaBottom;
-
-  const GreenHeaderscaffold({
-    super.key,
-    required this.header,
-    required this.body,
-    this.borderRadius = 26.0,
-    this.backgroundColor,
-    this.bodyColor,
-    this.resizeToAvoidBottomInset = true,
-    this.maxWidth,
-    this.safeAreaTop = false,
-    this.safeAreaBottom = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final effectiveBgColor = backgroundColor ?? Constants.primaryColor;
-    final effectiveMaxWidth = maxWidth ?? R.maxContentWidth(context);
-
-    return Scaffold(
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      backgroundColor: effectiveBgColor,
-      body: Center(child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: effectiveMaxWidth),
-        child: Column(children: [
-          header,
-          Expanded(child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: bodyColor ?? Colors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(borderRadius.r))),
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(borderRadius.r)),
-              child: body,
-            ),
-          )),
-        ]),
-      )),
+        HanaButton('Update Password', onTap: controller.updatePassword),
+      ])),
     );
   }
 }
@@ -2198,7 +2062,137 @@ class GreenHeaderScaffold extends StatelessWidget {
 </div>
 </div>
 
-> Shared scaffold with green header and rounded white body — used across most sub-pages.
+---
+
+### 38. Edit Address
+
+> Edit delivery address form with label, street, city, state, and zip code fields.
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Edit Address](/img/screenshots/edit_address.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/address/edit_address_view.dart"
+class EditAddressView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DeliveryAddressController>();
+    return GreenHeaderScaffold(
+      header: SubPageHeader(title: 'Edit Address'),
+      body: SingleChildScrollView(child: Column(children: [
+        TextFormInputField(label: 'Address Label', controller: controller.labelController),
+        TextFormInputField(label: 'Street Address', controller: controller.streetController),
+        TextFormInputField(label: 'City', controller: controller.cityController),
+        TextFormInputField(label: 'State', controller: controller.stateController),
+        TextFormInputField(label: 'Zip Code', controller: controller.zipController),
+        HanaButton('Save Address', onTap: controller.saveAddress),
+      ])),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+---
+
+### 39. Notification Details
+
+> Notification detail view showing full notification content with title, timestamp, and body.
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Notification Details](/img/screenshots/notification_details.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/notification/notification_details_view.dart"
+class NotificationDetailsView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final notification = Get.arguments as NotificationModel;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(children: [
+        SubPageHeader(title: 'Notification'),
+        Expanded(child: SingleChildScrollView(child: Column(children: [
+          Text(notification.title, style: AppTextStyles.titleBoldTextStyle),
+          Text(notification.timestamp, style: AppTextStyles.smallGreyTextStyle),
+          SizedBox(height: 16),
+          Text(notification.body, style: AppTextStyles.bodyTextStyle),
+        ]))),
+      ]),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+---
+
+### 40. Privacy and Sharing
+
+> Privacy policy, sharing options, and legal information page.
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start'}}>
+<div>
+
+#### 📱 Frontend
+
+![Privacy and Sharing](/img/screenshots/privacy_sharing.png)
+
+</div>
+<div>
+
+#### 💻 Code
+
+```dart title="lib/pages/settings/privacy_sharing/privacy_sharing_view.dart"
+class PrivacySharingView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GreenHeaderScaffold(
+      header: SubPageHeader(title: 'Privacy & Sharing'),
+      body: SingleChildScrollView(child: Column(children: [
+        _buildSection(title: 'Privacy Policy', items: [
+          _buildTile(title: 'View Privacy Policy', onTap: () {}),
+          _buildTile(title: 'Manage Data', onTap: () {}),
+        ]),
+        _buildSection(title: 'Sharing', items: [
+          _buildTile(title: 'Share App', onTap: () {}),
+          _buildTile(title: 'Rate Us', onTap: () {}),
+          _buildTile(title: 'Refer a Friend', onTap: () {}),
+        ]),
+        _buildSection(title: 'Legal', items: [
+          _buildTile(title: 'Terms of Service', onTap: () {}),
+          _buildTile(title: 'Open Source Licenses', onTap: () {}),
+        ]),
+      ])),
+    );
+  }
+}
+```
+
+</div>
+</div>
+
+> Privacy policy, sharing options, and legal information page.
 
 ---
 

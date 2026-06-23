@@ -36,15 +36,16 @@ Place your app screenshots here for the documentation gallery.
 | Wishlist | `wishlist.png` |
 | Settings | `settings.png` |
 | Account | `account.png` |
+| Change Password | `change_password.png` |
 | Delivery Address | `delivery_address.png` |
+| Edit Address | `edit_address.png` |
 | Payment Method | `payment_method.png` |
 | Notifications | `notifications.png` |
+| Notification Details | `notification_details.png` |
 | Language | `language.png` |
 | Coupons | `coupons.png` |
 | FAQ | `faq.png` |
-| Product Card | `product_card.png` |
-| Bottom Nav Bar | `bottom_nav.png` |
-| Green Header Scaffold | `green_header.png` |
+| Privacy and Sharing | `privacy_sharing.png` |
 
 ## Recommended Specs
 - Format: PNG or WebP
