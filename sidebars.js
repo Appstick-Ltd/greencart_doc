@@ -68,7 +68,6 @@ const sidebars = {
       label: '📚 Reference',
       collapsed: false,
       items: [
-        'reference/screenshots',
         'reference/screens-and-code',
         'reference/faq',
         'reference/changelog',
