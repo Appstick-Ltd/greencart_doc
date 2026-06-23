@@ -6,13 +6,64 @@ description: Complete breakdown of the Hana Go Flutter project folder architectu
 
 # 📂 Project Structure
 
-Hana Go follows a **feature-first, clean architecture** pattern. Every folder has a single responsibility, making navigation and customization intuitive.
+Hana Go follows a **feature-first, clean architecture** pattern. Every folder has a single responsibility, making navigation and customization intuitive. This page walks you through the entire project layout so you know exactly where to find things and how the code is organized.
+
+---
+
+## 🗺️ Architecture Overview
+
+> Before diving into individual folders, take a moment to understand how everything connects. This is the big picture — the full project tree showing every major folder and its role in the app. Use this as a map to navigate the codebase.
+
+<div style={{textAlign: 'center'}}>
+
+<img src="/img/project-structure/architecture_overview.png" alt="Architecture Overview" style={{width: '100%', height: '500px', objectFit: 'contain'}} />
+
+</div>
+
+**Complete project tree:**
+```
+hana_go/
+├── android/                    ← Android native config (Gradle, manifests, signing)
+├── ios/                        ← iOS native config (Xcode, Info.plist, certificates)
+├── assets/                     ← Static resources (fonts, icons, images, translations)
+│   ├── data/                   ← Mock product catalog (products.json)
+│   ├── font/                   ← Manrope font family (weights 200–800)
+│   ├── icons/                  ← App logo, navigation SVGs, category icons
+│   ├── images/                 ← General images
+│   └── translations/           ← Localization files (9 languages)
+├── lib/                        ← ⭐ All Dart/Flutter source code
+│   ├── main.dart               ← App entry point (initializes GetX, routing)
+│   ├── components/             ← Shared reusable widgets
+│   ├── constants/              ← Colors, typography, feature flags
+│   ├── data/                   ← Data layer (loaders, repositories, seeds)
+│   ├── domain/                 ← Business logic entities
+│   ├── managers/               ← System-level managers
+│   ├── models/                 ← Dart data models
+│   ├── navigator/              ← Navigation controller & bottom nav
+│   ├── pages/                  ← Feature screens (13 feature folders)
+│   ├── routes/                 ← Route definitions & page bindings
+│   ├── services/               ← Cart, storage, navigation, notifications
+│   ├── theme/                  ← Material 3 theme config
+│   └── utils/                  ← Helper utilities & extensions
+├── test/                       ← Unit & widget tests
+├── pubspec.yaml                ← Package dependencies & asset declarations
+└── analysis_options.yaml       ← Dart linter configuration
+```
+
+**How the layers connect:**
+| Layer | Folders | Responsibility |
+|-------|---------|----------------|
+| **Presentation** | `pages/`, `components/`, `theme/` | UI widgets, layouts, styling |
+| **Business Logic** | `pages/*_controller.dart`, `domain/` | State management, data transformation |
+| **Data** | `data/`, `services/`, `models/` | API calls, local storage, data models |
+| **Configuration** | `constants/`, `routes/`, `navigator/` | App settings, routing, navigation |
+| **Resources** | `assets/`, `translations/` | Fonts, icons, images, localization |
 
 ---
 
 ## 🗂️ Root Directory
 
-> The top-level folder that contains everything — Android and iOS configs, the lib/ source code, assets, and pubspec.yaml for dependencies.
+> This is what you see when you open the project in VS Code or Android Studio. The root directory is the starting point — it holds the Android and iOS platform folders, the `lib/` source code, `assets/` for images and fonts, and `pubspec.yaml` where all package dependencies are declared. If you're new to the project, start here to get your bearings.
 
 <div style={{textAlign: 'center'}}>
 
@@ -20,11 +71,17 @@ Hana Go follows a **feature-first, clean architecture** pattern. Every folder ha
 
 </div>
 
+**Key files at root level:**
+- `pubspec.yaml` — All Flutter/Dart dependencies, asset declarations, and app metadata
+- `analysis_options.yaml` — Dart linter rules and code quality settings
+- `android/` — Native Android configuration (Gradle, manifests, signing)
+- `ios/` — Native iOS configuration (Xcode project, Info.plist, certificates)
+
 ---
 
 ## 📁 `lib/` — Source Code Architecture
 
-> The heart of the app. All Dart/Flutter code lives here — from main.dart entry point to pages, services, models, and utilities. Organized by responsibility so you always know where to find things.
+> This is where all the Dart code lives. Every feature, service, model, and utility is organized into its own folder under `lib/`. The structure follows a clean architecture pattern — UI code stays in `pages/`, business logic lives in controllers, data access happens in `services/`, and shared utilities sit in `utils/`. When you need to modify a feature, you'll almost always be working inside this folder.
 
 <div style={{textAlign: 'center'}}>
 
@@ -32,11 +89,28 @@ Hana Go follows a **feature-first, clean architecture** pattern. Every folder ha
 
 </div>
 
+**Folder breakdown:**
+| Folder | Purpose |
+|--------|---------|
+| `main.dart` | App entry point — initializes GetX, sets up routing, runs the app |
+| `components/` | Shared reusable widgets used across multiple screens |
+| `constants/` | App-wide constants — colors, text styles, feature flags |
+| `data/` | Data layer — loaders, repositories, seed data |
+| `domain/` | Business logic entities and use cases |
+| `managers/` | System-level managers (permissions, lifecycle) |
+| `models/` | Dart data models for API responses and app state |
+| `navigator/` | Navigation controller and bottom navigation bar |
+| `pages/` | Feature screens — each screen has its own folder |
+| `routes/` | Route definitions and page bindings |
+| `services/` | Infrastructure services (cart, storage, notifications) |
+| `theme/` | Material 3 theme configuration |
+| `utils/` | Helper utilities and extensions |
+
 ---
 
 ## 📱 `lib/pages/` — Feature Screens
 
-> Every screen in the app lives here as its own folder. Each folder has a view file (UI), a controller file (business logic), and sometimes a widgets/ subfolder for screen-specific components.
+> Every screen in the app is organized as its own folder under `pages/`. This is the feature-first approach — instead of grouping by file type (all views together, all controllers together), we group by feature. So `auth/` contains everything related to login and registration, `home/` contains the home screen and its widgets, `cart/` contains the shopping cart. This makes it easy to find, modify, or remove entire features without breaking other parts of the app.
 
 <div style={{textAlign: 'center'}}>
 
@@ -44,11 +118,38 @@ Hana Go follows a **feature-first, clean architecture** pattern. Every folder ha
 
 </div>
 
+**Each feature folder follows this pattern:**
+```
+feature_name/
+├── feature_name_view.dart        ← UI code (widgets, layouts, styling)
+├── feature_name_controller.dart  ← Business logic (state, API calls, navigation)
+└── widgets/                      ← Screen-specific sub-components (optional)
+    ├── custom_header.dart
+    └── product_card.dart
+```
+
+**Available feature folders:**
+| Folder | What's Inside |
+|--------|---------------|
+| `splash/` | App splash screen with logo animation and auto-navigation |
+| `onboarding/` | 2-page onboarding carousel for first-time users |
+| `auth/` | Login, register, forgot password, OTP verification, new password |
+| `home/` | Main home screen with banner, categories, offers, AI strip |
+| `category/` | Category browser with subcategory filters |
+| `product/` | Product list (grid/list view) and product details page |
+| `all_products/` | Browse all products with search and filters |
+| `cart/` | Shopping cart with quantity steppers and price breakdown |
+| `wishlist/` | Saved products with heart toggle |
+| `checkout/` | Multi-step checkout with address, payment, order confirmation |
+| `orders/` | Order history and real-time order tracking |
+| `hana_ai/` | AI chat interface with voice input and product cards |
+| `settings/` | Settings hub, account, addresses, payments, notifications, language |
+
 ---
 
 ## 🎨 `assets/` — Static Resources
 
-> Everything the app displays but doesn't generate — fonts, icons, images, product data JSON, and translation files for 9 languages. Organized by type so assets are easy to find and update.
+> This folder contains everything the app displays but doesn't generate at runtime — fonts for the Manrope typeface, SVG icons for navigation and categories, product images, the mock product catalog in JSON format, and translation files for 9 languages. When you need to add a new icon, update a product image, or add a new language, this is where you go.
 
 <div style={{textAlign: 'center'}}>
 
@@ -56,11 +157,20 @@ Hana Go follows a **feature-first, clean architecture** pattern. Every folder ha
 
 </div>
 
+**Subfolder breakdown:**
+| Folder | Contents |
+|--------|----------|
+| `data/` | `products.json` — Mock product catalog with all product data |
+| `font/` | Manrope font family (weights 200–800) for consistent typography |
+| `icons/` | App logo, navigation icons, category icons, settings icons |
+| `images/` | General images used across the app |
+| `translations/` | Localization files for 9 languages (en_US, de_DE, es_ES, fr_FR, etc.) |
+
 ---
 
 ## 🔧 `lib/constants/` — Global Constants
 
-> All the values that stay the same across the entire app — color palette, typography scale, and feature flags. Change a color here and it updates everywhere.
+> These are the values that stay the same across the entire app — the primary green color, the typography scale from display to caption, feature flags, and app configuration. Change a value here and it updates everywhere the app uses it. This is the single source of truth for design tokens and app settings.
 
 <div style={{textAlign: 'center'}}>
 
@@ -68,11 +178,21 @@ Hana Go follows a **feature-first, clean architecture** pattern. Every folder ha
 
 </div>
 
+**Files and what they control:**
+| File | Controls |
+|------|----------|
+| `ui.dart` | All color tokens — primary green, accent yellow, semantic colors (success, error, warning) |
+| `text.dart` | Typography scale — display, headline, title, body, caption styles with font sizes and weights |
+| `app_config.dart` | Feature flags, app version, API endpoints, and configuration constants |
+| `gaps.dart` | Consistent spacing values used throughout the app |
+| `images.dart` | Asset path constants so image references are centralized and typo-free |
+| `mock_data.dart` | Mock data constants for development and testing |
+
 ---
 
 ## 🔌 `lib/services/` — Infrastructure Services
 
-> The behind-the-scenes workers that handle cart operations, local storage, navigation, push notifications, and user profiles. These services are used across multiple screens.
+> These are the behind-the-scenes workers that handle tasks no single screen owns. The cart service manages adding, removing, and persisting items across the app. The navigation service wraps GetX routing with helper methods. The notification service handles Firebase Cloud Messaging. The profile service manages user data persistence. These services are injected into controllers and used across multiple screens.
 
 <div style={{textAlign: 'center'}}>
 
@@ -80,9 +200,20 @@ Hana Go follows a **feature-first, clean architecture** pattern. Every folder ha
 
 </div>
 
+**Available services:**
+| Service | What It Does |
+|---------|--------------|
+| `cart_service.dart` | Cart CRUD operations, quantity management, local persistence |
+| `local_storage_service.dart` | GetStorage wrapper for reading/writing app data locally |
+| `navigation_service.dart` | Custom navigation helper with named route shortcuts |
+| `notification_service.dart` | Firebase Cloud Messaging setup and push notification handling |
+| `profile_service.dart` | User profile persistence and retrieval |
+
 ---
 
 ## 📐 Naming Conventions
+
+> Consistent naming makes the codebase predictable. When you see a file name, you immediately know what type of code it contains. These conventions are followed throughout the entire project.
 
 | Type | Convention | Example |
 |------|-----------|---------|
