@@ -18,7 +18,6 @@ const sidebars = {
         'getting-started/project-structure',
         'configuration',
         'firebase-setup',
-        'google-services',
       ],
     },
     {
