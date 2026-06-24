@@ -4,183 +4,194 @@ title: Quick Start
 description: Get Hana Go running on your device in under 5 minutes with this step-by-step quick start guide.
 ---
 
-# ⚡ Quick Start
+# Quick Start
 
 Get **Hana Go** running on your device in under 5 minutes.
 
 ---
 
-## 1️⃣ Extract the Project
+## What You Need
 
-After purchasing from CodeCanyon, extract the downloaded `.zip` file:
+Before you start, make sure you have:
 
-```
-hana-go-v1.0.0.zip
-└── hana_go/          ← Main Flutter project (this is your working folder)
-└── hana_go_docs/     ← Documentation site (Docusaurus)
-└── README.pdf        ← Quick reference PDF
-```
+| Requirement | Why |
+|-------------|-----|
+| **Flutter SDK** installed | The app is built with Flutter |
+| **Android Studio** or **VS Code** | Your code editor |
+| **Android Emulator** or **Physical Device** | To run the app |
 
----
-
-## 2️⃣ Open in Your IDE
-
-```bash
-# Open in VS Code
-code hana_go/
-
-# Or open Android Studio → Open → select the hana_go/ folder
-```
+> New to Flutter? Check the [Installation Guide](./installation) for detailed setup instructions.
 
 ---
 
-## 3️⃣ Install Flutter Packages
+## Step 1: Extract the Downloaded Files
+
+After purchasing from CodeCanyon, you will get a `.zip` file. Extract it to any folder on your computer.
+
+<img src="/img/screenshots/installation/project_structure.png" alt="Extracted Folder Structure" width="600" />
+
+After extraction, you will see:
+
+```
+hana-go-v1.0.0/
+└── hana_go/          ← This is your main project folder
+└── hana_go_docs/     ← Documentation site
+└── README.pdf        ← Quick reference
+```
+
+**Important:** The `hana_go/` folder is what you will work with.
+
+---
+
+## Step 2: Open the Project in Your Editor
+
+**Using VS Code:**
+1. Open VS Code
+2. Go to **File → Open Folder**
+3. Select the `hana_go/` folder
+
+**Using Android Studio:**
+1. Open Android Studio
+2. Click **Open**
+3. Select the `hana_go/` folder
+
+<img src="/img/screenshots/installation/vscode_open_project.png" alt="VS Code with Project Opened" width="600" />
+
+---
+
+## Step 3: Install Packages
+
+Open the terminal in your editor and run:
 
 ```bash
 flutter pub get
 ```
 
-You should see:
-```
-Resolving dependencies...
-Got dependencies!
-```
+Wait for it to finish. You will see "Got dependencies!" when done.
+
+<img src="/img/screenshots/installation/flutter_pub_get.png" alt="Flutter Pub Get Output" width="600" />
 
 ---
 
-## 4️⃣ Configure Firebase (Optional for First Run)
+## Step 4: Run the App
 
-For a quick first run without push notifications, you can skip Firebase. The app will launch with a warning in debug logs.
+### Using VS Code (Recommended)
 
-For full Firebase setup, see the [Firebase Setup](../firebase-setup) guide.
+**1. Open the Run and Debug panel:**
 
----
+Click the **Run and Debug** icon in the left sidebar (or press `Ctrl+Shift+D`).
 
-## 5️⃣ Run the App
+<img src="/img/screenshots/installation/vscode_run_debug.png" alt="Run and Debug Panel" width="800" />
+
+**2. Select your device:**
+
+From the dropdown at the top, select your emulator or connected device.
+
+<img src="/img/screenshots/installation/vscode_select_device.png" alt="Select Device" width="800" />
+
+**3. Click the Run button:**
+
+Press the green **Run** button (▶) or press `F5`.
+
+<img src="/img/screenshots/installation/vscode_click_run.png" alt="Click Run Button" width="600" />
+
+**4. Wait for the app to build and launch:**
+
+The first time may take 60-90 seconds. After that, it will be fast.
+
+<img src="/img/screenshots/installation/app_running.png" alt="App Running on Device" width="350" />
+
+### Using Terminal
 
 ```bash
-# Make sure a device/emulator is running first
+# List available devices
 flutter devices
 
-# Then run
+# Run the app
 flutter run
 ```
 
-The app will build and launch. First build may take 60–90 seconds. Subsequent runs use hot reload and are near-instant.
+---
+
+## What Happens When You Run the App
+
+After the app launches, you will see this flow:
+
+### Splash Screen
+The app shows a splash screen with the logo for about 2 seconds.
+
+<img src="/img/screenshots/splash.png" alt="Splash Screen" width="350" />
+
+### Onboarding (First Time Only)
+Two introduction screens that explain the app. Swipe left to continue.
+
+<img src="/img/screenshots/onboarding_1.png" alt="Onboarding Screen 1" width="350" />
+
+<img src="/img/screenshots/onboarding_2.png" alt="Onboarding Screen 2" width="350" />
+
+### Welcome Screen
+A welcome page with options to Login or Register.
+
+<img src="/img/screenshots/welcome.png" alt="Welcome Screen" width="350" />
+
+### Login / Register
+Create an account or sign in to continue.
+
+<img src="/img/screenshots/login.png" alt="Login Screen" width="350" />
+
+### Home Screen
+The main screen where users browse products, see offers, and use the AI assistant.
+
+<img src="/img/screenshots/home.png" alt="Home Screen" width="350" />
 
 ---
 
-## 🗺️ What You'll See
+:::tip Note
+On first run, the app shows the Onboarding screens. On next launches, it goes directly to the Home Screen.
 
-After launch, the app goes through this flow automatically:
-
-```
-Splash Screen (2s)
-    ↓
-Onboarding (2 slides — swipeable)
-    ↓
-Welcome Screen
-    ↓
-Login / Register
-    ↓
-Home Screen (main app)
-```
-
-:::tip First-Run Navigation
-On first run, the app shows Onboarding. On subsequent runs, you'll go directly to the Home Screen (state is persisted via `get_storage`).
-
-To reset to onboarding: clear app data on your device, or set `GetStorage().erase()` in `main.dart` during development.
+To see Onboarding again: clear the app data on your device, or run `GetStorage().erase()` in `main.dart`.
 :::
 
 ---
 
-## 🔄 Development Workflow
+## Common Tasks After First Run
 
-### Making UI Changes
-```bash
-# 1. Run the app
-flutter run
+Here are the most common things you will want to change:
 
-# 2. Edit any .dart file in lib/
-# 3. Press 'r' in terminal → Hot Reload applies instantly
-# 4. Press 'R' for Hot Restart if state reset is needed
-```
+| What to Change | Where to Change | Guide |
+|----------------|-----------------|-------|
+| App name | `android/app/src/main/AndroidManifest.xml` | See below |
+| App colors | `lib/constants/ui.dart` | [Colors Guide](../customization/colors-theme) |
+| Logo | `assets/icons/logo.png` | [Assets Guide](../customization/assets-images) |
+| Languages | `assets/translations/` | [Localization Guide](../customization/localization) |
 
-### Switching Between Mock Data and Real API
-All mock data lives in `lib/data/seeds/`. To connect real APIs:
-1. Replace seed loaders in `lib/data/loaders/` with `dio` HTTP calls
-2. Keep the same model structures in `lib/models/`
-3. The UI will automatically reflect real data — no view changes needed
+### Change App Name (Android)
 
-See [Mock Data → Real API](../customization/mock-data) for a detailed guide.
+Open `android/app/src/main/AndroidManifest.xml` and find:
 
----
-
-## 📝 Quick Customization Checklist
-
-After first run, here are the most common things you'll want to change:
-
-| Task | File | Guide |
-|------|------|-------|
-| Change app name | `android/app/src/main/AndroidManifest.xml` | Below |
-| Change bundle ID | `android/app/build.gradle` | Below |
-| Change colors | `lib/constants/ui.dart` | [Colors Guide](../customization/colors-theme) |
-| Replace logo | `assets/icons/logo.png` | [Assets Guide](../customization/assets-images) |
-| Add a language | `assets/translations/` | [Localization Guide](../customization/localization) |
-| Connect real API | `lib/data/loaders/` | [Mock Data Guide](../customization/mock-data) |
-
-### Change App Name
-
-**Android** — `android/app/src/main/AndroidManifest.xml`:
 ```xml
 <application
     android:label="Your App Name"
     ...>
 ```
 
-**iOS** — `ios/Runner/Info.plist`:
+Replace `Your App Name` with your app name.
+
+### Change App Name (iOS)
+
+Open `ios/Runner/Info.plist` and find:
+
 ```xml
 <key>CFBundleName</key>
 <string>Your App Name</string>
 ```
 
-### Change Bundle/Package ID
-
-**Android** — `android/app/build.gradle`:
-```groovy
-android {
-    defaultConfig {
-        applicationId "com.yourcompany.yourapp"
-        ...
-    }
-}
-```
-
-**iOS** — Open Xcode → Runner target → General → Bundle Identifier
+Replace `Your App Name` with your app name.
 
 ---
 
-## 🚀 Run the Documentation Site
+## Next Steps
 
-The Docusaurus documentation site (what you're reading now) can also be run locally:
-
-```bash
-# Navigate to the docs folder
-cd hana_go_docs/
-
-# Install Node.js dependencies
-npm install
-
-# Start the dev server
-npm start
-
-# Opens at http://localhost:3000
-```
-
----
-
-:::info Next Steps
-- 📂 Understand the codebase: [Project Structure](./project-structure)
-- 🎨 Brand it as your own: [Colors & Theme](../customization/colors-theme)
-- 🏗️ Understand the architecture: [Tech Stack](../architecture/tech-stack)
-:::
+- [Project Structure](./project-structure) — Understand how the code is organized
+- [Colors & Theme](../customization/colors-theme) — Customize the app look
+- [Tech Stack](../architecture/tech-stack) — Learn about the architecture

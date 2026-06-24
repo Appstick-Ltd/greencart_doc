@@ -4,6 +4,8 @@ title: Project Structure
 description: How the Hana Go project was built, folder by folder, with screenshots and marked files to customize.
 ---
 
+import ZoomableImage from '@site/src/components/ZoomableImage';
+
 # Project Structure
 
 This page explains **how I built this project** — folder by folder, layer by layer. Every section has a folder screenshot so you know exactly what you are looking at in your code editor. Files that **you need to change** are clearly marked.
@@ -16,117 +18,75 @@ This page explains **how I built this project** — folder by folder, layer by l
 
 When you first extract the downloaded `.zip` and open the project, this is what you see — all the folders and files in one place:
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/architecture_overview.png" alt="Project overview" style={{width: '100%', height: '500px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/architecture_overview.png" alt="Project overview" />
 
-*Above: Complete project overview — all folders and files at a glance*
+*Click image to zoom — Above: Complete project overview — all folders and files at a glance*
 
-| Folder / File | What It Is |
-|---------------|-----------|
-| `android/` | Android phone build settings |
-| `ios/` | iPhone build settings |
-| `assets/` | All images, icons, fonts, translations |
-| `lib/` | All the app code — this is the main folder |
-| `pubspec.yaml` | **CHANGE THIS** — the app's config file |
-| `test/` | Automated tests (you can ignore this) |
+| Folder / File | What It Is | Action |
+|---------------|-----------|--------|
+| `android/` | Android phone build settings | Change app name |
+| `ios/` | iPhone build settings | Change app name |
+| `assets/` | All images, icons, fonts, translations | Replace with your content |
+| `lib/` | All the app code — main folder | Customize as needed |
+| `pubspec.yaml` | App config file | **Change this first** |
+| `test/` | Automated tests | Ignore for now |
 
 ---
 
-## Step 2: The Config File — `pubspec.yaml`
+## Step 2: Config File — `pubspec.yaml`
 
-This is the **most important file to customize first**. It controls the app version, dependencies, and which image folders are included.
-
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/pubspec_yaml_file.png" alt="pubspec.yaml overview" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
-
-*Above: The pubspec.yaml file — app name and description at the top*
-
-### Dependencies Section
-
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml dependencies" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
-
-*Above: All the packages (dependencies) the app uses*
-
-### Assets Section
-
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
-
-*Above: List of all image folders included in the app*
-
-### Fonts and App Icon Section
-
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/pubspec_yaml_file3.png" alt="pubspec.yaml fonts and icons" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
-
-*Above: Font configuration and app icon settings*
-
-:::warning CHANGE THIS FILE
 This is the **first file you should open**. It controls the app version, dependencies, and which image folders are included.
-:::
 
-### What to Change
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file.png" alt="pubspec.yaml overview" />
 
-**Line 1 — App Name:**
+*Click image to zoom — Above: The pubspec.yaml file — app name and description at the top*
+
+| Section | Line | What to Change |
+|---------|------|----------------|
+| App Name | Line 1 | Change `hana_go` to your app name |
+| Version | Line 19 | Change `1.0.0+1` to your version |
+| Description | Line 3 | Change app description |
+
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml dependencies" />
+
+*Click image to zoom — Above: All the packages (dependencies) the app uses*
+
+| Section | What It Contains |
+|---------|-----------------|
+| `dependencies:` | Core packages the app needs |
+| `dev_dependencies:` | Development packages |
+
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" />
+
+*Click image to zoom — Above: List of all image folders included in the app*
+
+| Section | What to Change |
+|---------|----------------|
+| `flutter: assets:` | Add new image folders here |
+
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file3.png" alt="pubspec.yaml fonts and icons" />
+
+*Click image to zoom — Above: Font configuration and app icon settings*
+
+| Section | What to Change |
+|---------|----------------|
+| `fonts:` | Replace font files in `assets/font/` |
+| `flutter_launcher_icons:` | Replace `assets/icons/logo.png` with your logo |
+
+:::warning Quick Changes
 ```yaml
-name: hana_go
-```
-Change `hana_go` to your app's name (lowercase, no spaces). This is the internal package name.
+# Line 1: Change app name
+name: your_app_name
 
-**Line 19 — Version:**
-```yaml
+# Line 19: Change version
 version: 1.0.0+1
-```
-- `1.0.0` — the version shown to users (e.g. `1.2.0`)
-- `+1` — the build number (increment this with each release, e.g. `+2`, `+3`)
 
-**Lines 103–123 — Asset Folders:**
-```yaml
+# Line 103+: Add new asset folders
 flutter:
   assets:
-    - assets/
-    - assets/images/
-    - assets/icons/
-    - assets/icons/setting/
-    - assets/icons/home_screen image/
-    - assets/icons/navi_icon/
-    - assets/icons/catagory/dairy/
-    ... (more folders)
-    - assets/data/
-    - assets/translations/
+    - assets/your_new_folder/
 ```
-When you add a new image folder, add its path here. Then run `flutter pub get`.
-
-**Lines 151–166 — Font:**
-```yaml
-fonts:
-  - family: Manrope
-    fonts:
-      - asset: assets/font/Manrope/static/Manrope-Regular.ttf
-      - asset: assets/font/Manrope/static/Manrope-Bold.ttf
-        weight: 700
-```
-The app uses the **Manrope** font. You can replace it by swapping the `.ttf` files in `assets/font/Manrope/static/` and updating this section.
-
-**Lines 70–89 — App Icon:**
-```yaml
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icons/logo.png"
-  adaptive_icon_background: "#0D3D31"
-  adaptive_icon_foreground: "assets/icons/logo.png"
-```
-To change the app icon, replace `assets/icons/logo.png` with your own image, then run:
-```bash
-dart run flutter_launcher_icons
-```
+:::
 
 ---
 
@@ -134,127 +94,102 @@ dart run flutter_launcher_icons
 
 This folder holds everything that is **not code** — pictures, icons, fonts, and language files.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/assets_resources.png" alt="Assets folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/assets_resources.png" alt="Assets folder" />
 
-*Above: The complete assets folder with all subfolders*
+*Click image to zoom — Above: The complete assets folder with all subfolders*
 
-### Folder Breakdown
-
-```
-assets/
-├── data/
-│   └── products.json           ← All product data (name, price, image, category)
-├── font/
-│   └── Manrope/static/         ← App font files
-├── icons/
-│   ├── logo.png                ← App icon (used on splash, login, phone home screen)
-│   ├── catagory/               ← Product category icons
-│   │   ├── dairy/
-│   │   ├── fruits/
-│   │   ├── vegetables/
-│   │   ├── pantry/
-│   │   ├── beverage/
-│   │   ├── frozen/
-│   │   ├── household/
-│   │   ├── snacks/
-│   │   └── snack&package/
-│   ├── home_screen image/      ← Home screen banners and images
-│   ├── navi_icon/              ← Bottom navigation bar icons
-│   ├── setting/                ← Settings screen icons
-│   ├── daily purchase/         ← Daily purchase feature icons
-│   └── ai recom/               ← AI recommendation icons
-├── images/
-│   ├── Logo.png                ← Logo used on screens
-│   ├── login_page.logo.png     ← Logo on login screen
-│   ├── onboarding1.png         ← Onboarding slide 1
-│   └── onboarding2.png         ← Onboarding slide 2
-├── translations/               ← Language files (9 languages)
-│   ├── en_US.json              ← English (default)
-│   ├── fr.json                 ← French
-│   ├── es.json                 ← Spanish
-│   ├── de.json                 ← German
-│   └── ... (4 more)
-└── profile_image.png           ← Default profile picture
-```
+| Subfolder | What It Contains | Action |
+|-----------|-----------------|--------|
+| `data/` | Product data JSON file | Replace with your products |
+| `font/` | App font files (Manrope) | Replace with your fonts |
+| `icons/` | Category icons, nav icons, logos | Replace with your icons |
+| `images/` | Onboarding images, logos | Replace with your images |
+| `translations/` | Language files (9 languages) | Edit text for your app |
 
 ### Icons Folder
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/icons_folder.png" alt="Icons folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/icons_folder.png" alt="Icons folder" />
 
-*Above: All icon subfolders — category icons, navigation icons, settings icons*
+*Click image to zoom — Above: All icon subfolders — category icons, navigation icons, settings icons*
+
+| Subfolder | What It Contains | Action |
+|-----------|-----------------|--------|
+| `logo.png` | App icon (splash, login, home screen) | **Replace with your logo** |
+| `catagory/` | Product category icons (9 categories) | Replace with your icons |
+| `home_screen image/` | Home screen banners | Replace with your banners |
+| `navi_icon/` | Bottom navigation bar icons | Replace with your icons |
+| `setting/` | Settings screen icons | Replace with your icons |
 
 ### Translations Folder
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/translations_folder.png" alt="Translations folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/translations_folder.png" alt="Translations folder" />
 
-*Above: Language files for 9 different languages*
+*Click image to zoom — Above: Language files for 9 different languages*
 
-:::warning CHANGE THESE FILES
-- **`assets/icons/logo.png`** — Replace with your logo (app icon + splash screen)
-- **`assets/images/Logo.png`** — Replace with your logo (in-app screens)
-- **`assets/images/onboarding1.png`** — Replace with your onboarding image
-- **`assets/images/onboarding2.png`** — Replace with your onboarding image
-- **`assets/data/products.json`** — Replace with your product data
-- **`assets/translations/`** — Edit to change all text in the app
+| File | Language | Action |
+|------|----------|--------|
+| `en_US.json` | English (default) | Edit all English text |
+| `fr.json` | French | Translate or delete |
+| `es.json` | Spanish | Translate or delete |
+| `de.json` | German | Translate or delete |
+| Other files | More languages | Translate or delete |
+
+:::warning Files to Change
+| File | What to Replace |
+|------|-----------------|
+| `assets/icons/logo.png` | Your app logo (used on splash, login, phone home screen) |
+| `assets/images/Logo.png` | Your logo (used on in-app screens) |
+| `assets/images/onboarding1.png` | Your onboarding image 1 |
+| `assets/images/onboarding2.png` | Your onboarding image 2 |
+| `assets/data/products.json` | Your product data |
+| `assets/translations/en_US.json` | All English text in the app |
 :::
 
 ---
 
-## Step 4: The App Code — `lib/`
+## Step 4: App Code — `lib/`
 
 This is the main working folder. Every screen, every button, every feature lives here.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/lib_source.png" alt="lib folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/lib_source.png" alt="lib folder" />
 
-*Above: The lib folder — where all the app code lives*
+*Click image to zoom — Above: The lib folder — where all the app code lives*
 
-### How I Built It — Layer by Layer
-
-```
-Layer 1: main.dart          →  App starts here
-Layer 2: theme/             →  Colors, fonts, visual style
-Layer 3: constants/         →  All design values in one place
-Layer 4: models/            →  Data shapes (what a Product, User, etc. look like)
-Layer 5: assets/data/       →  Product data loaded from JSON
-Layer 6: data/              →  How data is loaded and stored
-Layer 7: services/          →  Background workers (cart, profile, storage)
-Layer 8: components/        →  Reusable UI pieces (buttons, cards, inputs)
-Layer 9: pages/             →  Every screen the user sees
-Layer 10: routes/           →  Maps screen names to screens
-Layer 11: navigator/        →  Bottom navigation bar
-```
+| Folder | What It Contains | Action |
+|--------|-----------------|--------|
+| `main.dart` | App entry point | Change initial route if needed |
+| `constants/` | Colors, fonts, spacing, config | **Change brand colors here** |
+| `models/` | Data structure definitions | Leave as is |
+| `data/` | Data loaders and repositories | Leave as is |
+| `services/` | Background workers (cart, profile) | Leave as is |
+| `components/` | Reusable UI elements | Customize button/card styles |
+| `pages/` | All screens the user sees | Customize screen layouts |
+| `routes/` | Screen navigation map | Add new screens here |
+| `navigator/` | Bottom navigation bar | Change tab icons/order |
+| `theme/` | App visual style | Leave as is |
 
 ---
 
 ## Step 5: `main.dart` — The Starting Point
 
-This is the very first file Flutter runs. Here is what happens in order:
+This is the very first file Flutter runs.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/main_dart_file.png" alt="main.dart" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/main_dart_file.png" alt="main.dart" />
 
-*Above: The main.dart file — app initialization and entry point*
+*Click image to zoom — Above: The main.dart file — app initialization and entry point*
 
-1. **Initialize storage** — loads saved settings (language, theme)
-2. **Load translations** — loads all 9 language files
-3. **Start the app** — opens the Splash screen
-
-The app uses **GetX** as its state management and navigation framework. The key line:
+| What It Does | Line | Action |
+|--------------|------|--------|
+| Initialize storage | Line 10 | Leave as is |
+| Load translations | Line 15 | Leave as is |
+| Start at Splash screen | Line 25 | Change if you want different start screen |
 
 ```dart
+// This line controls which screen appears first
 initialRoute: Routes.splashPage,
 ```
 
-This tells the app to start at the Splash screen. The Splash screen then automatically navigates to Onboarding (first run) or Home (returning users).
+> The Splash screen automatically navigates to Onboarding (first run) or Home (returning users).
 
 ---
 
@@ -262,50 +197,46 @@ This tells the app to start at the Splash screen. The Splash screen then automat
 
 This folder is the **single source of truth** for the app's visual design. Change a value here and it updates everywhere.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/constants_folder.png" alt="Constants folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/constants_folder.png" alt="Constants folder" />
 
-*Above: The constants folder — colors, text sizes, spacing, images, config*
+*Click image to zoom — Above: The constants folder — colors, text sizes, spacing, images, config*
 
-### Files
+| File | What It Controls | Action |
+|------|-----------------|--------|
+| `ui.dart` | All colors (primary green, backgrounds, borders) | **Change brand colors** |
+| `text.dart` | All font sizes and text weights | Adjust if needed |
+| `gaps.dart` | All spacing values (padding, margins) | Adjust if needed |
+| `images.dart` | Central list of every image path | Update if you rename images |
+| `app_config.dart` | App name, AI settings, pricing rules | **Change app name and config** |
+| `mock_data.dart` | Sample data for testing | Leave as is |
 
-| File | What It Controls |
-|------|-----------------|
-| `ui.dart` | All colors (primary green, yellow accent, backgrounds, borders) |
-| `text.dart` | All font sizes and text weights |
-| `gaps.dart` | All spacing values (padding, margins) |
-| `images.dart` | Central list of every image path in the app |
-| `app_config.dart` | App name, AI settings, pricing rules |
-| `mock_data.dart` | Sample data for testing |
+### Colors in `ui.dart`
 
-:::warning CHANGE THESE FILES
-- **`ui.dart`** — Change `primaryColor` (`#004B30`) to your brand color
-- **`app_config.dart`** — Change `appName`, `supportEmail`, `aiName`, pricing thresholds
-- **`images.dart`** — Update paths if you rename image files
-:::
+| Variable | Hex | Used For | Change To |
+|----------|-----|----------|-----------|
+| `primaryColor` | `#004B30` | Main brand green — buttons, headers | Your brand color |
+| `mintGreen` | `#D2F6D2` | Light green backgrounds | Your light background |
+| `yellowColor` | `#EAB308` | Accent yellow — icons, highlights | Your accent color |
+| `bgColor` | `#FAFAFA` | Screen backgrounds | Your background color |
 
-### Key Colors in `ui.dart`
+### Config in `app_config.dart`
 
-| Variable | Hex | Used For |
-|----------|-----|----------|
-| `primaryColor` | `#004B30` | Main brand green — buttons, headers |
-| `mintGreen` | `#D2F6D2` | Light green backgrounds |
-| `yellowColor` | `#EAB308` | Accent yellow — icons, highlights |
-| `bgColor` | `#FAFAFA` | Screen backgrounds |
-| `successColor` | `#22C55E` | Success messages |
-| `errorColor` | `#EA3A2D` | Error messages |
-
-### Config Values in `app_config.dart`
-
-| Variable | Current Value | What to Change |
-|----------|--------------|----------------|
+| Variable | Current Value | Change To |
+|----------|--------------|-----------|
 | `appName` | `'HanaGo'` | Your app name |
 | `appTagline` | `'Smart Grocery Shopping'` | Your tagline |
 | `supportEmail` | `'support@hanago.com'` | Your support email |
 | `aiName` | `'Hana AI'` | Your AI assistant name |
-| `freeShippingThreshold` | `50.0` | Free shipping minimum |
-| `shippingCharge` | `2.0` | Shipping cost |
+
+:::warning Quick Changes
+```dart
+// lib/constants/ui.dart — Change your brand color
+Color primaryColor = Color(0xFF004B30);  // Change to your color
+
+// lib/constants/app_config.dart — Change app name
+String appName = 'HanaGo';  // Change to your app name
+```
+:::
 
 ---
 
@@ -313,20 +244,18 @@ This folder is the **single source of truth** for the app's visual design. Chang
 
 Models define **what a piece of data looks like**. They are blueprints, not the data itself.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/models_folder.png" alt="Models folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/models_folder.png" alt="Models folder" />
 
-*Above: The models folder — data structure definitions*
+*Click image to zoom — Above: The models folder — data structure definitions*
 
-| Model | What It Describes |
-|-------|------------------|
-| `product_model.dart` | A product — name, price, image, category, description, stock status |
-| `cart_item_model.dart` | An item in the cart — product + quantity |
-| `user_model.dart` | A user — name, email, phone, avatar |
-| `coupon_model.dart` | A coupon — code, discount, expiry |
-| `notification_model.dart` | A notification — title, message, time |
-| `hana_ai_message.dart` | A chat message — user input + bot response |
+| Model | What It Describes | Action |
+|-------|------------------|--------|
+| `product_model.dart` | Product — name, price, image, category | Add fields if needed |
+| `cart_item_model.dart` | Cart item — product + quantity | Leave as is |
+| `user_model.dart` | User — name, email, phone, avatar | Add fields if needed |
+| `coupon_model.dart` | Coupon — code, discount, expiry | Leave as is |
+| `notification_model.dart` | Notification — title, message, time | Leave as is |
+| `hana_ai_message.dart` | Chat message — user input + bot response | Leave as is |
 
 > **You rarely need to edit these** unless you want to add new data fields (like "rating" or "brand" to products).
 
@@ -334,17 +263,15 @@ Models define **what a piece of data looks like**. They are blueprints, not the 
 
 ## Step 8: `data/` — Loading Product Data
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/data_folder.png" alt="Data folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/data_folder.png" alt="Data folder" />
 
-*Above: The data folder — loaders, repositories, and seed data*
+*Click image to zoom — Above: The data folder — loaders, repositories, and seed data*
 
-### How Product Data Works
-
-The app loads products from a JSON file: `assets/data/products.json`
-
-The loading happens in `lib/data/loaders/product_data_loader.dart`. It reads the JSON, converts each entry into a `ProductModel`, and caches everything in memory.
+| Subfolder | What It Contains | Action |
+|-----------|-----------------|--------|
+| `loaders/` | Reads and parses JSON data | Leave as is |
+| `repositories/` | Provides data to screens | Leave as is |
+| `seeds/` | Default data that ships with the app | Customize if needed |
 
 ### Data Flow
 
@@ -352,13 +279,10 @@ The loading happens in `lib/data/loaders/product_data_loader.dart`. It reads the
 assets/data/products.json
         │
         ▼
-lib/data/loaders/product_data_loader.dart   ← Reads and parses JSON
+lib/data/loaders/product_data_loader.dart
         │
         ▼
-lib/data/repositories/product_repository_impl.dart   ← Provides data to screens
-        │
-        ▼
-lib/domain/repositories/product_repository.dart   ← Defines what operations exist
+lib/data/repositories/product_repository_impl.dart
         │
         ▼
 Screens use the data
@@ -366,18 +290,18 @@ Screens use the data
 
 ### Seed Data (Default Data)
 
-The `lib/data/seeds/` folder contains default data that ships with the app:
+| File | What It Provides | Action |
+|------|-----------------|--------|
+| `default_addresses.dart` | Pre-filled delivery addresses | Replace with your addresses |
+| `default_coupons.dart` | Available coupon codes | Replace with your coupons |
+| `default_notifications.dart` | Welcome notifications | Replace with your notifications |
+| `default_orders.dart` | Sample order data | Replace with your orders |
+| `default_payment_cards.dart` | Saved payment methods | Replace with your payment methods |
 
-| File | What It Provides |
+:::warning File to Change
+| File | What to Replace |
 |------|-----------------|
-| `default_addresses.dart` | Pre-filled delivery addresses |
-| `default_coupons.dart` | Available coupon codes |
-| `default_notifications.dart` | Welcome notifications |
-| `default_orders.dart` | Sample order data |
-| `default_payment_cards.dart` | Saved payment methods |
-
-:::warning CHANGE THIS FILE
-- **`assets/data/products.json`** — Replace with your own product data. Keep the same JSON structure (id, name, price, assetPath, categoryLabel, etc.)
+| `assets/data/products.json` | Your product data (keep same JSON structure) |
 :::
 
 ---
@@ -386,19 +310,17 @@ The `lib/data/seeds/` folder contains default data that ships with the app:
 
 Services handle things that happen **behind the scenes**.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/services_folder.png" alt="Services folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/services_folder.png" alt="Services folder" />
 
-*Above: The services folder — cart, profile, notifications, storage*
+*Click image to zoom — Above: The services folder — cart, profile, notifications, storage*
 
-| Service | What It Does |
-|---------|-------------|
-| `cart_service.dart` | Adds/removes items from cart, calculates totals |
-| `profile_service.dart` | Saves and loads user profile info |
-| `notification_service.dart` | Handles push notifications (Firebase) |
-| `local_storage_service.dart` | Remembers settings on the phone (language, login state) |
-| `navigation_service.dart` | Shortcuts for moving between screens |
+| Service | What It Does | Action |
+|---------|-------------|--------|
+| `cart_service.dart` | Adds/removes items from cart, calculates totals | Leave as is |
+| `profile_service.dart` | Saves and loads user profile info | Leave as is |
+| `notification_service.dart` | Handles push notifications (Firebase) | Configure Firebase if needed |
+| `local_storage_service.dart` | Remembers settings (language, login state) | Leave as is |
+| `navigation_service.dart` | Shortcuts for moving between screens | Leave as is |
 
 > **You rarely need to edit these** unless you are adding a new background feature.
 
@@ -408,32 +330,25 @@ Services handle things that happen **behind the scenes**.
 
 These are pre-built pieces used across many screens. Instead of building the same button 20 times, it is built once here and reused everywhere.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/components_folder.png" alt="Components folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/components_folder.png" alt="Components folder" />
 
-*Above: The components folder — reusable UI elements*
+*Click image to zoom — Above: The components folder — reusable UI elements*
 
-### Key Components
+| Component | What It Is | Used On | Action |
+|-----------|-----------|---------|--------|
+| `hana_button.dart` | Main green action button | Every screen | **Change button style** |
+| `product_card.dart` | Product card with image, price | Home, Category, Search | **Change card design** |
+| `hana_search_bar.dart` | Search input field | Home, All Products | Adjust if needed |
+| `empty_state.dart` | "Nothing here yet" illustration | Empty cart, wishlist | Replace image if needed |
+| `form_input.dart` | Text input fields | Login, Register, Checkout | Adjust if needed |
+| `quantity_stepper.dart` | +/- quantity controls | Cart, Product Details | Adjust if needed |
+| `stock_badge.dart` | "In Stock" / "Out of Stock" badge | Product Cards | Adjust colors if needed |
 
-| Component | What It Is | Used On |
-|-----------|-----------|---------|
-| `hana_button.dart` | Main green action button | Every screen with a submit/continue button |
-| `product_card.dart` | Product card with image, price, add-to-cart | Home, Category, Search, Wishlist |
-| `hana_search_bar.dart` | Search input field | Home, All Products |
-| `empty_state.dart` | "Nothing here yet" illustration | Empty cart, empty wishlist |
-| `form_input.dart` | Text input fields | Login, Register, Checkout |
-| `quantity_stepper.dart` | +/- quantity controls | Cart, Product Details |
-| `stock_badge.dart` | "In Stock" / "Out of Stock" badge | Product Cards |
-| `green_header_scaffold.dart` | Green header layout | Many screens |
-| `loader.dart` | Loading spinner | While data is loading |
-| `alert.dart` | Confirmation popups | Delete actions, errors |
-| `user_avatar.dart` | Circular profile picture | Profile, Account |
-| `filter_modal.dart` | Filter bottom sheet | All Products |
-
-:::warning CHANGE THIS FILE IF NEEDED
-- **`hana_button.dart`** — Change button style (border radius, padding, colors) to match your brand
-- **`product_card.dart`** — Change how product cards look
+:::warning Files to Change (Optional)
+| File | What to Change |
+|------|----------------|
+| `hana_button.dart` | Button style (border radius, padding, colors) |
+| `product_card.dart` | Product card design |
 :::
 
 ---
@@ -442,34 +357,25 @@ These are pre-built pieces used across many screens. Instead of building the sam
 
 This is the **largest folder**. Every screen the user sees is here.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/pages_folder.png" alt="Pages folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/pages_folder.png" alt="Pages folder" />
 
-*Above: The pages folder — all screens organized by feature*
+*Click image to zoom — Above: The pages folder — all screens organized by feature*
 
-### Complete Screen Map
-
-| Folder | What It Contains |
-|--------|-----------------|
-| `splash/` | Loading screen — logo + loading animation |
-| `onboarding/` | Welcome slides for new users (2 slides) |
-| `auth/welcome/` | Welcome screen with Login and Register buttons |
-| `auth/login/` | Login screen (email + password) |
-| `auth/register/` | Registration screen (name, email, phone, password) |
-| `auth/forgot_password/` | Forgot password screen (enter email) |
-| `auth/otp_verification/` | OTP verification (6-digit code) |
-| `auth/new_password/` | Set new password screen |
-| `home/` | Main home screen — banners, categories, daily purchases, AI recommendations, offers |
-| `category/` | Browse products by category (dairy, fruits, vegetables, etc.) |
-| `product/` | Product list and product detail page |
-| `all_products/` | Search and browse all products with filters |
-| `cart/` | Shopping cart with quantity controls and totals |
-| `wishlist/` | Saved and liked products |
-| `checkout/` | Address selection, delivery date/time, payment, order confirmation |
-| `orders/` | Order history list and live order tracking |
-| `hana_ai/` | AI chat assistant — type or use voice to get product recommendations |
-| `settings/` | Account, language, notifications, FAQ, privacy, address, payment, coupons |
+| Folder | What It Contains | Action |
+|--------|-----------------|--------|
+| `splash/` | Loading screen — logo + animation | Replace logo |
+| `onboarding/` | Welcome slides (2 slides) | Replace images |
+| `auth/` | Login, Register, Forgot Password screens | Customize text/colors |
+| `home/` | Main home screen — banners, categories | Replace banners |
+| `category/` | Browse products by category | Leave as is |
+| `product/` | Product list and detail page | Leave as is |
+| `all_products/` | Search and browse all products | Leave as is |
+| `cart/` | Shopping cart with quantity controls | Leave as is |
+| `wishlist/` | Saved and liked products | Leave as is |
+| `checkout/` | Address, delivery, payment, confirmation | Customize if needed |
+| `orders/` | Order history and live tracking | Leave as is |
+| `hana_ai/` | AI chat assistant | Configure AI if needed |
+| `settings/` | Account, language, notifications, FAQ | Customize if needed |
 
 ### How to Add a New Screen
 
@@ -496,16 +402,14 @@ Get.toNamed(Routes.myScreenView);
 
 Two files that connect screen names to actual screens:
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/routes_folder.png" alt="Routes folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/routes_folder.png" alt="Routes folder" />
 
-*Above: The routes folder — route names and page connections*
+*Click image to zoom — Above: The routes folder — route names and page connections*
 
-| File | What It Does |
-|------|-------------|
-| `routes.dart` | Lists all screen names (e.g. `'/home'`, `'/cart'`) |
-| `pages.dart` | Connects each name to the actual screen widget |
+| File | What It Does | Action |
+|------|-------------|--------|
+| `routes.dart` | Lists all screen names (e.g. `'/home'`, `'/cart'`) | Add new route names here |
+| `pages.dart` | Connects each name to the actual screen widget | Connect new routes here |
 
 ---
 
@@ -513,22 +417,22 @@ Two files that connect screen names to actual screens:
 
 The 5-tab bar at the bottom of the screen:
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/navigator_folder.png" alt="Navigator folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/navigator_folder.png" alt="Navigator folder" />
 
-*Above: The navigator folder — bottom navigation bar configuration*
+*Click image to zoom — Above: The navigator folder — bottom navigation bar configuration*
 
-| Tab | What It Opens |
-|-----|--------------|
-| Home | Home screen |
-| Category | Browse by category |
-| AI | AI chat assistant |
-| Cart | Shopping cart |
-| Profile | Account and settings |
+| Tab | What It Opens | Action |
+|-----|--------------|--------|
+| Home | Home screen | Change icon if needed |
+| Category | Browse by category | Change icon if needed |
+| AI | AI chat assistant | Change icon if needed |
+| Cart | Shopping cart | Change icon if needed |
+| Profile | Account and settings | Change icon if needed |
 
-:::warning CHANGE THIS FILE
-- **`lib/navigator/bottom_nav_bar.dart`** — Change tab icons, labels, or reorder tabs
+:::warning File to Change
+| File | What to Change |
+|------|----------------|
+| `lib/navigator/bottom_nav_bar.dart` | Tab icons, labels, or reorder tabs |
 :::
 
 ---
@@ -537,13 +441,15 @@ The 5-tab bar at the bottom of the screen:
 
 One file — `app.dart` — controls the overall look: button shapes, card styles, input field styles, and font.
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/theme_folder.png" alt="Theme folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/theme_folder.png" alt="Theme folder" />
 
-*Above: The theme folder — app-wide visual styling*
+*Click image to zoom — Above: The theme folder — app-wide visual styling*
 
-It reads colors from `constants/ui.dart`, so to change the theme, edit `ui.dart` first.
+| File | What It Controls | Action |
+|------|-----------------|--------|
+| `app.dart` | Button shapes, card styles, input fields, font | Leave as is (reads from `constants/ui.dart`) |
+
+> To change the theme, edit `constants/ui.dart` first. This file just reads those values.
 
 ---
 
@@ -551,35 +457,29 @@ It reads colors from `constants/ui.dart`, so to change the theme, edit `ui.dart`
 
 ### Android
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/android_folder1.png" alt="Android folder overview" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/android_folder1.png" alt="Android folder overview" />
 
-*Above: Android folder — build settings and configuration*
+*Click image to zoom — Above: Android folder — build settings and configuration*
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/anroid_folder.png" alt="Android folder details" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/anroid_folder.png" alt="Android folder details" />
 
-*Above: Android app folder — manifest and build files*
+*Click image to zoom — Above: Android app folder — manifest and build files*
 
-:::warning CHANGE THESE FILES
-- **`android/app/src/main/AndroidManifest.xml`** (line 8) — Change `android:label="hana_go"` to your app name
-- **`android/app/build.gradle.kts`** (line 19) — Change `applicationId = "com.appstick.hanago.hana_go"` to your package ID
-:::
+| File | Line | What to Change |
+|------|------|----------------|
+| `android/app/src/main/AndroidManifest.xml` | Line 8 | Change `android:label="hana_go"` to your app name |
+| `android/app/build.gradle.kts` | Line 19 | Change `applicationId` to your package ID |
 
 ### iOS
 
-<div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/ios_folder.png" alt="iOS folder" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
-</div>
+<ZoomableImage src="/img/project-structure/ios_folder.png" alt="iOS folder" />
 
-*Above: iOS folder — Xcode project settings*
+*Click image to zoom — Above: iOS folder — Xcode project settings*
 
-:::warning CHANGE THESE FILES
-- **`ios/Runner/Info.plist`** (line 10) — Change `CFBundleDisplayName` to your app name
-- **`ios/Runner/Info.plist`** (line 18) — Change `CFBundleName` to your app name
-:::
+| File | Line | What to Change |
+|------|------|----------------|
+| `ios/Runner/Info.plist` | Line 10 | Change `CFBundleDisplayName` to your app name |
+| `ios/Runner/Info.plist` | Line 18 | Change `CFBundleName` to your app name |
 
 ---
 
