@@ -12,13 +12,15 @@ This page explains **how I built this project** — folder by folder, layer by l
 
 ---
 
-## Step 1: The Project Root
+## Step 1: Project Overview
 
-When you first extract the downloaded `.zip` and open the project, this is what you see:
+When you first extract the downloaded `.zip` and open the project, this is what you see — all the folders and files in one place:
 
 <div style={{textAlign: 'center'}}>
-<img src="/img/project-structure/architecture_overview.png" alt="Project root folder" style={{width: '100%', height: '500px', objectFit: 'contain'}} />
+<img src="/img/project-structure/architecture_overview.png" alt="Project overview" style={{width: '100%', height: '500px', objectFit: 'contain'}} />
 </div>
+
+*Above: Complete project overview — all folders and files at a glance*
 
 | Folder / File | What It Is |
 |---------------|-----------|
@@ -33,21 +35,37 @@ When you first extract the downloaded `.zip` and open the project, this is what 
 
 ## Step 2: The Config File — `pubspec.yaml`
 
+This is the **most important file to customize first**. It controls the app version, dependencies, and which image folders are included.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/pubspec_yaml_file.png" alt="pubspec.yaml overview" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
+
+*Above: The pubspec.yaml file — app name and description at the top*
+
+### Dependencies Section
 
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml dependencies" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
+*Above: All the packages (dependencies) the app uses*
+
+### Assets Section
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
+*Above: List of all image folders included in the app*
+
+### Fonts and App Icon Section
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/pubspec_yaml_file3.png" alt="pubspec.yaml fonts and icons" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
+
+*Above: Font configuration and app icon settings*
 
 :::warning CHANGE THIS FILE
 This is the **first file you should open**. It controls the app version, dependencies, and which image folders are included.
@@ -114,11 +132,13 @@ dart run flutter_launcher_icons
 
 ## Step 3: Assets — Images, Icons, Fonts, Translations
 
+This folder holds everything that is **not code** — pictures, icons, fonts, and language files.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/assets_resources.png" alt="Assets folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-This folder holds everything that is **not code** — pictures, icons, fonts, and language files.
+*Above: The complete assets folder with all subfolders*
 
 ### Folder Breakdown
 
@@ -159,13 +179,21 @@ assets/
 └── profile_image.png           ← Default profile picture
 ```
 
+### Icons Folder
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/icons_folder.png" alt="Icons folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
+*Above: All icon subfolders — category icons, navigation icons, settings icons*
+
+### Translations Folder
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/translations_folder.png" alt="Translations folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
+
+*Above: Language files for 9 different languages*
 
 :::warning CHANGE THESE FILES
 - **`assets/icons/logo.png`** — Replace with your logo (app icon + splash screen)
@@ -180,11 +208,13 @@ assets/
 
 ## Step 4: The App Code — `lib/`
 
+This is the main working folder. Every screen, every button, every feature lives here.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/lib_source.png" alt="lib folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-This is the main working folder. Every screen, every button, every feature lives here.
+*Above: The lib folder — where all the app code lives*
 
 ### How I Built It — Layer by Layer
 
@@ -206,11 +236,13 @@ Layer 11: navigator/        →  Bottom navigation bar
 
 ## Step 5: `main.dart` — The Starting Point
 
+This is the very first file Flutter runs. Here is what happens in order:
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/main_dart_file.png" alt="main.dart" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
 </div>
 
-This is the very first file Flutter runs. Here is what happens in order:
+*Above: The main.dart file — app initialization and entry point*
 
 1. **Initialize storage** — loads saved settings (language, theme)
 2. **Load translations** — loads all 9 language files
@@ -228,11 +260,13 @@ This tells the app to start at the Splash screen. The Splash screen then automat
 
 ## Step 6: `constants/` — All Design Values
 
+This folder is the **single source of truth** for the app's visual design. Change a value here and it updates everywhere.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/constants_folder.png" alt="Constants folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-This folder is the **single source of truth** for the app's visual design. Change a value here and it updates everywhere.
+*Above: The constants folder — colors, text sizes, spacing, images, config*
 
 ### Files
 
@@ -277,11 +311,13 @@ This folder is the **single source of truth** for the app's visual design. Chang
 
 ## Step 7: `models/` — Data Blueprints
 
+Models define **what a piece of data looks like**. They are blueprints, not the data itself.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/models_folder.png" alt="Models folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-Models define **what a piece of data looks like**. They are blueprints, not the data itself.
+*Above: The models folder — data structure definitions*
 
 | Model | What It Describes |
 |-------|------------------|
@@ -301,6 +337,8 @@ Models define **what a piece of data looks like**. They are blueprints, not the 
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/data_folder.png" alt="Data folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
+
+*Above: The data folder — loaders, repositories, and seed data*
 
 ### How Product Data Works
 
@@ -346,11 +384,13 @@ The `lib/data/seeds/` folder contains default data that ships with the app:
 
 ## Step 9: `services/` — Background Workers
 
+Services handle things that happen **behind the scenes**.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/services_folder.png" alt="Services folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-Services handle things that happen **behind the scenes**.
+*Above: The services folder — cart, profile, notifications, storage*
 
 | Service | What It Does |
 |---------|-------------|
@@ -366,11 +406,13 @@ Services handle things that happen **behind the scenes**.
 
 ## Step 10: `components/` — Reusable Building Blocks
 
+These are pre-built pieces used across many screens. Instead of building the same button 20 times, it is built once here and reused everywhere.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/components_folder.png" alt="Components folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-These are pre-built pieces used across many screens. Instead of building the same button 20 times, it is built once here and reused everywhere.
+*Above: The components folder — reusable UI elements*
 
 ### Key Components
 
@@ -398,11 +440,13 @@ These are pre-built pieces used across many screens. Instead of building the sam
 
 ## Step 11: `pages/` — Every Screen in the App
 
+This is the **largest folder**. Every screen the user sees is here.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/pages_folder.png" alt="Pages folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-This is the **largest folder**. Every screen the user sees is here.
+*Above: The pages folder — all screens organized by feature*
 
 ### Complete Screen Map
 
@@ -450,11 +494,13 @@ Get.toNamed(Routes.myScreenView);
 
 ## Step 12: `routes/` — Screen Navigation Map
 
+Two files that connect screen names to actual screens:
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/routes_folder.png" alt="Routes folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-Two files that connect screen names to actual screens:
+*Above: The routes folder — route names and page connections*
 
 | File | What It Does |
 |------|-------------|
@@ -465,11 +511,13 @@ Two files that connect screen names to actual screens:
 
 ## Step 13: `navigator/` — Bottom Navigation Bar
 
+The 5-tab bar at the bottom of the screen:
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/navigator_folder.png" alt="Navigator folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-The 5-tab bar at the bottom of the screen:
+*Above: The navigator folder — bottom navigation bar configuration*
 
 | Tab | What It Opens |
 |-----|--------------|
@@ -487,11 +535,13 @@ The 5-tab bar at the bottom of the screen:
 
 ## Step 14: `theme/` — App Visual Style
 
+One file — `app.dart` — controls the overall look: button shapes, card styles, input field styles, and font.
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/theme_folder.png" alt="Theme folder" style={{width: '100%', height: '400px', objectFit: 'contain'}} />
 </div>
 
-One file — `app.dart` — controls the overall look: button shapes, card styles, input field styles, and font.
+*Above: The theme folder — app-wide visual styling*
 
 It reads colors from `constants/ui.dart`, so to change the theme, edit `ui.dart` first.
 
@@ -505,9 +555,13 @@ It reads colors from `constants/ui.dart`, so to change the theme, edit `ui.dart`
 <img src="/img/project-structure/android_folder1.png" alt="Android folder overview" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
 </div>
 
+*Above: Android folder — build settings and configuration*
+
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/anroid_folder.png" alt="Android folder details" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
 </div>
+
+*Above: Android app folder — manifest and build files*
 
 :::warning CHANGE THESE FILES
 - **`android/app/src/main/AndroidManifest.xml`** (line 8) — Change `android:label="hana_go"` to your app name
@@ -519,6 +573,8 @@ It reads colors from `constants/ui.dart`, so to change the theme, edit `ui.dart`
 <div style={{textAlign: 'center'}}>
 <img src="/img/project-structure/ios_folder.png" alt="iOS folder" style={{width: '100%', height: '350px', objectFit: 'contain'}} />
 </div>
+
+*Above: iOS folder — Xcode project settings*
 
 :::warning CHANGE THESE FILES
 - **`ios/Runner/Info.plist`** (line 10) — Change `CFBundleDisplayName` to your app name
