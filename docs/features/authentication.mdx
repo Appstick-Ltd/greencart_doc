@@ -4,13 +4,13 @@ title: Authentication
 description: Complete authentication flow in Hana Go — Login, Register, Forgot Password, OTP Verification, and New Password screens.
 ---
 
-# 🔐 Authentication
+# Authentication
 
-Hana Go includes a **complete, ready-to-wire authentication UI** covering every step of the auth flow — from first launch through password recovery.
+Hana Go includes a **complete, ready-to-use authentication UI** covering every step of the login flow — from first launch through password recovery.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/auth/
@@ -36,7 +36,7 @@ lib/pages/auth/
 
 ---
 
-## 🗺️ Auth Flow
+## Auth Flow
 
 ```
 App Launch
@@ -60,31 +60,33 @@ Login → "Forgot Password?" → Enter Email → OTP Verification → New Passwo
 
 ---
 
-## 👋 Welcome Screen
+## Welcome Screen
 
 **Route:** `/welcome`
 
-The landing screen after onboarding with two CTAs:
-- **Sign In** → navigates to `/login`
-- **Create Account** → navigates to `/register`
+The landing screen after onboarding with two buttons:
+- **Sign In** — goes to `/login`
+- **Create Account** — goes to `/register`
 
 Features a full-screen illustration with the Hana Go brand.
 
 ---
 
-## 🔑 Login Screen
+## Login Screen
 
 **Route:** `/login` | **File:** `lib/pages/auth/login/login_view.dart`
 
 ### Features
 - Email input with validation
 - Password input with show/hide toggle
-- **Country Code Picker** (`country_code_picker`) for phone-based login variant
-- "Remember Me" toggle (persisted via `get_storage`)
+- Country code picker for phone-based login
+- "Remember Me" toggle (saved via local storage)
 - "Forgot Password?" link
-- Social login buttons (UI pre-built — wire to your OAuth provider)
+- Social login buttons (UI pre-built — connect to your OAuth provider)
 
 ### Connecting Your Auth API
+
+Here is how to replace the mock login with a real API call:
 
 ```dart
 // lib/pages/auth/login/login_controller.dart
@@ -115,7 +117,7 @@ Future<void> login() async {
 
 ---
 
-## 📝 Register Screen
+## Register Screen
 
 **Route:** `/register` | **File:** `lib/pages/auth/register/register_view.dart`
 
@@ -123,23 +125,23 @@ Future<void> login() async {
 - Full Name
 - Email Address
 - Phone Number (with country code picker)
-- Password + Confirm Password
-- Terms & Conditions checkbox
+- Password and Confirm Password
+- Terms and Conditions checkbox
 
 ### Validation Rules
-All fields use `TextFormField` validators:
-- Email: regex format check
+All fields use built-in validators:
+- Email: format check
 - Password: minimum 8 characters
-- Phone: digits only, 7–15 chars
-- Name: non-empty, max 50 chars
+- Phone: digits only, 7 to 15 characters
+- Name: non-empty, max 50 characters
 
 ---
 
-## 🔓 Forgot Password
+## Forgot Password
 
 **Route:** `/forgot-password`
 
-Single email input field. On submit, triggers your backend to send an OTP/reset link.
+Single email input field. On submit, your backend sends an OTP or reset link.
 
 ```dart
 // forgot_password_controller.dart
@@ -153,15 +155,15 @@ Future<void> sendResetEmail() async {
 
 ---
 
-## 🔢 OTP Verification
+## OTP Verification
 
 **Route:** `/otp-verification` | **Package:** `pinput ^5.0.0`
 
 ### Features
-- 6-digit PIN input with animated focus states (via `pinput`)
+- 6-digit PIN input with animated focus states
 - Auto-submit on last digit entry
-- **Resend OTP** button with 60-second countdown timer
-- Receives email/phone from `Get.arguments`
+- Resend OTP button with 60-second countdown timer
+- Receives email or phone from previous screen
 
 ### Customizing OTP Length
 
@@ -183,17 +185,17 @@ Pinput(
 
 ---
 
-## 🔒 New Password
+## New Password
 
 **Route:** `/new-password`
 
-Password + Confirm Password fields with strength indicator. On success, navigates back to Login with a success toast.
+Password and Confirm Password fields with strength indicator. On success, navigates back to Login with a success message.
 
 ---
 
-## 💾 Auth State Persistence
+## Auth State Persistence
 
-Hana Go uses `GetStorage` to persist auth state between app launches:
+Hana Go uses `GetStorage` to save auth state between app launches:
 
 ```dart
 // lib/services/local_storage_service.dart
@@ -209,7 +211,7 @@ class LocalStorageService {
 }
 ```
 
-The `SplashController` checks `LocalStorageService.isLoggedIn` and routes accordingly:
+The splash screen checks if the user is logged in and routes accordingly:
 
 ```dart
 // splash_controller.dart
@@ -229,8 +231,8 @@ Future<void> _navigate() async {
 ---
 
 :::warning Security Note
-Hana Go is a **UI template**. It includes mock auth logic for demo purposes. Before going to production, ensure you:
-1. Implement proper JWT/OAuth token validation on your server
-2. Use `flutter_secure_storage` (already included) for sensitive token storage — not `get_storage`
-3. Add SSL certificate pinning for your API calls via `dio`
+Hana Go is a **UI template**. It includes mock auth logic for demo purposes. Before going live, you must:
+1. Implement proper token validation on your server
+2. Use `flutter_secure_storage` (already included) for sensitive token storage instead of `get_storage`
+3. Add SSL certificate pinning for your API calls
 :::

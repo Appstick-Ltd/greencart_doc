@@ -4,13 +4,13 @@ title: Assets & Images
 description: Asset management in Hana Go — SVG icons, product images, category assets, and how to replace them with your own.
 ---
 
-# 🖼️ Assets & Images
+# Assets & Images
 
 All static assets are organized under the `assets/` directory, declared in `pubspec.yaml`, and accessed via typed paths throughout the app.
 
 ---
 
-## 📁 Asset Directory Structure
+## Asset Directory Structure
 
 ```
 assets/
@@ -42,16 +42,16 @@ assets/
 
 ---
 
-## 🔄 Replacing the App Logo
+## Replacing the App Logo
 
-1. Replace `assets/icons/logo.png` with your logo (recommended: **1024×1024px PNG** with transparent background)
-2. Run the launcher icon generator:
+1. Replace `assets/icons/logo.png` with your logo (recommended: **1024x1024px PNG** with transparent background)
+2. Run the launcher icon generator.
 
 ```bash
 dart run flutter_launcher_icons
 ```
 
-This updates the launcher icon on **Android, iOS, Web, Windows, and macOS** automatically based on `pubspec.yaml`:
+This updates the launcher icon on Android, iOS, Web, Windows, and macOS automatically based on `pubspec.yaml`.
 
 ```yaml
 # pubspec.yaml
@@ -65,11 +65,13 @@ flutter_launcher_icons:
 
 ---
 
-## 🎨 SVG Icons
+## SVG Icons
 
-Hana Go uses **SVG icons** exclusively (via `flutter_svg`) for crisp rendering at any density.
+Hana Go uses SVG icons exclusively (via `flutter_svg`) for crisp rendering at any density.
 
 ### Loading an SVG
+
+Here is how to load an SVG icon from your assets.
 
 ```dart
 import 'package:flutter_svg/flutter_svg.dart';
@@ -86,9 +88,9 @@ SvgPicture.asset(
 ### Replacing Category Icons
 
 Each category folder contains a single `.svg` file. To replace:
-1. Prepare your SVG (ideally 48×48dp viewBox, single-path or simple shapes)
-2. Drop it into the appropriate category folder, e.g. `assets/icons/catagory/vegetables/veg.svg`
-3. Reference it in the category data:
+1. Prepare your SVG (ideally 48x48dp viewBox, single-path or simple shapes)
+2. Drop it into the appropriate category folder (e.g., `assets/icons/catagory/vegetables/veg.svg`)
+3. Reference it in the category data.
 
 ```dart
 // home_quick_categories.dart or category_controller.dart
@@ -104,7 +106,7 @@ const _kQuickCategories = [
 
 ---
 
-## 🖼️ Product Images
+## Product Images
 
 ### Mock Mode (default)
 
@@ -114,7 +116,7 @@ Product images are loaded from the JSON data file. During development, they use 
 
 ### Production Mode
 
-Replace local assets with real CDN URLs in your product API response:
+Replace local assets with real CDN URLs in your product API response.
 
 ```json
 {
@@ -128,7 +130,7 @@ Replace local assets with real CDN URLs in your product API response:
 }
 ```
 
-`CachedNetworkImage` handles downloading, caching, and shimmer placeholders automatically:
+`CachedNetworkImage` handles downloading, caching, and shimmer placeholders automatically.
 
 ```dart
 // lib/components/hana_image.dart
@@ -142,9 +144,9 @@ CachedNetworkImage(
 
 ---
 
-## 📦 Declaring New Assets
+## Declaring New Assets
 
-After adding any new file to the `assets/` directory, declare it in `pubspec.yaml`:
+After adding any new file to the `assets/` directory, declare it in `pubspec.yaml`.
 
 ```yaml
 flutter:
@@ -161,7 +163,7 @@ flutter pub get
 
 ---
 
-## 🗜️ Image Optimization Tips
+## Image Optimization Tips
 
 | Format | Use Case | Recommended Tool |
 |--------|----------|-----------------|
@@ -175,7 +177,7 @@ Keep product images under **100KB** for fast loading on slow connections.
 ---
 
 :::tip Asset Access Pattern
-Never hardcode asset paths as inline strings in widget files. Define them as constants:
+Never hardcode asset paths as inline strings in widget files. Define them as constants.
 ```dart
 // lib/constants/app_assets.dart
 abstract class AppAssets {

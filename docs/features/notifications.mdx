@@ -4,13 +4,13 @@ title: Notifications
 description: Push notifications and in-app notification center in Hana Go — Firebase FCM setup, notification types, and management.
 ---
 
-# 🔔 Notifications
+# Notifications
 
 Hana Go has a complete notification system — Firebase Cloud Messaging (FCM) for push notifications and an in-app notification center.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/settings/notifications/
@@ -19,7 +19,7 @@ lib/pages/settings/notifications/
 └── notification_controller.dart
 
 lib/services/
-└── notification_service.dart          ← FCM initialization & handling
+└── notification_service.dart          ← FCM initialization and handling
 
 lib/models/
 └── notification_model.dart            ← Notification data model
@@ -27,7 +27,7 @@ lib/models/
 
 ---
 
-## 📬 NotificationModel
+## NotificationModel
 
 ```dart
 // lib/models/notification_model.dart
@@ -50,45 +50,47 @@ class NotificationModel {
 
 ---
 
-## 📱 Notification View
+## Notification View
 
 **Route:** `/notification`
 
 ### Features
-- Categorized tabs: **All | Orders | Promotions | System**
+- Categorized tabs: All, Orders, Promotions, System
 - Unread count badge per tab
-- Each notification row shows: icon/image, title, short body, timestamp
-- **Swipe to dismiss** (mark as read or delete)
-- **"Mark all as read"** button in app bar
+- Each notification row shows: icon or image, title, short body, timestamp
+- Swipe to dismiss (mark as read or delete)
+- "Mark all as read" button in app bar
 - Pull-to-refresh
-- Tap → opens `NotificationDetailsView`
+- Tap to open notification details
 
 ### Category Icons
 
 | Category | Icon | Color |
 |----------|------|-------|
-| Order | 📦 | Primary Green |
-| Promo | 🏷️ | Yellow Accent |
-| System | ⚙️ | Gray |
-| AI | 🤖 | Purple |
+| Order | Box | Primary Green |
+| Promo | Tag | Yellow Accent |
+| System | Gear | Gray |
+| AI | Robot | Purple |
 
 ---
 
-## 📄 Notification Details
+## Notification Details
 
 **Route:** `/notification-details`
 
 Full-page view of a single notification:
 - Large banner image (if present)
-- Full title + body text
+- Full title and body text
 - Received timestamp
 - Deep link action button (e.g., "View Order", "Shop Now")
 
 ---
 
-## 🔥 Firebase Cloud Messaging Setup
+## Firebase Cloud Messaging Setup
 
 ### 1. Initialize FCM
+
+Here is the service that handles push notification setup and message handling:
 
 ```dart
 // lib/services/notification_service.dart
@@ -159,14 +161,14 @@ Future<void> _sendTokenToServer(String token) async {
 
 ### 3. Send a Test Notification (from Firebase Console)
 
-1. Go to **Firebase Console → Cloud Messaging → Send your first message**
+1. Go to Firebase Console, then Cloud Messaging, then "Send your first message"
 2. Enter a notification title and body
 3. Select your app target
-4. Click **Send test message** → enter your device's FCM token
+4. Click "Send test message" and enter your device's FCM token
 
 ---
 
-## 📊 FCM Message Payload Format
+## FCM Message Payload Format
 
 For proper deep-linking and categorization, structure your FCM payloads as:
 
@@ -174,7 +176,7 @@ For proper deep-linking and categorization, structure your FCM payloads as:
 {
   "to": "<device_fcm_token>",
   "notification": {
-    "title": "Your order is on the way! 🚚",
+    "title": "Your order is on the way!",
     "body": "Order #HG-00123 is out for delivery. Expected by 5:00 PM."
   },
   "data": {
@@ -188,9 +190,9 @@ For proper deep-linking and categorization, structure your FCM payloads as:
 
 ---
 
-## 🔕 Notification Preferences
+## Notification Preferences
 
-Users can control notification categories from the Settings → Notifications screen:
+Users can control notification categories from the Settings screen:
 
 ```dart
 // notification_controller.dart
@@ -217,7 +219,7 @@ void toggleCategory(NotificationCategory category, bool value) {
 
 :::info APNs Configuration (iOS)
 For iOS push notifications to work:
-1. Enable **Push Notifications** capability in Xcode (Runner → Signing & Capabilities)
-2. Enable **Background Modes → Remote notifications**
-3. Upload your APNs key or certificate in Firebase Console → Project Settings → Cloud Messaging → iOS app
+1. Enable Push Notifications capability in Xcode (Runner, then Signing and Capabilities)
+2. Enable Background Modes, then Remote notifications
+3. Upload your APNs key or certificate in Firebase Console under Project Settings, Cloud Messaging, iOS app
 :::

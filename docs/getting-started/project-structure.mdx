@@ -1,22 +1,22 @@
 ---
 sidebar_position: 3
 title: Project Structure
-description: How the Hana Go project was built, folder by folder, with screenshots and marked files to customize.
+description: A folder-by-folder guide to the Hana Go project structure, with screenshots and clear customization instructions.
 ---
 
 import ZoomableImage from '@site/src/components/ZoomableImage';
 
 # Project Structure
 
-This page explains **how I built this project** — folder by folder, layer by layer. Every section has a folder screenshot so you know exactly what you are looking at in your code editor. Files that **you need to change** are clearly marked.
+This guide explains the project layout step by step. Each section includes a screenshot so you can see exactly what to look for in your code editor. Files you need to change are clearly marked.
 
-> **Follow the order below.** Each step builds on the previous one.
+> Follow the steps in order. Each builds on the previous one.
 
 ---
 
 ## Step 1: Project Overview
 
-When you first extract the downloaded `.zip` and open the project, this is what you see — all the folders and files in one place:
+When you open the project, this is what you see — all folders and files in one place:
 
 <ZoomableImage src="/img/project-structure/architecture_overview.png" alt="Project overview" />
 
@@ -35,7 +35,7 @@ When you first extract the downloaded `.zip` and open the project, this is what 
 
 ## Step 2: Config File — `pubspec.yaml`
 
-This is the **first file you should open**. It controls the app version, dependencies, and which image folders are included.
+Open this file first. It controls the app version, dependencies, and which image folders are included.
 
 <ZoomableImage src="/img/project-structure/pubspec_yaml_file.png" alt="pubspec.yaml overview" />
 
@@ -92,7 +92,7 @@ flutter:
 
 ## Step 3: Assets — Images, Icons, Fonts, Translations
 
-This folder holds everything that is **not code** — pictures, icons, fonts, and language files.
+This folder holds everything that is not code — pictures, icons, fonts, and language files.
 
 <ZoomableImage src="/img/project-structure/assets_resources.png" alt="Assets folder" />
 
@@ -149,7 +149,7 @@ This folder holds everything that is **not code** — pictures, icons, fonts, an
 
 ## Step 4: App Code — `lib/`
 
-This is the main working folder. Every screen, every button, every feature lives here.
+This is the main folder. Every screen, button, and feature lives here.
 
 <ZoomableImage src="/img/project-structure/lib_source.png" alt="lib folder" />
 
@@ -195,7 +195,7 @@ initialRoute: Routes.splashPage,
 
 ## Step 6: `constants/` — All Design Values
 
-This folder is the **single source of truth** for the app's visual design. Change a value here and it updates everywhere.
+This folder is the single source of truth for the app's visual design. Change a value here and it updates everywhere.
 
 <ZoomableImage src="/img/project-structure/constants_folder.png" alt="Constants folder" />
 
@@ -242,7 +242,7 @@ String appName = 'HanaGo';  // Change to your app name
 
 ## Step 7: `models/` — Data Blueprints
 
-Models define **what a piece of data looks like**. They are blueprints, not the data itself.
+Models define what a piece of data looks like. They are blueprints, not the data itself.
 
 <ZoomableImage src="/img/project-structure/models_folder.png" alt="Models folder" />
 
@@ -257,7 +257,7 @@ Models define **what a piece of data looks like**. They are blueprints, not the 
 | `notification_model.dart` | Notification — title, message, time | Leave as is |
 | `hana_ai_message.dart` | Chat message — user input + bot response | Leave as is |
 
-> **You rarely need to edit these** unless you want to add new data fields (like "rating" or "brand" to products).
+> You rarely need to edit these unless you want to add new data fields (like "rating" or "brand" to products).
 
 ---
 
@@ -308,7 +308,7 @@ Screens use the data
 
 ## Step 9: `services/` — Background Workers
 
-Services handle things that happen **behind the scenes**.
+Services handle things that happen behind the scenes.
 
 <ZoomableImage src="/img/project-structure/services_folder.png" alt="Services folder" />
 
@@ -322,7 +322,7 @@ Services handle things that happen **behind the scenes**.
 | `local_storage_service.dart` | Remembers settings (language, login state) | Leave as is |
 | `navigation_service.dart` | Shortcuts for moving between screens | Leave as is |
 
-> **You rarely need to edit these** unless you are adding a new background feature.
+> You rarely need to edit these unless you are adding a new background feature.
 
 ---
 

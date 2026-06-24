@@ -4,13 +4,13 @@ title: Cart & Checkout
 description: Complete cart management and multi-step checkout flow in Hana Go — cart, address, delivery time, payment, and order confirmation.
 ---
 
-# 🛒 Cart & Checkout
+# Cart and Checkout
 
 Hana Go features a complete, multi-step checkout experience from cart management to order confirmation.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/cart/
@@ -32,21 +32,21 @@ lib/components/
 
 ---
 
-## 🛒 Cart Screen
+## Cart Screen
 
 **Route:** `/cart`
 
 ### Features
 - Full list of cart items with product image, name, variant, quantity
-- **Quantity controls**: Tap `+` / `–` to adjust, zero removes item
-- **Swipe to delete**: Swipe left on item to remove
-- **Price summary**: Subtotal, delivery fee, taxes, total
-- **Promo code field** inline in cart (or accessible from checkout)
-- **Proceed to Checkout** sticky button at bottom
+- Quantity controls: Tap + or - to adjust, zero removes item
+- Swipe to delete: Swipe left on item to remove
+- Price summary: Subtotal, delivery fee, taxes, total
+- Promo code field inline in cart (or accessible from checkout)
+- Proceed to Checkout button at bottom
 
 ### CartService — Core Cart Logic
 
-The `CartService` (`lib/services/cart_service.dart`) manages all cart state reactively:
+The `CartService` manages all cart state reactively:
 
 ```dart
 class CartService extends GetxService {
@@ -84,7 +84,7 @@ class CartService extends GetxService {
   int get totalItems => items.fold(0, (sum, i) => sum + i.quantity);
   bool get isEmpty => items.isEmpty;
 
-  // Persist cart to GetStorage between sessions
+  // Persist cart between sessions
   void _persist() => GetStorage().write('cart', items.map((i) => i.toJson()).toList());
 }
 ```
@@ -101,20 +101,20 @@ Obx(() => Text('${cartService.totalItems}'))
 
 ---
 
-## 💳 Checkout Screen
+## Checkout Screen
 
 **Route:** `/checkout`
 
 The checkout screen is a **single scrollable page** with distinct collapsible sections:
 
 ### Section 1 — Delivery Address
-- Displays saved addresses from `DeliveryAddressService`
+- Displays saved addresses
 - Select with radio button
-- "+ Add New Address" → opens `EditAddressView`
+- "+ Add New Address" opens the address form
 
 ### Section 2 — Delivery Schedule
 - Shows selected date and time slot
-- Tap → opens `DateAndTimeView`
+- Tap to open the date/time picker
 - Pre-selected options: Today, Tomorrow, or custom date
 
 ### Section 3 — Order Summary
@@ -122,7 +122,7 @@ The checkout screen is a **single scrollable page** with distinct collapsible se
 - Quantity and line-item price per product
 
 ### Section 4 — Coupon / Promo Code
-- Text field + "Apply" button
+- Text field and "Apply" button
 - Displays discount amount when applied
 - Error state for invalid codes
 
@@ -144,12 +144,10 @@ void applyCoupon(String code) {
 ```
 Subtotal:           $42.50
 Delivery Fee:        $2.99
-Discount (SAVE10): –$4.25
+Discount (SAVE10): -$4.25
 ─────────────────────────
 Total:              $41.24
 ```
-
-Powered by the `PriceRow` component (`lib/components/price_row.dart`).
 
 ### Section 6 — Payment Method
 - Select saved card or "Cash on Delivery"
@@ -160,16 +158,16 @@ Sticky bottom bar. Disabled until address and payment method are selected.
 
 ---
 
-## 📅 Date & Time Picker
+## Date and Time Picker
 
 **Route:** `/date-and-time`
 
-An elegant delivery scheduler with:
-- **Horizontal date scroller**: 7-day window (Today + next 6 days)
-- **Time slot grid**: Available slots in 1-hour blocks (e.g., 9AM–10AM, 10AM–11AM)
+A delivery scheduler with:
+- Horizontal date scroller: 7-day window (Today + next 6 days)
+- Time slot grid: Available slots in 1-hour blocks (e.g., 9AM-10AM, 10AM-11AM)
 - Unavailable slots shown greyed out
 - Selected slot highlighted in primary green
-- "Confirm" saves selection back to `CheckoutController`
+- "Confirm" saves selection back to checkout
 
 ```dart
 // Returns selected slot to checkout:
@@ -181,16 +179,16 @@ Get.back(result: DeliverySlot(
 
 ---
 
-## ✅ Order Confirmed
+## Order Confirmed
 
 **Route:** `/order-confirmed`
 
 An animated success screen shown after a successful order:
-- Lottie-style animated checkmark (CSS animation)
+- Animated checkmark
 - Order number display
 - Summary: delivery address, estimated time
-- **Track Order** button → `/track-order`
-- **Continue Shopping** → clears back stack → `/home`
+- "Track Order" button goes to `/track-order`
+- "Continue Shopping" clears back stack and goes to `/home`
 
 ```dart
 // order_confirmed_view.dart — clear cart on reach
@@ -203,30 +201,30 @@ void initState() {
 
 ---
 
-## 📦 My Orders
+## My Orders
 
 **Route:** `/my-orders`
 
 Order history list with:
 - Order number, date, item count
-- Status badge: `Pending` / `Processing` / `Shipped` / `Delivered` / `Cancelled`
+- Status badge: Pending, Processing, Shipped, Delivered, or Cancelled
 - Total amount
-- Tap → Order detail / Track Order
+- Tap to view order detail or track order
 
 ---
 
-## 🗺️ Track Order
+## Track Order
 
 **Route:** `/track-order`
 
-Step-by-step order tracking UI:
+Step-by-step order tracking view:
 
 ```
-✅ Order Placed        — Mon, 10 Jun 2026 09:15 AM
-✅ Order Confirmed     — Mon, 10 Jun 2026 09:20 AM
-✅ Packed              — Mon, 10 Jun 2026 11:00 AM
-🔄 Out for Delivery    — Mon, 10 Jun 2026 02:30 PM
-○  Delivered           — Expected: Mon, 10 Jun 2026 05:00 PM
+Done: Order Placed        — Mon, 10 Jun 2026 09:15 AM
+Done: Order Confirmed     — Mon, 10 Jun 2026 09:20 AM
+Done: Packed              — Mon, 10 Jun 2026 11:00 AM
+Active: Out for Delivery  — Mon, 10 Jun 2026 02:30 PM
+Pending: Delivered         — Expected: Mon, 10 Jun 2026 05:00 PM
 ```
 
 Each step has an icon, label, timestamp, and a connecting animated progress line.
@@ -237,6 +235,6 @@ Each step has an icon, label, timestamp, and a connecting animated progress line
 To integrate Stripe, Razorpay, or PayPal:
 1. Add the SDK to `pubspec.yaml`
 2. Replace the `_processPayment()` stub in `checkout_controller.dart`
-3. On success callback → call `Get.offAllNamed(Routes.orderConfirmedView)`
+3. On success callback, call `Get.offAllNamed(Routes.orderConfirmedView)`
 4. The rest of the UI flow works automatically
 :::

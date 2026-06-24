@@ -4,13 +4,13 @@ title: Installation
 description: Step-by-step guide to install Flutter, set up your environment, and get Hana Go running on Android and iOS.
 ---
 
-# ⚙️ Installation Guide
+# Installation Guide
 
 This guide walks you through everything you need to set up your development environment and run **Hana Go** on Android and iOS simulators or physical devices.
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you begin, make sure you have the following installed:
 
@@ -26,7 +26,7 @@ Before you begin, make sure you have the following installed:
 
 ---
 
-## 🛠️ Step 1 — Install Git
+## Step 1 — Install Git
 
 1. Download Git from [git-scm.com](https://git-scm.com/download/win)
 
@@ -44,7 +44,7 @@ git --version
 
 ---
 
-## 🛠️ Step 2 — Install Flutter SDK
+## Step 2 — Install Flutter SDK
 
 ### Windows
 
@@ -98,7 +98,7 @@ flutter --version
 
 ---
 
-## 📱 Step 3 — Install Android Studio
+## Step 3 — Install Android Studio
 
 1. Download Android Studio from [developer.android.com](https://developer.android.com/studio)
 
@@ -116,7 +116,7 @@ flutter --version
 
 ---
 
-## 🔍 Step 4 — Run Flutter Doctor
+## Step 4 — Run Flutter Doctor
 
 `flutter doctor` checks your environment for missing dependencies:
 
@@ -131,13 +131,13 @@ Resolve any issues it reports. A healthy output looks like:
 ![Flutter Doctor Output](/img/screenshots/installation/flutter_doctor_output.png)
 
 ```
-✓ Flutter (Channel stable, 3.22.x)
-✓ Android toolchain - develop for Android devices
-✓ Xcode - develop for iOS and macOS (Xcode 15.x)
-✓ Android Studio (version 2024.x)
-✓ VS Code (version 1.9x.x)
-✓ Connected device (2 available)
-✓ Network resources
+Flutter (Channel stable, 3.22.x)
+Android toolchain - develop for Android devices
+Xcode - develop for iOS and macOS (Xcode 15.x)
+Android Studio (version 2024.x)
+VS Code (version 1.9x.x)
+Connected device (2 available)
+Network resources
 ```
 
 :::warning Common Issues
@@ -148,7 +148,7 @@ Resolve any issues it reports. A healthy output looks like:
 
 ---
 
-## 📱 Step 5 — Set Up an Emulator or Device
+## Step 5 — Set Up an Emulator or Device
 
 ### Android Emulator
 
@@ -164,7 +164,7 @@ Resolve any issues it reports. A healthy output looks like:
 
 ![Select Device](/img/screenshots/installation/select_device.png)
 
-4. Click **Finish** to complete setup, then click ▶ to launch the emulator
+4. Click **Finish** to complete setup, then click the play button to launch the emulator
 
 ![Emulator Running](/img/screenshots/installation/emulator_running.png)
 
@@ -178,12 +178,12 @@ open -a Simulator
 ```
 
 ### Physical Device
-- **Android**: Enable Developer Options → USB Debugging → connect via USB
+- **Android**: Enable Developer Options, USB Debugging, then connect via USB
 - **iOS**: Trust the computer when prompted, or use wireless development in Xcode 14+
 
 ---
 
-## 📦 Step 6 — Install Dependencies
+## Step 6 — Install Dependencies
 
 After cloning the project (see [Quick Start](./quick-start)), install all Flutter packages:
 
@@ -204,7 +204,7 @@ Got dependencies!
 
 ---
 
-## 🔧 Step 7 — Install VS Code
+## Step 7 — Install VS Code
 
 1. Download VS Code from [code.visualstudio.com](https://code.visualstudio.com/)
 
@@ -239,7 +239,7 @@ Got dependencies!
 
 ---
 
-## ✅ Step 8 — Run the App
+## Step 8 — Run the App
 
 ### Using VS Code (Recommended)
 
@@ -255,7 +255,7 @@ Got dependencies!
 
 ![Select Device](/img/screenshots/installation/vscode_select_device.png)
 
-4. Click **Run** (▶) or press `F5`
+4. Click **Run** or press `F5`
 
 ![Click Run](/img/screenshots/installation/vscode_click_run.png)
 
@@ -280,7 +280,7 @@ flutter run -d <device-id>
 
 ---
 
-## 🏗️ Build for Production
+## Build for Production
 
 ### Android APK
 ```bash
@@ -302,7 +302,7 @@ flutter build ios --release
 
 ---
 
-:::tip Hot Reload & Hot Restart
-- **Hot Reload** (`r` in terminal or `⌘R`/`Ctrl+R`): Updates UI instantly without losing state — great for UI tweaks.
-- **Hot Restart** (`R` in terminal or `⌘⇧R`/`Ctrl+Shift+R`): Full restart, resets state — use when changing controllers or bindings.
+:::tip Hot Reload and Hot Restart
+- **Hot Reload** (`r` in terminal or `Ctrl+R`): Updates UI instantly without losing state — great for UI tweaks.
+- **Hot Restart** (`R` in terminal or `Ctrl+Shift+R`): Full restart, resets state — use when changing controllers or bindings.
 :::

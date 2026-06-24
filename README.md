@@ -1,41 +1,50 @@
-# Website
+# Hana Go
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+A premium Flutter grocery e-commerce app template with 26+ screens, built-in AI assistant, and 9 language support.
 
-## Installation
+## What's Included
 
-```bash
-yarn
-```
+- 26+ fully designed screens (onboarding, home, cart, checkout, orders, settings)
+- AI shopping assistant with voice input and recipe suggestions
+- 9 languages: English, German, Spanish, French, Italian, Indonesian and more
+- Dark-green design system with Manrope typography
+- GetX state management
+- Firebase push notifications (optional)
+- Mock product data ready to replace with your own
 
-## Local Development
-
-```bash
-yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-## Build
+## Quick Start
 
 ```bash
-yarn build
+# Install dependencies
+flutter pub get
+
+# Run the app
+flutter run
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## Customization
 
-## Deployment
+| What to Change | File |
+|----------------|------|
+| App name | `android/app/src/main/AndroidManifest.xml` |
+| Brand colors | `lib/constants/ui.dart` |
+| Logo | `assets/icons/logo.png` |
+| Languages | `assets/translations/` |
+| Product data | `assets/data/products.json` |
 
-Using SSH:
+## Documentation
+
+Open the `hana_go_docs/` folder and run:
 
 ```bash
-USE_SSH=true yarn deploy
+npm install
+npm start
 ```
 
-Not using SSH:
+This opens the full documentation site in your browser.
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
+## Requirements
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+- Flutter SDK 3.12 or higher
+- Android Studio or VS Code
+- Android emulator or physical device

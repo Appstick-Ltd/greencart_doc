@@ -4,13 +4,13 @@ title: Settings
 description: Complete settings suite in Hana Go — account, addresses, payment methods, notifications, language, privacy, FAQ, and coupons.
 ---
 
-# ⚙️ Settings
+# Settings
 
 The Settings section is a comprehensive 11-screen suite covering every user account management feature.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/settings/
@@ -49,38 +49,38 @@ lib/pages/settings/
 
 ---
 
-## 🏠 Settings Hub
+## Settings Hub
 
 **Route:** `/settings` (bottom nav — 5th tab)
 
 The settings hub displays:
-1. **Profile Card** (top) — avatar, name, email, "Edit Profile" button
-2. **Action Buttons List** — tappable rows with icon, label, and arrow
+1. Profile Card (top) — avatar, name, email, "Edit Profile" button
+2. Action Buttons List — tappable rows with icon, label, and arrow
 
 ### Settings Menu Items
 
 | Icon | Label | Route |
 |------|-------|-------|
-| 👤 | My Account | `/account` |
-| 📍 | Delivery Address | `/delivery-address` |
-| 💳 | Payment Method | `/payment-method` |
-| 🔔 | Notifications | `/notification` |
-| 🔒 | Change Password | `/change-password` |
-| 🌐 | Language | `/language` |
-| 🔏 | Privacy & Sharing | `/privacy-sharing` |
-| ❓ | FAQ | `/faq` |
-| 🎟️ | Coupons | `/coupons` |
-| 📞 | Contact Us | Bottom Sheet |
-| 🚪 | Logout | Clears storage → `/welcome` |
+| Person | My Account | `/account` |
+| Pin | Delivery Address | `/delivery-address` |
+| Card | Payment Method | `/payment-method` |
+| Bell | Notifications | `/notification` |
+| Lock | Change Password | `/change-password` |
+| Globe | Language | `/language` |
+| Shield | Privacy and Sharing | `/privacy-sharing` |
+| Question | FAQ | `/faq` |
+| Ticket | Coupons | `/coupons` |
+| Phone | Contact Us | Bottom Sheet |
+| Door | Logout | Clears storage, goes to `/welcome` |
 
 ---
 
-## 👤 Account / Personal Info
+## Account / Personal Info
 
 **Route:** `/account`
 
 Editable fields:
-- Profile photo (via `image_picker` — gallery or camera)
+- Profile photo (via image picker — gallery or camera)
 - Full Name
 - Email (read-only if using OAuth)
 - Phone Number (with country code)
@@ -101,21 +101,21 @@ Future<void> pickProfilePhoto() async {
 
 ---
 
-## 📍 Delivery Addresses
+## Delivery Addresses
 
 **Route:** `/delivery-address`
 
 ### Features
 - List of saved addresses with full details
-- **Default address** highlighted with a green badge
+- Default address highlighted with a green badge
 - "Set as Default" option per address
 - Edit and Delete actions (swipe or long-press menu)
-- **"+ Add New Address"** → opens Edit Address form
+- "+ Add New Address" opens the Edit Address form
 
 ### Edit Address Form (`/edit-address`)
 
-Fields powered by `google_places_flutter` for autocomplete:
-- Address Line 1 (with Google Places autocomplete)
+Fields powered by Google Places autocomplete:
+- Address Line 1 (with autocomplete)
 - Address Line 2 (optional)
 - City / State / ZIP
 - Country
@@ -134,7 +134,7 @@ void onPlaceSelected(Prediction prediction) async {
 
 ---
 
-## 💳 Payment Methods
+## Payment Methods
 
 **Route:** `/payment-method`
 
@@ -150,19 +150,19 @@ Displays saved payment cards with a visual card widget:
 └─────────────────────────────────────┘
 ```
 
-- Add new card → card number, name, expiry, CVV
+- Add new card: card number, name, expiry, CVV
 - Remove card with confirmation dialog
 - Set default payment method
 
 ---
 
-## 🔔 Notifications
+## Notifications
 
-See [Notifications](./notifications) for full documentation.
+See the Notifications documentation page for full details.
 
 ---
 
-## 🔒 Change Password
+## Change Password
 
 **Route:** `/change-password`
 
@@ -171,27 +171,27 @@ Three-field form:
 2. New Password (with strength meter)
 3. Confirm New Password
 
-Validation: Passwords match + minimum 8 characters + at least one number.
+Validation: Passwords must match, minimum 8 characters, at least one number.
 
 ---
 
-## 🌐 Language
+## Language
 
 **Route:** `/language`
 
-Displays all 9 supported languages as a selectable list with flag emoji:
+Displays all 9 supported languages as a selectable list:
 
 | Flag | Language | Locale Code |
 |------|----------|-------------|
-| 🇺🇸 | English (US) | `en_US` |
-| 🇬🇧 | English (UK) | `en_GB` |
-| 🇩🇪 | German | `de_DE` |
-| 🇪🇸 | Spanish | `es_ES` |
-| 🇫🇷 | French | `fr_FR` |
-| 🇮🇹 | Italian | `it_IT` |
-| 🇮🇩 | Indonesian | `id_ID` |
+| US | English (US) | `en_US` |
+| UK | English (UK) | `en_GB` |
+| DE | German | `de_DE` |
+| ES | Spanish | `es_ES` |
+| FR | French | `fr_FR` |
+| IT | Italian | `it_IT` |
+| ID | Indonesian | `id_ID` |
 
-Tapping a language calls `Get.updateLocale()` and persists the choice:
+Tapping a language updates the app locale and saves the choice:
 
 ```dart
 void selectLanguage(AppLanguage lang) {
@@ -200,11 +200,11 @@ void selectLanguage(AppLanguage lang) {
 }
 ```
 
-See [Localization](../customization/localization) for adding new languages.
+See the Localization documentation for adding new languages.
 
 ---
 
-## 🎟️ Coupons
+## Coupons
 
 **Route:** `/coupons`
 
@@ -212,13 +212,13 @@ A wallet of available coupon cards:
 
 ```
 ┌─────────────────────────────────────┐
-│ 🎟️  SAVE10              10% OFF    │
-│  Min. order: $30      Expires: Jul 1│
+│ SAVE10                 10% OFF      │
+│ Min. order: $30      Expires: Jul 1 │
 │           [Copy Code]               │
 └─────────────────────────────────────┘
 ```
 
-Each coupon card shows: code, discount %, min order value, expiry date, and a copy-to-clipboard button.
+Each coupon card shows: code, discount percentage, minimum order value, expiry date, and a copy-to-clipboard button.
 
 ### CouponModel
 
@@ -236,13 +236,13 @@ class CouponModel {
 
 ---
 
-## 📞 Contact Us
+## Contact Us
 
-Accessible from Settings as a **bottom sheet** (`lib/components/contact_us_bottom_sheet.dart`):
+Accessible from Settings as a bottom sheet:
 
-- 📞 **Call Support** — opens phone dialer via `url_launcher`
-- ✉️ **Email Us** — opens email app via `url_launcher`
-- 💬 **Live Chat** — placeholder for chat SDK integration
+- Call Support — opens phone dialer
+- Email Us — opens email app
+- Live Chat — placeholder for chat SDK integration
 
 ```dart
 // Launching call:

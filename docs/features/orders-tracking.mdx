@@ -4,13 +4,13 @@ title: Orders & Tracking
 description: My Orders list and Track Order step-by-step delivery tracking screens in Hana Go.
 ---
 
-# 📦 Orders & Tracking
+# Orders and Tracking
 
 Hana Go includes a complete order history and real-time delivery tracking UI.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/orders/
@@ -22,24 +22,24 @@ lib/pages/orders/
 
 ---
 
-## 📋 My Orders
+## My Orders
 
 **Route:** `/my-orders`
 
 ### Features
 - Chronological list of all past and active orders
 - Order card shows: order number, date, product thumbnails (max 3), item count, total, status badge
-- **Status badges** with color coding:
+- Status badges with color coding:
 
 | Status | Color |
 |--------|-------|
-| Pending | Yellow `#EAB308` |
+| Pending | Yellow |
 | Processing | Blue |
-| Shipped | Orange `#D96126` |
-| Delivered | Green `#22C55E` |
-| Cancelled | Red `#EF4444` |
+| Shipped | Orange |
+| Delivered | Green |
+| Cancelled | Red |
 
-- Tap any order → opens Track Order view
+- Tap any order to open Track Order view
 - Pull-to-refresh for latest orders
 
 ### OrderModel
@@ -66,6 +66,8 @@ enum OrderStatus { pending, processing, shipped, delivered, cancelled }
 ```
 
 ### Loading Orders
+
+Here is how to load orders from your API:
 
 ```dart
 // my_orders_controller.dart
@@ -96,7 +98,7 @@ Future<void> loadOrders() async {
 
 ---
 
-## 🗺️ Track Order
+## Track Order
 
 **Route:** `/track-order`
 
@@ -105,27 +107,28 @@ Future<void> loadOrders() async {
 The tracking screen shows a vertical animated timeline with 5 steps:
 
 ```
-Step 1: Order Placed      ✅ Completed
-Step 2: Order Confirmed   ✅ Completed
-Step 3: Packed            ✅ Completed
-Step 4: Out for Delivery  🔄 In Progress (animated pulse)
-Step 5: Delivered         ○  Pending
+Step 1: Order Placed      Done
+Step 2: Order Confirmed   Done
+Step 3: Packed            Done
+Step 4: Out for Delivery  In Progress (animated pulse)
+Step 5: Delivered         Pending
 ```
 
 ### Step Widget
 
 Each step renders:
-- **Icon**: checkmark (done), spinner (active), circle (pending)
-- **Label**: step name
-- **Timestamp**: when completed (empty if pending)
-- **Connector line**: solid (completed), dashed (pending)
+- Icon: checkmark (done), spinner (active), circle (pending)
+- Label: step name
+- Timestamp: when completed (empty if pending)
+- Connector line: solid (completed), dashed (pending)
 
 ### Connecting Live Tracking
+
+This code polls for order status updates every 30 seconds:
 
 ```dart
 // track_order_controller.dart
 
-// Poll for updates every 30 seconds:
 late Timer _pollingTimer;
 
 @override
@@ -161,9 +164,9 @@ void onClose() {
 
 ---
 
-## 🔔 Order Notifications
+## Order Notifications
 
-When order status changes, Firebase Cloud Messaging (FCM) sends a push notification. The `NotificationService` handles it:
+When order status changes, a push notification is sent. The notification service handles it:
 
 ```dart
 // lib/services/notification_service.dart

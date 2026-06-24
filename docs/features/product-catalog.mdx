@@ -4,13 +4,13 @@ title: Product Catalog
 description: Hana Go product catalog — Categories, Product List with filters, Product Details, and All Products screens.
 ---
 
-# 🛍️ Product Catalog
+# Product Catalog
 
-Hana Go's product catalog includes a fully featured browsing experience — category navigation, advanced filtering, search, sort, and detailed product pages.
+Hana Go's product catalog includes a complete browsing experience — category navigation, filtering, search, sort, and detailed product pages.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/
@@ -31,36 +31,36 @@ lib/pages/
 
 ---
 
-## 📂 Category View
+## Category View
 
 **Route:** `/category`
 
-The Category screen is the main browse entry point, accessible from:
+The Category screen is the main browse entry point. It is accessible from:
 - Bottom navigation bar (2nd tab)
-- Quick category cards on Home Screen
+- Quick category cards on the Home Screen
 
 ### Features
-- 8 main categories in a scrollable grid/list
+- 8 main categories in a scrollable grid or list
 - Sub-category filter chips within each category
 - Product count badge per category
-- Tap a category → navigates to `ProductListView` with that category pre-filtered
+- Tap a category to go to `ProductListView` with that category pre-filtered
 
 ### 8 Categories
 
 | Category | Sub-categories |
 |----------|----------------|
-| 🥦 Vegetables | Leafy, Root, Organic, Seasonal |
-| 🍎 Fruits | Tropical, Berries, Citrus, Exotic |
-| 🥛 Dairy | Milk, Cheese, Butter, Yogurt |
-| 🌾 Pantry | Rice, Pasta, Oils, Condiments |
-| 🍟 Snacks & Packaged | Chips, Biscuits, Nuts, Sweets |
-| 🥤 Beverages | Juices, Water, Tea, Coffee |
-| 🧊 Frozen | Frozen Veg, Ice Cream, Ready Meals |
-| 🏠 Household | Cleaning, Paper, Personal Care |
+| Vegetables | Leafy, Root, Organic, Seasonal |
+| Fruits | Tropical, Berries, Citrus, Exotic |
+| Dairy | Milk, Cheese, Butter, Yogurt |
+| Pantry | Rice, Pasta, Oils, Condiments |
+| Snacks and Packaged | Chips, Biscuits, Nuts, Sweets |
+| Beverages | Juices, Water, Tea, Coffee |
+| Frozen | Frozen Veg, Ice Cream, Ready Meals |
+| Household | Cleaning, Paper, Personal Care |
 
 ---
 
-## 📋 Product List
+## Product List
 
 **Route:** `/product-list`
 
@@ -69,21 +69,21 @@ A powerful product browsing screen with multiple view modes and filtering.
 ### Features
 
 #### View Modes
-- **Grid View**: 2-column responsive product cards
-- **List View**: Horizontal card layout with more details
+- Grid View: 2-column responsive product cards
+- List View: Horizontal card layout with more details
 - Toggle button in the top-right corner
 
 #### Search
-Real-time search filtering as the user types, filtering the displayed product list by name or description.
+Real-time search filtering as the user types.
 
 #### Filter Drawer
 Slide-in filter panel with:
 - Category multi-select chips
 - Price range slider (min/max)
-- Rating filter (1–5 stars)
+- Rating filter (1 to 5 stars)
 - Availability toggle (In Stock only)
 - Brand filter (if applicable)
-- **Apply** and **Clear All** buttons
+- Apply and Clear All buttons
 
 #### Sort Options
 Bottom sheet with sort options:
@@ -93,12 +93,12 @@ Bottom sheet with sort options:
 - Best Rated
 - Most Popular
 
-### Product Card (`lib/components/product_card.dart`)
+### Product Card
 
 Each product card shows:
 - Product image (with shimmer loading)
 - Name (max 2 lines)
-- Weight/Size variant
+- Weight or size variant
 - Price (with discount strike-through)
 - Rating stars
 - Wishlist heart icon
@@ -119,22 +119,22 @@ Get.toNamed(
 
 ---
 
-## 📦 Product Details
+## Product Details
 
 **Route:** `/product-details`
 
 The full product detail page is the most feature-rich screen in the catalog.
 
 ### Sections
-1. **Image Gallery** — Swipeable product images with zoom support
-2. **Product Header** — Name, brand, rating with review count
-3. **Price Block** — Current price, original price, discount %, per-unit price
-4. **Variant Selector** — Weight/size options (e.g., 250g, 500g, 1kg)
-5. **Stock Status** — In Stock / Low Stock / Out of Stock badge
-6. **Description** — Full product description (expandable)
-7. **Nutritional Info** — Key nutritional data (if available)
-8. **Related Products** — Horizontal strip of similar items
-9. **Add to Cart** — Quantity selector + Add to Cart button (sticky bottom bar)
+1. Image Gallery — Swipeable product images with zoom support
+2. Product Header — Name, brand, rating with review count
+3. Price Block — Current price, original price, discount percentage, per-unit price
+4. Variant Selector — Weight or size options (e.g., 250g, 500g, 1kg)
+5. Stock Status — In Stock / Low Stock / Out of Stock badge
+6. Description — Full product description (expandable)
+7. Nutritional Info — Key nutritional data (if available)
+8. Related Products — Horizontal strip of similar items
+9. Add to Cart — Quantity selector and Add to Cart button (sticky bottom bar)
 
 ### Navigating to Product Details
 
@@ -159,7 +159,7 @@ void onInit() {
 
 ---
 
-## 🗂️ All Products
+## All Products
 
 **Route:** `/all-products`
 
@@ -167,7 +167,7 @@ A simple grid showing every product in the catalogue, with real-time search. Use
 
 ---
 
-## 📊 ProductModel
+## ProductModel
 
 All screens use a unified `ProductModel`:
 
@@ -201,9 +201,9 @@ class ProductModel {
 
 ---
 
-## 🔌 Connecting to a Real Product API
+## Connecting to a Real Product API
 
-Replace the JSON asset loader with a `dio` HTTP call:
+Replace the JSON asset loader with an HTTP call:
 
 ```dart
 // lib/data/loaders/product_loader.dart
@@ -228,10 +228,10 @@ class ProductLoader {
 }
 ```
 
-The controllers and views remain **unchanged** — they only depend on the `List<ProductModel>` that the loader returns.
+The controllers and views remain **unchanged** — they only depend on the list of products that the loader returns.
 
 ---
 
 :::tip Search Performance
-The product search uses Dart's built-in `String.contains()` for case-insensitive filtering on the in-memory list. For large catalogues (1000+ products), consider implementing server-side search with a debounced `dio` call.
+The product search uses case-insensitive filtering on the in-memory list. For large catalogues (1000+ products), consider server-side search with a debounced API call.
 :::

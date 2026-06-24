@@ -4,13 +4,13 @@ title: Wishlist
 description: Wishlist functionality in Hana Go — save products, move to cart, and persistent wishlist state.
 ---
 
-# ❤️ Wishlist
+# Wishlist
 
-The Wishlist allows users to save products they love and move them to cart when ready.
+The Wishlist lets users save products they like and move them to cart when ready.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 lib/pages/wishlist/
@@ -21,20 +21,20 @@ Wishlist state is managed in HomeViewController (lib/pages/home/home_view_contro
 
 ---
 
-## 💖 Features
+## Features
 
 **Route:** `/wishlist` (accessible from bottom nav — 4th tab, or heart icon on product cards)
 
-- Grid of saved product cards (same `ProductCard` component as Product List)
-- **Heart toggle** on every product card throughout the app
-- **"Move to Cart"** button per item — adds to cart and removes from wishlist
-- **"Remove"** action — swipe or long-press
+- Grid of saved product cards (same component as Product List)
+- Heart toggle on every product card throughout the app
+- "Move to Cart" button per item — adds to cart and removes from wishlist
+- "Remove" action — swipe or long-press
 - Empty state illustration when wishlist is empty
 - Item count badge on wishlist tab icon
 
 ---
 
-## 🔴 Heart Toggle (App-wide)
+## Heart Toggle (App-wide)
 
 The wishlist heart appears on:
 - Product List cards
@@ -61,7 +61,7 @@ Obx(() {
 
 ---
 
-## 🔧 Wishlist State Management
+## Wishlist State Management
 
 Wishlist state is managed inside `HomeViewController` using a reactive list of product IDs:
 
@@ -96,13 +96,13 @@ class HomeViewController extends GetxController {
 }
 ```
 
-Persistence is handled through `LocalStorageService` (backed by `GetStorage`).
+Wishlist data is saved to local storage automatically after every change.
 
 ---
 
-## 📊 Empty State
+## Empty State
 
-When the wishlist is empty, a centered illustration with a CTA is shown:
+When the wishlist is empty, a centered illustration with a call-to-action is shown:
 
 ```dart
 // wishlist_view.dart
@@ -115,7 +115,7 @@ Obx(() {
         SizedBox(height: 24.h),
         Text('Your wishlist is empty', style: AppTextStyles.heading3),
         SizedBox(height: 8.h),
-        Text('Save items you love by tapping the ❤️', style: AppTextStyles.body),
+        Text('Save items you like by tapping the heart icon', style: AppTextStyles.body),
         SizedBox(height: 24.h),
         HanaButton(
           label: 'Start Shopping',
@@ -130,9 +130,9 @@ Obx(() {
 
 ---
 
-## 🔔 Persistence
+## Persistence
 
-Wishlist state is persisted to `GetStorage` automatically after every change, so items survive app restarts.
+Wishlist state is saved to local storage automatically after every change, so items survive app restarts.
 
 To sync wishlist with a server:
 

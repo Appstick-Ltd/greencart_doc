@@ -4,13 +4,13 @@ title: Colors & Theme
 description: Complete color palette and theme customization guide for Hana Go — change brand colors, dark mode, and semantic tokens.
 ---
 
-# 🎨 Colors & Theme
+# Colors & Theme
 
-Hana Go uses a centralized color system. Every color in the app is defined in one file — change it there and the entire app updates instantly.
+Hana Go uses a centralized color system. Every color in the app is defined in one file. Change it there and the entire app updates instantly.
 
 ---
 
-## 📁 File
+## File
 
 ```
 lib/constants/ui.dart
@@ -19,7 +19,7 @@ lib/theme/app.dart
 
 ---
 
-## 🎨 Complete Color Palette
+## Complete Color Palette
 
 ### Brand Colors
 
@@ -54,7 +54,9 @@ lib/theme/app.dart
 
 ---
 
-## 📝 ui.dart
+## ui.dart
+
+This file defines all the colors used across the app.
 
 ```dart
 // lib/constants/ui.dart
@@ -90,9 +92,9 @@ abstract class AppColors {
 
 ---
 
-## 🔄 How to Change the Primary Brand Color
+## How to Change the Primary Brand Color
 
-To rebrand Hana Go with your own colors, only edit `ui.dart`:
+To rebrand Hana Go, edit only `ui.dart`. This example shows how to switch to a blue brand.
 
 ```dart
 // Example: Changing to a blue brand
@@ -102,13 +104,13 @@ static const Color mintGreen    = Color(0xFFDBEAFE);  // Light blue tint
 static const Color lightMint    = Color(0xFFEFF6FF);  // Very light blue
 ```
 
-Hot reload the app and every button, icon, header, and active state updates automatically.
+Hot reload the app. Every button, icon, header, and active state updates automatically.
 
 ---
 
-## 🌙 Material Theme Configuration
+## Material Theme Configuration
 
-The full Material 3 theme is configured in `lib/theme/app.dart`:
+The full Material 3 theme is configured in `lib/theme/app.dart`. This code shows how colors are applied to the overall theme.
 
 ```dart
 // lib/theme/app.dart
@@ -147,7 +149,7 @@ ThemeData get lightTheme => ThemeData(
 
 ---
 
-## 🎨 Semantic Color Usage Guidelines
+## Semantic Color Usage Guidelines
 
 | Situation | Color to Use |
 |-----------|-------------|
@@ -165,5 +167,5 @@ ThemeData get lightTheme => ThemeData(
 ---
 
 :::tip One File, App-Wide Impact
-Since every widget uses `AppColors.primary` (not hard-coded hex values), changing your brand color is a **single-line edit** in `ui.dart`. The entire app — 26 screens — reflects the change immediately on hot reload.
+Every widget uses `AppColors.primary` (not hard-coded hex values). Changing your brand color is a **single-line edit** in `ui.dart`. The entire app (26 screens) reflects the change immediately on hot reload.
 :::

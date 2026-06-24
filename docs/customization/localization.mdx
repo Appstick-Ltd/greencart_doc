@@ -4,13 +4,13 @@ title: Localization
 description: Multi-language support in Hana Go — 9 languages, how to add a new language, and translation key guide.
 ---
 
-# 🌍 Localization
+# Localization
 
 Hana Go ships with **9 languages** out of the box using Flutter's built-in localization with GetX for runtime language switching.
 
 ---
 
-## 📁 Files
+## Files
 
 ```
 assets/translations/          ← One JSON file per language
@@ -22,25 +22,25 @@ lib/pages/settings/language/
 
 ---
 
-## 🗺️ Supported Languages
+## Supported Languages
 
 | # | Language | Locale | File |
 |---|----------|--------|------|
-| 1 | 🇺🇸 English (US) | `en_US` | `en_US.json` |
-| 2 | 🇬🇧 English (UK) | `en_GB` | `en_GB.json` |
-| 3 | 🇩🇪 German | `de_DE` | `de_DE.json` |
-| 4 | 🇪🇸 Spanish | `es_ES` | `es_ES.json` |
-| 5 | 🇫🇷 French | `fr_FR` | `fr_FR.json` |
-| 6 | 🇮🇹 Italian | `it_IT` | `it_IT.json` |
-| 7 | 🇮🇩 Indonesian | `id_ID` | `id_ID.json` |
-| 8 | 🇩🇪 German (alt) | `de` | `de.json` |
-| 9 | 🇬🇧 English (alt) | `en` | `en.json` |
+| 1 | English (US) | `en_US` | `en_US.json` |
+| 2 | English (UK) | `en_GB` | `en_GB.json` |
+| 3 | German | `de_DE` | `de_DE.json` |
+| 4 | Spanish | `es_ES` | `es_ES.json` |
+| 5 | French | `fr_FR` | `fr_FR.json` |
+| 6 | Italian | `it_IT` | `it_IT.json` |
+| 7 | Indonesian | `id_ID` | `id_ID.json` |
+| 8 | German (alt) | `de` | `de.json` |
+| 9 | English (alt) | `en` | `en.json` |
 
 ---
 
-## 📋 Translation File Format
+## Translation File Format
 
-Each translation file is a flat JSON key-value object:
+Each translation file is a flat JSON key-value object. Here is an example of the English (US) file.
 
 ```json
 // assets/translations/en_US.json
@@ -84,9 +84,9 @@ Each translation file is a flat JSON key-value object:
 
 ---
 
-## 🔑 Using Translations in Code
+## Using Translations in Code
 
-GetX provides the `.tr` extension on strings:
+GetX provides the `.tr` extension on strings to load the correct translation.
 
 ```dart
 // In any widget:
@@ -100,11 +100,11 @@ Text('items_count'.trArgs(['5'])) // → "5 items in cart"
 
 ---
 
-## ➕ Adding a New Language
+## Adding a New Language
 
 ### Step 1 — Create the Translation File
 
-Create `assets/translations/ja_JP.json` (example: Japanese):
+Create `assets/translations/ja_JP.json` (example: Japanese).
 
 ```json
 {
@@ -125,6 +125,8 @@ Every key present in `en_US.json` must also be in your new language file. Missin
 
 ### Step 2 — Declare Asset in pubspec.yaml
 
+Add the new language file to the assets list.
+
 ```yaml
 flutter:
   assets:
@@ -133,6 +135,8 @@ flutter:
 ```
 
 ### Step 3 — Add Language Definition
+
+Add the new language to the supported languages list.
 
 ```dart
 // lib/utils/extensions/string.dart
@@ -152,18 +156,20 @@ class AppLanguage {
 }
 
 const kSupportedLanguages = [
-  AppLanguage(name: 'English (US)', flag: '🇺🇸', code: 'en_US', locale: Locale('en', 'US')),
-  AppLanguage(name: 'German',       flag: '🇩🇪', code: 'de_DE', locale: Locale('de', 'DE')),
-  AppLanguage(name: 'Spanish',      flag: '🇪🇸', code: 'es_ES', locale: Locale('es', 'ES')),
-  AppLanguage(name: 'French',       flag: '🇫🇷', code: 'fr_FR', locale: Locale('fr', 'FR')),
-  AppLanguage(name: 'Italian',      flag: '🇮🇹', code: 'it_IT', locale: Locale('it', 'IT')),
-  AppLanguage(name: 'Indonesian',   flag: '🇮🇩', code: 'id_ID', locale: Locale('id', 'ID')),
+  AppLanguage(name: 'English (US)', flag: '', code: 'en_US', locale: Locale('en', 'US')),
+  AppLanguage(name: 'German',       flag: '', code: 'de_DE', locale: Locale('de', 'DE')),
+  AppLanguage(name: 'Spanish',      flag: '', code: 'es_ES', locale: Locale('es', 'ES')),
+  AppLanguage(name: 'French',       flag: '', code: 'fr_FR', locale: Locale('fr', 'FR')),
+  AppLanguage(name: 'Italian',      flag: '', code: 'it_IT', locale: Locale('it', 'IT')),
+  AppLanguage(name: 'Indonesian',   flag: '', code: 'id_ID', locale: Locale('id', 'ID')),
   // Add new language:
-  AppLanguage(name: 'Japanese',     flag: '🇯🇵', code: 'ja_JP', locale: Locale('ja', 'JP')),
+  AppLanguage(name: 'Japanese',     flag: '', code: 'ja_JP', locale: Locale('ja', 'JP')),
 ];
 ```
 
 ### Step 4 — Add Locale to GetMaterialApp
+
+Register the new locale in the main app configuration.
 
 ```dart
 // main.dart
@@ -185,7 +191,9 @@ The new language will automatically appear in the Language settings screen.
 
 ---
 
-## 🔄 Switching Language at Runtime
+## Switching Language at Runtime
+
+This code handles language selection and saves the user's choice.
 
 ```dart
 // language_controller.dart
@@ -195,7 +203,7 @@ void selectLanguage(AppLanguage lang) {
 }
 ```
 
-On next app launch, saved locale is restored:
+On next app launch, the saved locale is restored.
 
 ```dart
 // main.dart
@@ -207,9 +215,9 @@ final savedLocale = kSupportedLanguages
 
 ---
 
-## 📐 Right-to-Left (RTL) Support
+## Right-to-Left (RTL) Support
 
-To add Arabic or Hebrew (RTL languages), add to `GetMaterialApp`:
+To add Arabic or Hebrew (RTL languages), add this to `GetMaterialApp`.
 
 ```dart
 GetMaterialApp(

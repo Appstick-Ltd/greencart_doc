@@ -1,21 +1,24 @@
 ---
 sidebar_position: 4
+title: Product Catalog and Database Setup
+description: How to manage the product catalog, add categories, and configure default seed data in Hana Go.
 ---
 
-# Product Catalog & Mock Database Setup
+# Product Catalog and Database Setup
 
-This guide describes how to manage the application's local database. You will learn the layout of the product catalog JSON, how to add new categories, and how to configure static seeds (e.g., default shipping addresses, discount coupons, and payment cards).
+This guide explains how to manage the app's local database. You will learn the product catalog JSON format, how to add categories, and how to configure default seed data like addresses, coupons, and payment cards.
 
 ---
 
 ## 1. Product Catalog Database
 
-Hana Go uses an offline-first catalog architecture. All product records are loaded from a bundled JSON file:
+Hana Go uses an offline-first catalog. All product records are loaded from a bundled JSON file:
 
-📁 File path: [assets/data/products.json](file:///d:/App_project/hanaGo/assets/data/products.json)
+`assets/data/products.json`
 
-### Product Entry Schema
-Each product in the JSON list contains the following attributes:
+### Product Entry Format
+
+Each product in the JSON list contains these fields:
 
 ```json
 {
@@ -34,43 +37,46 @@ Each product in the JSON list contains the following attributes:
 }
 ```
 
-### Attribute Breakdown:
-*   `id` *(String)*: Unique identifier used internally for shopping cart item management.
-*   `name` *(String)*: Display name shown on cards and detail screens.
-*   `price` *(Double)*: Current sale price.
-*   `originalPrice` *(Double)*: Regular price. If higher than `price`, the UI automatically displays a discount percentage badge.
-*   `inStock` *(Boolean)*: If set to `false`, the product detail screen shows "Out of Stock" and disables the "Add to Cart" button.
-*   `assetPath` *(String)*: Local image file path. Make sure your asset folders are declared under the `flutter -> assets` section in `pubspec.yaml`.
-*   `icon` *(String)*: Associated Material Icon representation (fallback).
-*   `color` *(Integer)*: Hex color representation in decimal integer format (ARGB) used as the background highlight on product item grids.
-*   `tags` *(Array of Strings)*: Search tags and filtering qualifiers.
-*   `description` *(String)*: Long-form text description.
-*   `sizeText` *(String)*: Standard units (e.g., "500 gm", "1 pc", "1 kg").
-*   `categoryLabel` *(String)*: Matches the category labels (e.g., `Vegetables`, `Snacks`, `Fruits`, `Diary`, `Pantry`, `Beverages`, `Frozen`, `Household`).
+### Field Guide
+
+- **id** (String): Unique identifier used for cart management.
+- **name** (String): Display name shown on cards and detail screens.
+- **price** (Double): Current sale price.
+- **originalPrice** (Double): Regular price. If higher than `price`, a discount badge appears.
+- **inStock** (Boolean): If `false`, the product shows "Out of Stock" and disables "Add to Cart".
+- **assetPath** (String): Local image path. Make sure asset folders are declared in `pubspec.yaml` under `flutter -> assets`.
+- **icon** (String): Fallback Material Icon name.
+- **color** (Integer): Background color in decimal ARGB format for product grids.
+- **tags** (Array of Strings): Search and filter tags.
+- **description** (String): Long-form text description.
+- **sizeText** (String): Unit size (for example, "500 gm", "1 pc", "1 kg").
+- **categoryLabel** (String): Category name (for example, `Vegetables`, `Snacks`, `Fruits`, `Dairy`, `Pantry`, `Beverages`, `Frozen`, `Household`).
 
 ---
 
 ## 2. Managing Product Categories
 
-Categories are resolved inside the product loader class:
+Categories are defined in the product loader class:
 
-📁 File path: [lib/data/loaders/product_data_loader.dart](file:///d:/App_project/hanaGo/lib/data/loaders/product_data_loader.dart)
+`lib/data/loaders/product_data_loader.dart`
 
 To add a new category:
-1. Open [product_data_loader.dart](file:///d:/App_project/hanaGo/lib/data/loaders/product_data_loader.dart) and add a value to the `ProductCategory` enum.
-2. Update the category mapping in the `loadProductsByCategory` function to map your new category name.
-3. Open `products.json` and add items containing your new category name in `categoryLabel`.
+1. Open `lib/data/loaders/product_data_loader.dart` and add a value to the `ProductCategory` enum.
+2. Update the category mapping in the `loadProductsByCategory` function.
+3. Open `products.json` and add items with your new category name in `categoryLabel`.
 
 ---
 
-## 3. Mock Database Seeds
+## 3. Default Seed Data
 
-To speed up development and provide a complete offline client demo, Hana Go loads initial lists for addresses, coupons, and orders from static files:
+To speed up development, Hana Go loads default lists for addresses, coupons, and orders from static files:
 
-📁 Folder path: [lib/data/seeds/](file:///d:/App_project/hanaGo/lib/data/seeds/)
+`lib/data/seeds/`
 
-### Modifying Default Shipping Addresses
-Edit [default_addresses.dart](file:///d:/App_project/hanaGo/lib/data/seeds/default_addresses.dart) to change the default address choices. Perfect for specifying testing locations:
+### Default Shipping Addresses
+
+Edit `lib/data/seeds/default_addresses.dart` to set default addresses:
+
 ```dart
 final defaultAddresses = [
   AddressModel(
@@ -86,8 +92,10 @@ final defaultAddresses = [
 ];
 ```
 
-### Modifying Default Promo Coupons
-Edit [default_coupons.dart](file:///d:/App_project/hanaGo/lib/data/seeds/default_coupons.dart) to define custom promo codes, descriptions, and active discounts:
+### Default Promo Coupons
+
+Edit `lib/data/seeds/default_coupons.dart` to set custom promo codes and discounts:
+
 ```dart
 final defaultCoupons = [
   CouponModel(
@@ -100,8 +108,10 @@ final defaultCoupons = [
 ];
 ```
 
-### Modifying Payment Cards Wallet
-Edit [default_payment_cards.dart](file:///d:/App_project/hanaGo/lib/data/seeds/default_payment_cards.dart) to configure testing debit/credit cards details:
+### Default Payment Cards
+
+Edit `lib/data/seeds/default_payment_cards.dart` to set test payment card details:
+
 ```dart
 final defaultPaymentCards = [
   PaymentCardModel(
@@ -115,6 +125,9 @@ final defaultPaymentCards = [
   ...
 ];
 ```
-:::tip Real API Integration
-When you are ready to connect to a live backend API, swap the storage initialization calls inside the GetX controllers (such as `CheckoutController`, `ProfileController`, and `CartController`) to hit your database endpoint instead of loading from these static seed files.
+
+:::tip Connecting to a Live API
+
+When you are ready to connect to a live backend, swap the storage calls in the GetX controllers (such as `CheckoutController`, `ProfileController`, and `CartController`) to use your API instead of these static seed files.
+
 :::

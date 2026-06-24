@@ -4,13 +4,13 @@ title: Mock Data → Real API
 description: How to replace Hana Go's built-in mock data with your real backend API — step-by-step integration guide.
 ---
 
-# 🔌 Mock Data → Real API
+# Mock Data → Real API
 
-Hana Go ships with a complete mock data layer so you can explore every screen without a backend. This guide walks you through swapping mock data for real API calls — without changing any UI code.
+Hana Go ships with a complete mock data layer so you can explore every screen without a backend. This guide walks you through swapping mock data for real API calls without changing any UI code.
 
 ---
 
-## 🏗️ Data Layer Architecture
+## Data Layer Architecture
 
 ```
 UI (Views)
@@ -26,7 +26,7 @@ The key insight: **controllers only care about `List<ProductModel>`, not where t
 
 ---
 
-## 📋 Mock Data Files
+## Mock Data Files
 
 | File | Contents |
 |------|----------|
@@ -39,9 +39,9 @@ The key insight: **controllers only care about `List<ProductModel>`, not where t
 
 ---
 
-## 🛒 Step 1 — Replace Products API
+## Step 1 — Replace Products API
 
-### Before (Mock)
+This is the current mock data loader that reads from a local JSON file.
 
 ```dart
 // lib/data/loaders/product_loader.dart
@@ -60,7 +60,7 @@ class ProductLoader {
 }
 ```
 
-### After (Real API)
+Replace it with this version that calls your real API.
 
 ```dart
 // lib/data/loaders/product_loader.dart
@@ -100,7 +100,9 @@ class ProductLoader {
 
 ---
 
-## 🔐 Step 2 — Replace Authentication
+## Step 2 — Replace Authentication
+
+Here is the auth service that connects to your login, register, and password reset endpoints.
 
 ```dart
 // lib/services/auth_service.dart
@@ -142,7 +144,9 @@ class AuthService extends GetxService {
 
 ---
 
-## 📦 Step 3 — Replace Orders API
+## Step 3 — Replace Orders API
+
+Replace the mock orders seed with real API calls in the orders controller.
 
 ```dart
 // Replace orders_seed.dart usage in my_orders_controller.dart:
@@ -170,7 +174,9 @@ Future<void> loadOrders() async {
 
 ---
 
-## 🎟️ Step 4 — Replace Coupons
+## Step 4 — Replace Coupons
+
+Replace the mock coupons seed with real API calls.
 
 ```dart
 // coupons_controller.dart
@@ -186,9 +192,9 @@ Future<void> loadCoupons() async {
 
 ---
 
-## 🌐 Configuring Dio (HTTP Client)
+## Configuring Dio (HTTP Client)
 
-Set up a single `Dio` instance with interceptors for auth headers, logging, and error handling:
+Set up a single Dio instance with interceptors for auth headers, logging, and error handling. This is the central HTTP client for the app.
 
 ```dart
 // lib/services/api_service.dart
@@ -230,7 +236,7 @@ class ApiService {
 
 ---
 
-## ✅ Integration Checklist
+## Integration Checklist
 
 | Step | Task | Status |
 |------|------|--------|
@@ -248,5 +254,5 @@ class ApiService {
 ---
 
 :::tip No UI Changes Required
-Hana Go's architecture is specifically designed so that **zero UI code changes** are needed when swapping mock data for real APIs. The separation of concerns between loaders, controllers, and views ensures clean integration.
+Hana Go's architecture is designed so that **zero UI code changes** are needed when swapping mock data for real APIs. The separation of concerns between loaders, controllers, and views ensures clean integration.
 :::
