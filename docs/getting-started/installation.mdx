@@ -26,19 +26,52 @@ Before you begin, make sure you have the following installed:
 
 ---
 
-## 🛠️ Step 1 — Install Flutter
+## 🛠️ Step 1 — Install Git
+
+1. Download Git from [git-scm.com](https://git-scm.com/download/win)
+
+![Git Download](/img/screenshots/installation/git_download.png)
+
+2. Run the installer with default settings
+
+3. Verify installation:
+
+```bash
+git --version
+```
+
+![Git Version](/img/screenshots/installation/git_version.png)
+
+---
+
+## 🛠️ Step 2 — Install Flutter SDK
 
 ### Windows
 
-```bash
-# 1. Download Flutter SDK from https://docs.flutter.dev/get-started/install/windows
-# 2. Extract to C:\flutter
-# 3. Add to PATH
-setx PATH "%PATH%;C:\flutter\bin"
+1. Download Flutter SDK from [flutter.dev](https://docs.flutter.dev/get-started/install/windows)
 
-# Verify installation
+![Flutter SDK Download](/img/screenshots/installation/flutter_download.png)
+
+2. Extract the zip file to `C:\flutter`
+
+![Extract Flutter SDK](/img/screenshots/installation/flutter_extract.png)
+
+3. Add Flutter to your PATH environment variable:
+   - Search for "Environment Variables" in Windows Search
+   - Click "Edit the system environment variables"
+   - Click "Environment Variables"
+   - Under "System variables", select "Path" and click "Edit"
+   - Click "New" and add `C:\flutter\bin`
+
+![Add to PATH](/img/screenshots/installation/flutter_path_windows.png)
+
+4. Open a new terminal and verify installation:
+
+```bash
 flutter --version
 ```
+
+![Flutter Version Check](/img/screenshots/installation/flutter_version_check.png)
 
 ### macOS
 
@@ -65,7 +98,25 @@ flutter --version
 
 ---
 
-## 🔍 Step 2 — Run Flutter Doctor
+## 📱 Step 3 — Install Android Studio
+
+1. Download Android Studio from [developer.android.com](https://developer.android.com/studio)
+
+![Android Studio Download](/img/screenshots/installation/android_studio_download.png)
+
+2. Run the installer and complete the installation
+
+3. Launch Android Studio
+
+![Android Studio Launch](/img/screenshots/installation/android_studio_launch.png)
+
+4. Wait for SDK components to download
+
+![SDK Download](/img/screenshots/installation/android_studio_sdk_download.png)
+
+---
+
+## 🔍 Step 4 — Run Flutter Doctor
 
 `flutter doctor` checks your environment for missing dependencies:
 
@@ -73,7 +124,11 @@ flutter --version
 flutter doctor
 ```
 
+![Flutter Doctor Command](/img/screenshots/installation/flutter_doctor_command.png)
+
 Resolve any issues it reports. A healthy output looks like:
+
+![Flutter Doctor Output](/img/screenshots/installation/flutter_doctor_output.png)
 
 ```
 ✓ Flutter (Channel stable, 3.22.x)
@@ -93,13 +148,25 @@ Resolve any issues it reports. A healthy output looks like:
 
 ---
 
-## 📱 Step 3 — Set Up an Emulator or Device
+## 📱 Step 5 — Set Up an Emulator or Device
 
 ### Android Emulator
+
 1. Open **Android Studio** → **Device Manager**
+
+![Open Device Manager](/img/screenshots/installation/android_studio_device_manager.png)
+
 2. Click **Create Device**
-3. Choose a device (e.g., Pixel 8) → API 34+ → **Finish**
-4. Click ▶ to launch the emulator
+
+![Create Device Button](/img/screenshots/installation/create_device_button.png)
+
+3. Choose a device (e.g., Pixel 8) and select a system image (API 34+)
+
+![Select Device](/img/screenshots/installation/select_device.png)
+
+4. Click **Finish** to complete setup, then click ▶ to launch the emulator
+
+![Emulator Running](/img/screenshots/installation/emulator_running.png)
 
 ### iOS Simulator (macOS only)
 ```bash
@@ -116,7 +183,7 @@ open -a Simulator
 
 ---
 
-## 📦 Step 4 — Install Dependencies
+## 📦 Step 6 — Install Dependencies
 
 After cloning the project (see [Quick Start](./quick-start)), install all Flutter packages:
 
@@ -124,7 +191,11 @@ After cloning the project (see [Quick Start](./quick-start)), install all Flutte
 flutter pub get
 ```
 
+![Flutter Pub Get](/img/screenshots/installation/flutter_pub_get.png)
+
 This reads `pubspec.yaml` and downloads all 20+ packages. Expected output:
+
+![Dependencies Resolved](/img/screenshots/installation/dependencies_resolved.png)
 
 ```
 Resolving dependencies...
@@ -133,36 +204,79 @@ Got dependencies!
 
 ---
 
-## 🔑 Step 5 — Configure Firebase (Required for Push Notifications)
+## 🔧 Step 7 — Install VS Code
 
-Hana Go uses Firebase for push notifications. Follow the [Firebase Setup Guide](../firebase-setup) or:
+1. Download VS Code from [code.visualstudio.com](https://code.visualstudio.com/)
 
-1. Go to [console.firebase.google.com](https://console.firebase.google.com)
-2. Create a new project or use existing
-3. Add Android app (`com.yourcompany.hanago`) → download `google-services.json` → place in `android/app/`
-4. Add iOS app → download `GoogleService-Info.plist` → add in Xcode under Runner target
+![VS Code Download](/img/screenshots/installation/vscode_download.png)
 
-:::info Skip Firebase for UI-only testing
-If you only want to explore the UI without push notifications, you can defer Firebase setup. The app will run without it — just expect a Firebase initialization warning in debug logs.
-:::
+2. Run the installer and complete the installation
+
+3. Launch VS Code
+
+![VS Code Launch](/img/screenshots/installation/vscode_launch.png)
+
+### Install Extensions
+
+1. Press `Ctrl+Shift+X` to open Extensions
+
+![VS Code Extensions](/img/screenshots/installation/vscode_extensions.png)
+
+2. Search for **Flutter** and click Install
+
+![Flutter Extension](/img/screenshots/installation/flutter_extension.png)
+
+3. Search for **Dart** and click Install
+
+![Dart Extension](/img/screenshots/installation/dart_extension.png)
+
+4. Install these additional extensions:
+   - **Pubspec Assist** — for managing pub dependencies
+   - **Flutter Widget Snippets** — code snippets
+   - **Error Lens** — inline error highlighting
+
+![Additional Extensions](/img/screenshots/installation/additional_extensions.png)
 
 ---
 
-## ✅ Step 6 — Run the App
+## ✅ Step 8 — Run the App
+
+### Using VS Code (Recommended)
+
+1. Open the project folder in VS Code
+
+![Open Project](/img/screenshots/installation/vscode_open_project.png)
+
+2. Click **Run and Debug** in the sidebar (or press `Ctrl+Shift+D`)
+
+![Run and Debug](/img/screenshots/installation/vscode_run_debug.png)
+
+3. Select your device from the dropdown
+
+![Select Device](/img/screenshots/installation/vscode_select_device.png)
+
+4. Click **Run** (▶) or press `F5`
+
+![Click Run](/img/screenshots/installation/vscode_click_run.png)
+
+5. Wait for the app to build and launch
+
+![App Running](/img/screenshots/installation/app_running.png)
+
+### Using Terminal
 
 ```bash
-# Run on connected device/emulator (debug mode)
+# List available devices
+flutter devices
+
+# Run on connected device/emulator
 flutter run
 
 # Run on a specific device
 flutter run -d <device-id>
-
-# List available devices
-flutter devices
-
-# Run in release mode (faster, no debug overlay)
-flutter run --release
 ```
+
+![Flutter Run Terminal](/img/screenshots/installation/flutter_run_terminal.png)
 
 ---
 
@@ -185,23 +299,6 @@ flutter build appbundle --release
 flutter build ios --release
 # Then open Xcode → Product → Archive → Distribute App
 ```
-
----
-
-## 🔧 IDE Setup (Recommended)
-
-### VS Code Extensions
-Install these for the best Flutter development experience:
-
-- **Flutter** (by Dart Code) — required
-- **Dart** (by Dart Code) — required
-- **Pubspec Assist** — for managing pub dependencies
-- **Flutter Widget Snippets** — code snippets
-- **Error Lens** — inline error highlighting
-
-### Android Studio Plugins
-- **Flutter** (bundled with recent versions)
-- **Dart** (bundled with recent versions)
 
 ---
 
