@@ -21,10 +21,11 @@ Skip straight to the **[Quick Start →](./quick-start)** and be running in unde
 | **1** | Install Git | ~2 min |
 | **2** | Install Flutter SDK | ~5 min |
 | **3** | Install Android Studio | ~5 min |
-| **4** | Run Flutter Doctor | ~2 min |
-| **5** | Set up Emulator or Device | ~5 min |
-| **6** | Install VS Code + Extensions | ~3 min |
-| **7** | Run Hana Go | ~2 min |
+| **4** | Set Up Android SDK | ~3 min |
+| **5** | Run Flutter Doctor | ~2 min |
+| **6** | Set up Emulator or Device | ~5 min |
+| **7** | Install VS Code + Extensions | ~3 min |
+| **8** | Run Hana Go | ~2 min |
 
 ---
 
@@ -133,7 +134,31 @@ After installation, open **Android Studio → SDK Manager** and make sure **Andr
 
 ---
 
-## Step 4 — Run Flutter Doctor
+## Step 4 — Set Up Android SDK
+
+After installing Android Studio, you need to configure the Android SDK:
+
+1. Open **Android Studio**
+
+2. Go to **More Actions** (or **Configure**) → **SDK Manager**
+
+![Open SDK Manager](/img/screenshots/installation/sdk_manager_open.png)
+
+3. Select the **SDK Tools** tab
+
+4. Check **Android SDK Command-line Tools (latest)**
+
+![Select Command-line Tools](/img/screenshots/installation/sdk_commandline_tools.png)
+
+5. Click **Apply** → **OK** to install
+
+:::note
+This step is required for Flutter to properly detect your Android toolchain.
+:::
+
+---
+
+## Step 5 — Run Flutter Doctor
 
 `flutter doctor` checks your entire environment and tells you exactly what's missing.
 
@@ -167,7 +192,7 @@ A fully healthy output looks like this:
 
 ---
 
-## Step 5 — Set Up an Emulator or Device
+## Step 6 — Set Up an Emulator or Device
 
 You need a device to run the app. Choose one option:
 
@@ -223,7 +248,7 @@ Select a device from **File → Open Simulator** within the Simulator app.
 
 ---
 
-## Step 6 — Install VS Code + Extensions
+## Step 7 — Install VS Code + Extensions
 
 VS Code is the recommended editor for Flutter development.
 
@@ -249,7 +274,7 @@ VS Code is the recommended editor for Flutter development.
 
 ---
 
-## Step 7 — Run Hana Go
+## Step 8 — Run Hana Go
 
 You're all set up. Now let's launch the app.
 
