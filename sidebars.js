@@ -6,23 +6,22 @@ const sidebars = {
     {
       type: 'doc',
       id: 'intro',
-      label: '🏠 Introduction',
+      label: 'Introduction',
     },
     {
       type: 'category',
-      label: '🚀 Getting Started',
+      label: 'Getting Started',
       collapsed: false,
       items: [
         'getting-started/installation',
         'getting-started/quick-start',
         'getting-started/project-structure',
         'configuration',
-        'firebase-setup',
       ],
     },
     {
       type: 'category',
-      label: '✨ Features',
+      label: 'Features',
       collapsed: false,
       items: [
         'features/screens-overview',
@@ -39,7 +38,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🎨 Customization',
+      label: 'Customization',
       collapsed: false,
       items: [
         'customization/colors-theme',
@@ -52,7 +51,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🏗️ Architecture',
+      label: 'Architecture',
       collapsed: false,
       items: [
         'architecture/tech-stack',
@@ -64,7 +63,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '📚 Reference',
+      label: 'Reference',
       collapsed: false,
       items: [
         'reference/screens-and-code',
