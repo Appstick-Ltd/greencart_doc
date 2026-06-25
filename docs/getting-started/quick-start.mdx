@@ -1,120 +1,166 @@
 ---
 sidebar_position: 2
 title: Quick Start
-description: Get Hana Go running on your device in under 5 minutes with this step-by-step quick start guide.
+description: Get Hana Go running on your device in under 5 minutes — no setup required if Flutter is already installed.
 ---
 
-# Quick Start
+# ⚡ Quick Start
 
-Get **Hana Go** running on your device in under 5 minutes.
+> Get **Hana Go** up and running on your device in under 5 minutes.
+
+:::info Prerequisites
+This guide assumes **Flutter SDK is already installed** on your machine.
+If not, follow the full [Installation Guide](./installation) first — it takes about 15 minutes.
+:::
 
 ---
 
 ## What You Need
 
-Before you start, make sure you have:
-
-| Requirement | Why |
-|-------------|-----|
-| **Flutter SDK** installed | The app is built with Flutter |
-| **Android Studio** or **VS Code** | Your code editor |
-| **Android Emulator** or **Physical Device** | To run the app |
-
-> New to Flutter? Check the [Installation Guide](./installation) for detailed setup instructions.
+| Requirement | Version | Notes |
+|-------------|---------|-------|
+| **Flutter SDK** | `^3.12.0` | [flutter.dev](https://flutter.dev) |
+| **Android Studio** or **VS Code** | Latest | Your code editor |
+| **Android Emulator** or **Physical Device** | — | To run the app |
 
 ---
 
-## Step 1: Extract the Downloaded Files
+## Step 1 — Extract the Downloaded Files
 
-After purchasing from CodeCanyon, you will get a `.zip` file. Extract it to any folder on your computer.
-
-<img src="/img/screenshots/installation/project_structure.png" alt="Extracted Folder Structure" width="600" />
-
-After extraction, you will see:
+After purchasing from CodeCanyon, you will receive a `.zip` file.
+Extract it anywhere on your computer.
 
 ```
 hana-go-v1.0.0/
-└── hana_go/          ← This is your main project folder
-└── hana_go_docs/     ← Documentation site
-└── README.pdf        ← Quick reference
+├── hana_go/          ← Your main Flutter project
+├── hana_go_docs/     ← This documentation site
+└── README.pdf        ← Quick reference card
 ```
 
-**Important:** The `hana_go/` folder is what you will work with.
+:::important
+Always work inside the **`hana_go/`** folder — that is your Flutter project root.
+:::
 
 ---
 
-## Step 2: Open the Project in Your Editor
+## Step 2 — Open the Project
 
-**Using VS Code:**
-1. Open VS Code
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="vscode" label="VS Code" default>
+
+1. Open **VS Code**
 2. Go to **File → Open Folder**
-3. Select the `hana_go/` folder
+3. Select the `hana_go/` folder and click **Open**
 
-**Using Android Studio:**
-1. Open Android Studio
-2. Click **Open**
-3. Select the `hana_go/` folder
+  </TabItem>
+  <TabItem value="android-studio" label="Android Studio">
 
-<img src="/img/screenshots/installation/vscode_open_project.png" alt="VS Code with Project Opened" width="600" />
+1. Open **Android Studio**
+2. Click **Open** on the welcome screen
+3. Select the `hana_go/` folder and click **OK**
+
+  </TabItem>
+</Tabs>
+
+<img src="/img/screenshots/installation/vscode_open_project.png" alt="Opening the project in VS Code" width="700" />
 
 ---
 
-## Step 3: Install Packages
+## Step 3 — Install Packages
 
-Open the terminal in your editor and run:
+Open the **terminal** inside your editor and run:
 
 ```bash
 flutter pub get
 ```
 
-Wait for it to finish. You will see "Got dependencies!" when done.
+Wait for it to finish. You should see:
 
-<img src="/img/screenshots/installation/flutter_pub_get.png" alt="Flutter Pub Get Output" width="600" />
-
----
-
-## Step 4: Run the App
-
-### Using VS Code (Recommended)
-
-**1. Open the Run and Debug panel:**
-
-Click the **Run and Debug** icon in the left sidebar (or press `Ctrl+Shift+D`).
-
-<img src="/img/screenshots/installation/vscode_run_debug.png" alt="Run and Debug Panel" width="800" />
-
-**2. Select your device:**
-
-From the dropdown at the top, select your emulator or connected device.
-
-<img src="/img/screenshots/installation/vscode_select_device.png" alt="Select Device" width="800" />
-
-**3. Click the Run button:**
-
-Press the green **Run** button or press `F5`.
-
-<img src="/img/screenshots/installation/vscode_click_run.png" alt="Click Run Button" width="600" />
-
-**4. Wait for the app to build and launch:**
-
-The first time may take 60-90 seconds. After that, it will be fast.
-
-<img src="/img/screenshots/installation/app_running.png" alt="App Running on Device" width="350" />
-
-### Using Terminal
-
-```bash
-# List available devices
-flutter devices
-
-# Run the app
-flutter run
+```
+Resolving dependencies...
+Got dependencies!
 ```
 
+<img src="/img/screenshots/installation/flutter_pub_get.png" alt="flutter pub get output" width="600" />
+
 ---
 
-## Next Steps
+## Step 4 — Run the App
 
-- [Project Structure](./project-structure) — Understand how the code is organized
-- [Colors and Theme](../customization/colors-theme) — Customize the app look
-- [Tech Stack](../architecture/tech-stack) — Learn about the architecture
+<Tabs>
+  <TabItem value="vscode" label="VS Code (Recommended)" default>
+
+1. Click the **Run and Debug** icon in the left sidebar, or press `Ctrl+Shift+D`
+2. Select your **emulator or physical device** from the dropdown at the top
+3. Click the green **▶ Run** button, or press `F5`
+4. Wait **60–90 seconds** for the first build to complete
+
+<img src="/img/screenshots/installation/vscode_run_debug.png" alt="Run and Debug panel" width="700" />
+
+  </TabItem>
+  <TabItem value="terminal" label="Terminal">
+
+```bash
+# See all connected devices
+flutter devices
+
+# Run on the default device
+flutter run
+
+# Run on a specific device
+flutter run -d <device-id>
+```
+
+  </TabItem>
+</Tabs>
+
+<div style={{textAlign: 'center', marginTop: '1.5rem', marginBottom: '0.5rem'}}>
+  <p style={{color: '#6B7280', fontSize: '0.9rem', marginBottom: '0.75rem'}}>🎉 Your app should now look like this:</p>
+  <img src="/img/screenshots/installation/app_running.png" alt="Hana Go running on device" width="280" />
+</div>
+
+:::tip Hot Reload and Hot Restart
+- Press **`r`** in the terminal → **Hot Reload** — updates the UI instantly, keeps app state
+- Press **`R`** in the terminal → **Hot Restart** — full restart, resets state — use after logic or controller changes
+:::
+
+---
+
+## ✅ You're All Set!
+
+The app is running. Here's what to explore next:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem'}}>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### 🗂️ Project Structure
+Understand how the code is organized — **[View Guide](./project-structure)**
+
+</div>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### 🎨 Colors & Theme
+Match the app to your brand — **[Customize](../customization/colors-theme)**
+
+</div>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### 🏗️ Architecture
+Learn the tech stack and patterns — **[Tech Stack](../architecture/tech-stack)**
+
+</div>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### 🔥 Firebase Setup
+Connect your backend — **[Firebase Guide](../firebase-setup)**
+
+</div>
+
+</div>
