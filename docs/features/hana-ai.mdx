@@ -1,259 +1,81 @@
 ---
 sidebar_position: 6
 title: Hana AI Assistant
-description: Complete documentation for the Hana AI Assistant feature — voice input, chat UI, product recommendations, and recipe suggestions.
+description: AI-powered grocery assistant with voice input, chat, product recommendations, and recipes.
 ---
+
+import ZoomableImage from '@site/src/components/ZoomableImage';
 
 # Hana AI Assistant
 
-**Hana AI** is a fully built conversational grocery assistant UI with voice input, inline product recommendations, recipe cards, and a cart sheet — ready to connect to any AI backend.
+**Hana AI** is a built-in grocery assistant that helps users find products, get recipes, and shop smarter.
 
 ---
 
-## Files
-
-```
-lib/pages/hana_ai/
-├── hana_ai_view.dart             ← Main AI chat screen
-├── hana_ai_controller.dart       ← Voice + message state management
-└── widgets/
-    ├── ai_message_bubble.dart    ← User and AI chat bubbles
-    ├── ai_product_card.dart      ← Inline product recommendation card
-    ├── ai_recipe_card.dart       ← Recipe suggestion with ingredients
-    ├── voice_waveform.dart       ← Animated waveform during voice recording
-    └── ai_cart_sheet.dart        ← Bottom sheet to add AI picks to cart
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/hana_ai.png" alt="AI Assistant" />
+  <ZoomableImage src="/img/screenshots/hana_ai_voice.png" alt="AI Voice Input" />
+</div>
 
 ---
 
-## Chat Interface
+## Features
 
-**Route:** `/hana-ai` (accessible from bottom navigation — 3rd tab)
+### Text Chat
+Type questions and get product recommendations as chat messages.
 
-The chat screen displays a list of message bubbles in chronological order:
+### Voice Input
+Tap the microphone button, speak naturally, and the app transcribes your voice.
 
-| Message Type | Sender | Display |
-|-------------|--------|---------|
-| `text` | User / AI | Standard chat bubble with avatar |
-| `product` | AI | Product card with image, name, price, add button |
-| `recipe` | AI | Recipe card with title, cook time, ingredients, steps |
-| `typing` | AI | Three-dot animated typing indicator |
-
-### Message Model
-
-```dart
-// lib/models/ai_message_model.dart
-
-enum AiMessageType { text, product, recipe, typing }
-
-class AiMessageModel {
-  final String id;
-  final AiMessageType type;
-  final bool isUser;
-  final String? text;
-  final ProductModel? product;
-  final RecipeModel? recipe;
-  final DateTime timestamp;
-  
-  const AiMessageModel({...});
-}
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/hana_ai_voice.png" alt="Voice Input" />
+</div>
 
 ---
 
-## Voice Input
+### Product Recommendations
 
-Voice input is powered by `speech_to_text ^7.3.0` with an animated waveform.
+When the AI suggests a product, it shows a card with:
+- Product image
+- Name and price
+- **Add to Cart** button
 
-### How It Works
+Tap "Add to Cart" to add the item directly.
 
-1. User taps the microphone button (bottom-right)
-2. App requests microphone permission
-3. Speech-to-text starts listening
-4. Voice waveform animates with audio amplitude data
-5. On silence, auto-stop and transcribe
-6. Transcribed text is sent as a user message, triggering AI response
-
-### Implementation
-
-```dart
-// hana_ai_controller.dart
-
-final SpeechToText _speech = SpeechToText();
-final RxBool isListening = false.obs;
-final RxDouble amplitude = 0.0.obs;
-
-Future<void> startListening() async {
-  final hasPermission = await _requestMicPermission();
-  if (!hasPermission) return;
-
-  isListening.value = true;
-  await _speech.listen(
-    onResult: (result) {
-      if (result.finalResult) {
-        isListening.value = false;
-        sendMessage(result.recognizedWords);
-      }
-    },
-    onSoundLevelChange: (level) {
-      amplitude.value = level.clamp(0.0, 1.0);
-    },
-    listenMode: ListenMode.confirmation,
-    localeId: Get.locale?.toLanguageTag() ?? 'en-US',
-  );
-}
-
-void stopListening() {
-  _speech.stop();
-  isListening.value = false;
-}
-```
-
-### Waveform Animation
-
-```dart
-// widgets/voice_waveform.dart
-Obx(() => AnimatedContainer(
-  duration: const Duration(milliseconds: 100),
-  height: 4 + (controller.amplitude.value * 40),
-  width: 3,
-  decoration: BoxDecoration(
-    color: AppColors.primary,
-    borderRadius: BorderRadius.circular(2),
-  ),
-))
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/ai_product_card.png" alt="AI Product Card" />
+</div>
 
 ---
 
-## AI Product Card
+### Recipe Suggestions
 
-When the AI recommends a product, it renders a product card inline in the chat:
-
-```
-┌─────────────────────────────┐
-│ [Product Image]  Fresh Milk │
-│                  500ml      │
-│                  $2.49      │
-│              [Add to Cart]  │
-└─────────────────────────────┘
-```
-
-Tapping "Add to Cart" adds the item to the cart and shows a success message.
+The AI can suggest recipes with:
+- Recipe name and cook time
+- Ingredient list
+- **Add All to Cart** button — adds all ingredients at once
 
 ---
 
-## AI Recipe Card
+## How It Works
 
-Recipe suggestions are rendered as collapsible cards:
-
-```
-Vegetable Stir Fry              20 min
-──────────────────────────────
-Ingredients: Broccoli, Carrots, Soy Sauce...
-[Expand] [Add All to Cart]
-```
-
-The "Add All to Cart" button adds each ingredient that has a matching product in the catalogue to the cart.
+1. User types or speaks a question
+2. AI processes the request
+3. AI responds with text, product cards, or recipe cards
+4. User can add items to cart directly from the chat
 
 ---
 
-## Connecting Your AI Backend
+## Example Prompts
 
-Hana AI's UI is fully built. You just need to wire the `sendMessage` function to your AI endpoint:
-
-```dart
-// hana_ai_controller.dart
-
-Future<void> sendMessage(String text) async {
-  // 1. Add user message bubble
-  messages.add(AiMessageModel(
-    id: DateTime.now().toIso8601String(),
-    type: AiMessageType.text,
-    isUser: true,
-    text: text,
-    timestamp: DateTime.now(),
-  ));
-
-  // 2. Show typing indicator
-  messages.add(AiMessageModel(type: AiMessageType.typing, isUser: false, ...));
-
-  try {
-    // 3. Call your AI API (OpenAI, Gemini, custom, etc.):
-    final response = await _dio.post(
-      'https://api.yourservice.com/ai/chat',
-      data: {
-        'message': text,
-        'context': 'grocery_assistant',
-        'userId': currentUserId,
-      },
-    );
-
-    // 4. Remove typing indicator
-    messages.removeWhere((m) => m.type == AiMessageType.typing);
-
-    // 5. Parse and display AI response
-    final aiResponse = AiResponseModel.fromJson(response.data);
-    
-    // Text response
-    if (aiResponse.text != null) {
-      messages.add(AiMessageModel(type: AiMessageType.text, text: aiResponse.text, ...));
-    }
-    
-    // Product recommendations
-    for (final product in aiResponse.products ?? []) {
-      messages.add(AiMessageModel(type: AiMessageType.product, product: product, ...));
-    }
-    
-    // Recipe suggestions
-    if (aiResponse.recipe != null) {
-      messages.add(AiMessageModel(type: AiMessageType.recipe, recipe: aiResponse.recipe, ...));
-    }
-
-  } catch (e) {
-    messages.removeWhere((m) => m.type == AiMessageType.typing);
-    AppAlert.error(message: 'AI assistant is temporarily unavailable.');
-  }
-}
-```
+Try asking the AI:
+- "What's fresh today?"
+- "Suggest a healthy breakfast"
+- "Find me a pasta recipe"
+- "Add milk to my cart"
 
 ---
 
-## Customizing the AI Experience
-
-### Change the AI Name/Avatar
-
-```dart
-// In ai_message_bubble.dart or hana_ai_view.dart:
-const String kAiName = 'Hana AI';        // Change to your brand name
-const String kAiAvatarAsset = 'assets/icons/ai_avatar.svg';
-```
-
-### Suggested Prompts
-
-Add pre-built prompt chips below the text field:
-
-```dart
-// hana_ai_view.dart
-Wrap(
-  children: [
-    'What\'s fresh today?',
-    'Suggest a healthy breakfast',
-    'Find me a pasta recipe',
-    'Add milk to my cart',
-  ].map((prompt) => PromptChip(
-    label: prompt,
-    onTap: () => controller.sendMessage(prompt),
-  )).toList(),
-)
-```
-
----
-
-:::info Recommended AI Backends
-Hana AI's UI is backend-agnostic. Popular choices:
-- OpenAI GPT-4o — Best for nuanced recipe and product recommendations
-- Google Gemini — Excellent multimodal support (image-based queries)
-- Anthropic Claude — Great for conversational, contextual responses
-- Custom RAG — Build your own retrieval-augmented generation with product catalogue embeddings
+:::info Connecting Your AI
+The AI chat UI is fully built. Connect your own AI backend (OpenAI, Gemini, Claude, or custom) by updating the `sendMessage` function in `hana_ai_controller.dart`.
 :::

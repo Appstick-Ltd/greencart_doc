@@ -1,266 +1,142 @@
 ---
 sidebar_position: 8
 title: Settings
-description: Complete settings suite in Hana Go — account, addresses, payment methods, notifications, language, privacy, FAQ, and coupons.
+description: Account management, addresses, payments, notifications, language, and more.
 ---
+
+import ZoomableImage from '@site/src/components/ZoomableImage';
 
 # Settings
 
-The Settings section is a comprehensive 11-screen suite covering every user account management feature.
-
----
-
-## Files
-
-```
-lib/pages/settings/
-├── settings_view.dart                    ← Settings hub (root)
-├── widgets/
-│   └── settings_profile_card.dart       ← Profile header card
-├── account/
-│   ├── account_view.dart                 ← Personal info editor
-│   └── account_controller.dart
-├── address/
-│   ├── delivery_address_view.dart        ← Address list
-│   ├── edit_address_view.dart            ← Add/Edit address form
-│   └── address_controller.dart
-├── payment_method/
-│   ├── payment_method_view.dart          ← Card wallet
-│   └── payment_method_controller.dart
-├── notifications/
-│   ├── notification_view.dart            ← Notification list
-│   ├── notification_details_view.dart    ← Full notification
-│   └── notification_controller.dart
-├── change_password/
-│   ├── change_password_view.dart
-│   └── change_password_controller.dart
-├── language/
-│   ├── language_view.dart                ← 9-language picker
-│   └── language_controller.dart
-├── privacy/
-│   └── privacy_sharing_view.dart         ← Privacy policy content
-├── faq/
-│   ├── faq_view.dart                     ← Accordion FAQ
-│   └── faq_controller.dart
-└── coupons/
-    ├── coupons_view.dart                 ← Coupon wallet
-    └── coupons_controller.dart
-```
+Complete account management with 11 screens.
 
 ---
 
 ## Settings Hub
 
-**Route:** `/settings` (bottom nav — 5th tab)
+The main settings screen with profile card and menu options.
 
-The settings hub displays:
-1. Profile Card (top) — avatar, name, email, "Edit Profile" button
-2. Action Buttons List — tappable rows with icon, label, and arrow
+### Menu Items
 
-### Settings Menu Items
+| Menu | What It Does |
+|------|--------------|
+| My Account | Edit personal info |
+| Delivery Address | Manage saved addresses |
+| Payment Method | Manage payment cards |
+| Notifications | View notification history |
+| Change Password | Update your password |
+| Language | Switch between 9 languages |
+| Privacy | Privacy policy |
+| FAQ | Frequently asked questions |
+| Coupons | Available discount codes |
+| Contact Us | Call or email support |
+| Logout | Sign out of the app |
 
-| Icon | Label | Route |
-|------|-------|-------|
-| Person | My Account | `/account` |
-| Pin | Delivery Address | `/delivery-address` |
-| Card | Payment Method | `/payment-method` |
-| Bell | Notifications | `/notification` |
-| Lock | Change Password | `/change-password` |
-| Globe | Language | `/language` |
-| Shield | Privacy and Sharing | `/privacy-sharing` |
-| Question | FAQ | `/faq` |
-| Ticket | Coupons | `/coupons` |
-| Phone | Contact Us | Bottom Sheet |
-| Door | Logout | Clears storage, goes to `/welcome` |
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/settings.png" alt="Settings Screen" />
+</div>
 
 ---
 
-## Account / Personal Info
+## Account
 
-**Route:** `/account`
+Edit your personal information.
 
-Editable fields:
-- Profile photo (via image picker — gallery or camera)
+- Profile photo (from gallery or camera)
 - Full Name
-- Email (read-only if using OAuth)
-- Phone Number (with country code)
+- Email
+- Phone Number
 - Date of Birth
 - Gender
 
-```dart
-// account_controller.dart — pick profile photo
-Future<void> pickProfilePhoto() async {
-  final picker = ImagePicker();
-  final image = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
-  if (image != null) {
-    profileImagePath.value = image.path;
-    await _profileService.updatePhoto(image.path);
-  }
-}
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/account.png" alt="Account Screen" />
+</div>
 
 ---
 
 ## Delivery Addresses
 
-**Route:** `/delivery-address`
+Manage your saved delivery addresses.
 
-### Features
-- List of saved addresses with full details
-- Default address highlighted with a green badge
-- "Set as Default" option per address
-- Edit and Delete actions (swipe or long-press menu)
-- "+ Add New Address" opens the Edit Address form
+- List of saved addresses
+- Default address highlighted
+- Set any address as default
+- Edit or delete addresses
+- Add new address
 
-### Edit Address Form (`/edit-address`)
-
-Fields powered by Google Places autocomplete:
-- Address Line 1 (with autocomplete)
-- Address Line 2 (optional)
-- City / State / ZIP
-- Country
-- Label (Home / Work / Other)
-
-```dart
-// edit_address_controller.dart
-void onPlaceSelected(Prediction prediction) async {
-  final details = await PlacesService.getDetails(prediction.placeId!);
-  streetController.text = details.formattedAddress ?? '';
-  cityController.text = details.city ?? '';
-  stateController.text = details.state ?? '';
-  zipController.text = details.zipCode ?? '';
-}
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/delivery_address.png" alt="Delivery Addresses" />
+</div>
 
 ---
 
 ## Payment Methods
 
-**Route:** `/payment-method`
+Manage your saved payment cards.
 
-Displays saved payment cards with a visual card widget:
-
-```
-┌─────────────────────────────────────┐
-│  ████  VISA                         │
-│                                     │
-│  •••• •••• •••• 4242                │
-│                                     │
-│  John Doe              09/28        │
-└─────────────────────────────────────┘
-```
-
-- Add new card: card number, name, expiry, CVV
-- Remove card with confirmation dialog
+- Visual card display
+- Add new card (number, name, expiry, CVV)
+- Remove card
 - Set default payment method
+
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/payment_method.png" alt="Payment Methods" />
+</div>
 
 ---
 
 ## Notifications
 
-See the Notifications documentation page for full details.
+View your notification history.
+
+- Tabs: All, Orders, Promotions, System
+- Unread count per tab
+- Tap to view full notification
+- Swipe to dismiss
+- "Mark all as read" option
+
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/notifications.png" alt="Notifications" />
+</div>
 
 ---
 
 ## Change Password
 
-**Route:** `/change-password`
+Update your password securely.
 
-Three-field form:
-1. Current Password
-2. New Password (with strength meter)
-3. Confirm New Password
-
-Validation: Passwords must match, minimum 8 characters, at least one number.
+- Current Password
+- New Password (with strength meter)
+- Confirm New Password
 
 ---
 
 ## Language
 
-**Route:** `/language`
+Switch between 9 supported languages.
 
-Displays all 9 supported languages as a selectable list:
-
-| Flag | Language | Locale Code |
-|------|----------|-------------|
-| US | English (US) | `en_US` |
-| UK | English (UK) | `en_GB` |
-| DE | German | `de_DE` |
-| ES | Spanish | `es_ES` |
-| FR | French | `fr_FR` |
-| IT | Italian | `it_IT` |
-| ID | Indonesian | `id_ID` |
-
-Tapping a language updates the app locale and saves the choice:
-
-```dart
-void selectLanguage(AppLanguage lang) {
-  Get.updateLocale(lang.locale);
-  GetStorage().write('locale', lang.code);
-}
-```
-
-See the Localization documentation for adding new languages.
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/language.png" alt="Language Screen" />
+</div>
 
 ---
 
 ## Coupons
 
-**Route:** `/coupons`
+View available discount codes.
 
-A wallet of available coupon cards:
+- Coupon code and discount percentage
+- Minimum order value
+- Expiry date
+- Copy code button
 
-```
-┌─────────────────────────────────────┐
-│ SAVE10                 10% OFF      │
-│ Min. order: $30      Expires: Jul 1 │
-│           [Copy Code]               │
-└─────────────────────────────────────┘
-```
-
-Each coupon card shows: code, discount percentage, minimum order value, expiry date, and a copy-to-clipboard button.
-
-### CouponModel
-
-```dart
-class CouponModel {
-  final String code;
-  final String title;
-  final double discountPercent;
-  final double? discountAmount;
-  final double minOrderValue;
-  final DateTime expiresAt;
-  final bool isActive;
-}
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/coupons.png" alt="Coupons" />
+</div>
 
 ---
 
-## Contact Us
-
-Accessible from Settings as a bottom sheet:
-
-- Call Support — opens phone dialer
-- Email Us — opens email app
-- Live Chat — placeholder for chat SDK integration
-
-```dart
-// Launching call:
-launchUrl(Uri.parse('tel:+18001234567'));
-
-// Launching email:
-launchUrl(Uri.parse('mailto:support@hanago.app?subject=Support Request'));
-```
-
----
-
-:::tip Logout Flow
-Logout clears all persisted data and routes back to Welcome:
-```dart
-void logout() {
-  GetStorage().erase();
-  Get.find<CartService>().clearCart();
-  Get.offAllNamed(Routes.welcomeView);
-}
-```
+:::info Adding Languages
+To add a new language, create a new JSON file in `assets/translations/` and add it to the language list in `language_controller.dart`.
 :::

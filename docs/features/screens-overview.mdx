@@ -1,142 +1,91 @@
 ---
 sidebar_position: 1
 title: Screens Overview
-description: Complete overview of all 26+ screens included in Hana Go Flutter grocery app template.
+description: All screens included in Hana Go at a glance.
 ---
+
+import ZoomableImage from '@site/src/components/ZoomableImage';
 
 # Screens Overview
 
-Hana Go includes **26+ fully designed screens** covering every step of the user journey, from first launch to order tracking.
+**32 screens** ready to use — just replace content with yours.
 
 ---
 
-## App Flow Diagram
+## What You Get
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   ONBOARDING FLOW                   │
-│  Splash → Onboarding → Welcome → Login / Register   │
-│           Forgot PW → OTP → New Password            │
-└──────────────────────┬──────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────┐
-│              MAIN APP (Bottom Navigation)            │
-│   Home  │  Category  │  Hana AI  │  Cart  │ Settings │
-└──────────────────────┬──────────────────────────────┘
-                       │
-    ┌──────────────────┼──────────────────────┐
-    ▼                  ▼                      ▼
-Product List    Checkout Flow           Settings Suite
-Product Detail  Date & Time             Account
-All Products    Order Confirmed         Addresses
-Wishlist        My Orders               Payment Methods
-                Track Order             Notifications
-                                        FAQ / Privacy
-                                        Language / Coupons
-```
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
 
----
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
 
-## Screen Inventory
+### Onboarding
+Splash, Welcome, Login, Register, OTP, Forgot Password
 
-### Onboarding and Auth (8 screens)
+**8 screens**
 
-| Screen | Route | Description |
-|--------|-------|-------------|
-| **Splash** | `/splash` | Animated logo with brand colors. Auto-navigates after 2 seconds. |
-| **Onboarding** | `/onboarding` | 2-slide carousel with skip/next. Saved on first visit. |
-| **Welcome** | `/welcome` | Call-to-action buttons for Login or Register. |
-| **Login** | `/login` | Email and password fields. Country code picker. Remember me option. |
-| **Register** | `/register` | Full registration form with validation. |
-| **Forgot Password** | `/forgot-password` | Enter email to start password reset. |
-| **OTP Verification** | `/otp-verification` | 6-digit PIN input with resend timer. |
-| **New Password** | `/new-password` | Set new password with strength indicator. |
+</div>
 
----
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
 
-### Home (1 screen, 5 section widgets)
+### Home
+Banner, Categories, Offers, AI Picks, Daily Purchase
 
-| Component | Description |
-|-----------|-------------|
-| **Hero Banner** | Auto-sliding promotional banner with page indicator dots. |
-| **Quick Categories** | 8-category horizontal scroll (Vegetables, Fruits, Dairy, Pantry, Snacks, Beverages, Frozen, Household). |
-| **Limited Offers** | Horizontally scrollable discount product cards with countdown. |
-| **AI Recommendations** | Personalized product cards from the Hana AI engine. |
-| **Daily Purchase** | Frequently ordered items for quick re-order. |
+**1 screen**
 
----
+</div>
 
-### Shopping (5 screens)
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
 
-| Screen | Route | Description |
-|--------|-------|-------------|
-| **Category View** | `/category` | Browse by category with sub-filter chips. |
-| **Product List** | `/product-list` | Grid/list toggle, filter drawer, sort options. |
-| **Product Details** | `/product-details` | Images, description, variants, stock status, add to cart. |
-| **All Products** | `/all-products` | Full catalogue grid with search. |
-| **Wishlist** | `/wishlist` | Saved items with move-to-cart action. |
+### Shopping
+Category, Product List, Product Details, All Products, Wishlist
+
+**5 screens**
+
+</div>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### AI Assistant
+Chat, Voice Input, Product Cards, Recipes
+
+**1 screen**
+
+</div>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### Cart & Checkout
+Cart, Checkout, Date/Time, Order Confirmed, Track Order
+
+**6 screens**
+
+</div>
+
+<div style={{border: '1px solid #004B30', borderRadius: '8px', padding: '1rem'}}>
+
+### Settings
+Account, Addresses, Payment, Notifications, Language, Coupons
+
+**11 screens**
+
+</div>
+
+</div>
 
 ---
 
-### Hana AI (1 screen)
+## Main Screens (Bottom Navigation)
 
-| Feature | Description |
-|---------|-------------|
-| **Text Chat** | Type queries, get product recommendations as chat bubbles. |
-| **Voice Input** | Tap microphone, speak, auto-transcribe. |
-| **Product Cards** | Inline product cards in chat with add-to-cart button. |
-| **Recipe Cards** | Recipe suggestions with ingredient lists and cooking steps. |
-| **Add to Cart Sheet** | Bottom sheet to add recommended items to cart. |
-
----
-
-### Cart and Checkout (5 screens)
-
-| Screen | Route | Description |
-|--------|-------|-------------|
-| **Cart** | `/cart` | Item list, quantity controls, subtotal, proceed button. |
-| **Checkout** | `/checkout` | Address selector, delivery slot, coupon, price breakdown, payment. |
-| **Date and Time** | `/date-and-time` | Calendar and time slot picker for delivery scheduling. |
-| **Order Confirmed** | `/order-confirmed` | Animated success screen with order summary. |
-| **My Orders** | `/my-orders` | Order history with status badges. |
-| **Track Order** | `/track-order` | Step-by-step order tracking view. |
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/home.png" alt="Home" />
+  <ZoomableImage src="/img/screenshots/category.png" alt="Category" />
+  <ZoomableImage src="/img/screenshots/hana_ai.png" alt="AI Assistant" />
+  <ZoomableImage src="/img/screenshots/cart.png" alt="Cart" />
+  <ZoomableImage src="/img/screenshots/settings.png" alt="Settings" />
+</div>
 
 ---
 
-### Settings (11 screens)
-
-| Screen | Route | Description |
-|--------|-------|-------------|
-| **Settings Hub** | `/settings` (via bottom nav) | Profile card and quick action buttons. |
-| **Account** | `/account` | Edit personal info, profile photo. |
-| **Delivery Addresses** | `/delivery-address` | Saved address list with default selection. |
-| **Edit Address** | `/edit-address` | Add or edit address with autocomplete. |
-| **Payment Methods** | `/payment-method` | Credit/debit cards with card widget. |
-| **Notifications** | `/notification` | Notification list with categories. |
-| **Notification Detail** | `/notification-details` | Full notification content view. |
-| **Change Password** | `/change-password` | Secure password update form. |
-| **Language** | `/language` | 9-language selector with flag icons. |
-| **Privacy and Sharing** | `/privacy-sharing` | Privacy policy content. |
-| **FAQ** | `/faq` | Expandable accordion FAQ list. |
-| **Coupons** | `/coupons` | Available coupon wallet. |
-
----
-
-## Screen Count Summary
-
-| Section | Screens |
-|---------|---------|
-| Onboarding and Auth | 8 |
-| Home | 1 |
-| Shopping (Catalog) | 5 |
-| Hana AI | 1 |
-| Cart and Checkout | 5 |
-| Orders and Tracking | 2 |
-| Settings | 11 |
-| **Total** | **33** |
-
----
-
-:::tip Screenshots
-Add your app screenshots to `static/img/screenshots/` and reference them in individual feature pages. All feature pages have placeholder image references ready to be replaced.
+:::tip
+Replace the placeholder images above with your actual app screenshots. Add them to `static/img/screenshots/`.
 :::

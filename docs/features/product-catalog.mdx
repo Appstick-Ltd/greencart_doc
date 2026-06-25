@@ -1,49 +1,28 @@
 ---
 sidebar_position: 4
 title: Product Catalog
-description: Hana Go product catalog — Categories, Product List with filters, Product Details, and All Products screens.
+description: Browse products by category, search, filter, sort, and view product details.
 ---
+
+import ZoomableImage from '@site/src/components/ZoomableImage';
 
 # Product Catalog
 
-Hana Go's product catalog includes a complete browsing experience — category navigation, filtering, search, sort, and detailed product pages.
-
----
-
-## Files
-
-```
-lib/pages/
-├── category/
-│   ├── category_view.dart
-│   └── category_controller.dart
-├── product/
-│   ├── product_list/
-│   │   ├── product_list_view.dart
-│   │   └── product_list_controller.dart
-│   └── product_details/
-│       ├── product_details_view.dart
-│       └── product_details_controller.dart
-└── all_products/
-    ├── all_products_view.dart
-    └── all_products_controller.dart
-```
+Hana Go's product catalog lets users browse, search, filter, and view product details.
 
 ---
 
 ## Category View
 
-**Route:** `/category`
+The main browse screen with 8 grocery categories.
 
-The Category screen is the main browse entry point. It is accessible from:
-- Bottom navigation bar (2nd tab)
-- Quick category cards on the Home Screen
+- Grid layout of category cards
+- Tap a category to see its products
+- Sub-category filters within each category
 
-### Features
-- 8 main categories in a scrollable grid or list
-- Sub-category filter chips within each category
-- Product count badge per category
-- Tap a category to go to `ProductListView` with that category pre-filtered
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/category.png" alt="Category Screen" />
+</div>
 
 ### 8 Categories
 
@@ -53,7 +32,7 @@ The Category screen is the main browse entry point. It is accessible from:
 | Fruits | Tropical, Berries, Citrus, Exotic |
 | Dairy | Milk, Cheese, Butter, Yogurt |
 | Pantry | Rice, Pasta, Oils, Condiments |
-| Snacks and Packaged | Chips, Biscuits, Nuts, Sweets |
+| Snacks | Chips, Biscuits, Nuts, Sweets |
 | Beverages | Juices, Water, Tea, Coffee |
 | Frozen | Frozen Veg, Ice Cream, Ready Meals |
 | Household | Cleaning, Paper, Personal Care |
@@ -62,176 +41,57 @@ The Category screen is the main browse entry point. It is accessible from:
 
 ## Product List
 
-**Route:** `/product-list`
-
-A powerful product browsing screen with multiple view modes and filtering.
+Products displayed in grid or list view.
 
 ### Features
+- **Grid/List toggle** — switch between 2-column grid and list view
+- **Search** — real-time search as you type
+- **Filter drawer** — filter by category, price, rating, availability
+- **Sort options** — by price, newest, rating, or popularity
 
-#### View Modes
-- Grid View: 2-column responsive product cards
-- List View: Horizontal card layout with more details
-- Toggle button in the top-right corner
-
-#### Search
-Real-time search filtering as the user types.
-
-#### Filter Drawer
-Slide-in filter panel with:
-- Category multi-select chips
-- Price range slider (min/max)
-- Rating filter (1 to 5 stars)
-- Availability toggle (In Stock only)
-- Brand filter (if applicable)
-- Apply and Clear All buttons
-
-#### Sort Options
-Bottom sheet with sort options:
-- Price: Low to High
-- Price: High to Low
-- Newest First
-- Best Rated
-- Most Popular
-
-### Product Card
-
-Each product card shows:
-- Product image (with shimmer loading)
-- Name (max 2 lines)
-- Weight or size variant
-- Price (with discount strike-through)
-- Rating stars
+### Product Card Shows
+- Product image
+- Name and weight
+- Price (with discount if available)
+- Star rating
 - Wishlist heart icon
 - Add to cart button
 
-### Passing Arguments to Product List
-
-```dart
-// Navigate to product list with a category pre-selected:
-Get.toNamed(
-  Routes.productListView,
-  arguments: {
-    'category': 'Vegetables',
-    'title': 'Fresh Vegetables',
-  },
-);
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/product_list.png" alt="Product List" />
+</div>
 
 ---
 
 ## Product Details
 
-**Route:** `/product-details`
-
-The full product detail page is the most feature-rich screen in the catalog.
+Full product detail page with everything a customer needs.
 
 ### Sections
-1. Image Gallery — Swipeable product images with zoom support
-2. Product Header — Name, brand, rating with review count
-3. Price Block — Current price, original price, discount percentage, per-unit price
-4. Variant Selector — Weight or size options (e.g., 250g, 500g, 1kg)
-5. Stock Status — In Stock / Low Stock / Out of Stock badge
-6. Description — Full product description (expandable)
-7. Nutritional Info — Key nutritional data (if available)
-8. Related Products — Horizontal strip of similar items
-9. Add to Cart — Quantity selector and Add to Cart button (sticky bottom bar)
+1. **Image Gallery** — swipeable product images with zoom
+2. **Product Header** — name, brand, rating
+3. **Price** — current price, original price, discount percentage
+4. **Variant Selector** — choose weight or size (250g, 500g, 1kg)
+5. **Stock Status** — In Stock / Low Stock / Out of Stock
+6. **Description** — full product description
+7. **Related Products** — similar items
 
-### Navigating to Product Details
-
-```dart
-// Pass a ProductModel as argument:
-Get.toNamed(
-  Routes.productDetailsView,
-  arguments: product, // ProductModel instance
-);
-```
-
-### Accessing Passed Arguments
-
-```dart
-// product_details_controller.dart
-@override
-void onInit() {
-  super.onInit();
-  product.value = Get.arguments as ProductModel;
-}
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/product_details.png" alt="Product Details" />
+</div>
 
 ---
 
 ## All Products
 
-**Route:** `/all-products`
+A simple grid showing every product with real-time search.
 
-A simple grid showing every product in the catalogue, with real-time search. Used as a "see all" destination from the Home Screen.
-
----
-
-## ProductModel
-
-All screens use a unified `ProductModel`:
-
-```dart
-// lib/models/product_model.dart
-
-class ProductModel {
-  final String id;
-  final String name;
-  final String brand;
-  final String category;
-  final String imageUrl;
-  final List<String> imageUrls;    // Gallery images
-  final double price;
-  final double? originalPrice;     // null if no discount
-  final String weight;             // e.g. "500g"
-  final List<String> variants;     // e.g. ["250g", "500g", "1kg"]
-  final double rating;
-  final int reviewCount;
-  final bool inStock;
-  final int stockQuantity;
-  final String description;
-  final bool isAiRecommended;
-
-  const ProductModel({...});
-  
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ...;
-  Map<String, dynamic> toJson() => ...;
-}
-```
+<div style={{display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <ZoomableImage src="/img/screenshots/all_products.png" alt="All Products" />
+</div>
 
 ---
 
-## Connecting to a Real Product API
-
-Replace the JSON asset loader with an HTTP call:
-
-```dart
-// lib/data/loaders/product_loader.dart
-
-class ProductLoader {
-  final Dio _dio;
-  
-  // BEFORE (mock):
-  Future<List<ProductModel>> loadAll() async {
-    final String json = await rootBundle.loadString('assets/data/products.json');
-    final List data = jsonDecode(json);
-    return data.map((e) => ProductModel.fromJson(e)).toList();
-  }
-
-  // AFTER (real API):
-  Future<List<ProductModel>> loadAll() async {
-    final response = await _dio.get('https://api.yourstore.com/products');
-    return (response.data as List)
-        .map((e) => ProductModel.fromJson(e))
-        .toList();
-  }
-}
-```
-
-The controllers and views remain **unchanged** — they only depend on the list of products that the loader returns.
-
----
-
-:::tip Search Performance
-The product search uses case-insensitive filtering on the in-memory list. For large catalogues (1000+ products), consider server-side search with a debounced API call.
+:::tip Replacing Product Data
+Replace the product data in `assets/data/products.json` with your own products. Keep the same JSON structure.
 :::
