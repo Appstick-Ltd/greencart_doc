@@ -37,37 +37,11 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Customization',
-      collapsed: false,
-      items: [
-        'customization/colors-theme',
-        'customization/typography',
-        'customization/localization',
-        'customization/assets-images',
-        'customization/mock-data',
-        'database-and-catalog',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Architecture',
-      collapsed: false,
-      items: [
-        'architecture/tech-stack',
-        'architecture/state-management',
-        'architecture/navigation',
-        'architecture/models',
-        'architecture/services',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Reference',
       collapsed: false,
       items: [
         'reference/screens-and-code',
         'reference/faq',
-        'reference/changelog',
         'reference/support',
         'troubleshooting',
       ],
