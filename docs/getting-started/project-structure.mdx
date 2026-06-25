@@ -22,14 +22,14 @@ When you open the project, this is what you see — all folders and files in one
 
 *Click image to zoom — Above: Complete project overview — all folders and files at a glance*
 
-| Folder / File | What It Is | Action |
-|---------------|-----------|--------|
-| `android/` | Android phone build settings | Change app name |
-| `ios/` | iPhone build settings | Change app name |
-| `assets/` | All images, icons, fonts, translations | Replace with your content |
-| `lib/` | All the app code — main folder | Customize as needed |
-| `pubspec.yaml` | App config file | **Change this first** |
-| `test/` | Automated tests | Ignore for now |
+| Folder / File | What It Is |
+|---------------|-----------|
+| `android/` | Android phone build settings |
+| `ios/` | iPhone build settings |
+| `assets/` | All images, icons, fonts, translations |
+| `lib/` | All the app code — main folder |
+| `pubspec.yaml` | App config file |
+| `test/` | Automated tests |
 
 ---
 
@@ -47,14 +47,15 @@ Open this file first. It controls the app version, dependencies, and which image
 | Version | Line 19 | Change `1.0.0+1` to your version |
 | Description | Line 3 | Change app description |
 
-<ZoomableImage src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml dependencies" />
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml launcher icons" />
 
-*Click image to zoom — Above: All the packages (dependencies) the app uses*
+*Click image to zoom — Above: Launcher icon configuration — app icon settings for Android, iOS, Web, and macOS*
 
-| Section | What It Contains |
-|---------|-----------------|
-| `dependencies:` | Core packages the app needs |
-| `dev_dependencies:` | Development packages |
+| Section | What to Change |
+|---------|----------------|
+| `flutter_launcher_icons:` | Replace `assets/icons/logo.png` with your logo |
+| `adaptive_icon_background:` | Change background color for Android adaptive icon |
+| `adaptive_icon_foreground:` | Change foreground image for Android adaptive icon |
 
 <ZoomableImage src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" />
 
@@ -72,21 +73,6 @@ Open this file first. It controls the app version, dependencies, and which image
 |---------|----------------|
 | `fonts:` | Replace font files in `assets/font/` |
 | `flutter_launcher_icons:` | Replace `assets/icons/logo.png` with your logo |
-
-:::warning Quick Changes
-```yaml
-# Line 1: Change app name
-name: your_app_name
-
-# Line 19: Change version
-version: 1.0.0+1
-
-# Line 103+: Add new asset folders
-flutter:
-  assets:
-    - assets/your_new_folder/
-```
-:::
 
 ---
 
@@ -134,16 +120,7 @@ This folder holds everything that is not code — pictures, icons, fonts, and la
 | `de.json` | German | Translate or delete |
 | Other files | More languages | Translate or delete |
 
-:::warning Files to Change
-| File | What to Replace |
-|------|-----------------|
-| `assets/icons/logo.png` | Your app logo (used on splash, login, phone home screen) |
-| `assets/images/Logo.png` | Your logo (used on in-app screens) |
-| `assets/images/onboarding1.png` | Your onboarding image 1 |
-| `assets/images/onboarding2.png` | Your onboarding image 2 |
-| `assets/data/products.json` | Your product data |
-| `assets/translations/en_US.json` | All English text in the app |
-:::
+
 
 ---
 
@@ -344,13 +321,6 @@ These are pre-built pieces used across many screens. Instead of building the sam
 | `quantity_stepper.dart` | +/- quantity controls | Cart, Product Details | Adjust if needed |
 | `stock_badge.dart` | "In Stock" / "Out of Stock" badge | Product Cards | Adjust colors if needed |
 
-:::warning Files to Change (Optional)
-| File | What to Change |
-|------|----------------|
-| `hana_button.dart` | Button style (border radius, padding, colors) |
-| `product_card.dart` | Product card design |
-:::
-
 ---
 
 ## Step 11: `pages/` — Every Screen in the App
@@ -429,10 +399,6 @@ The 5-tab bar at the bottom of the screen:
 | Cart | Shopping cart | Change icon if needed |
 | Profile | Account and settings | Change icon if needed |
 
-:::warning File to Change
-| File | What to Change |
-|------|----------------|
-| `lib/navigator/bottom_nav_bar.dart` | Tab icons, labels, or reorder tabs |
 :::
 
 ---
