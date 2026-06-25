@@ -11,7 +11,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Getting Started',
-      collapsed: false,
+      collapsed: true,
       items: [
         'getting-started/installation',
         'getting-started/quick-start',
@@ -21,7 +21,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Features',
-      collapsed: false,
+      collapsed: true,
       items: [
         'features/screens-overview',
         'features/home-screen',
@@ -38,7 +38,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Reference',
-      collapsed: false,
+      collapsed: true,
       items: [
         'reference/screens-and-code',
         'reference/faq',
