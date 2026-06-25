@@ -69,11 +69,6 @@ const config = {
             position: 'left',
             label: '📖 Documentation',
           },
-          {
-            href: 'https://codecanyon.net',
-            label: '🛒 Buy on CodeCanyon',
-            position: 'right',
-          },
         ],
       },
       footer: {
@@ -98,19 +93,9 @@ const config = {
             ],
           },
           {
-            title: 'Architecture',
-            items: [
-              { label: 'Tech Stack', to: '/architecture/tech-stack' },
-              { label: 'State Management', to: '/architecture/state-management' },
-              { label: 'Navigation', to: '/architecture/navigation' },
-              { label: 'Data Models', to: '/architecture/models' },
-            ],
-          },
-          {
             title: 'Support',
             items: [
               { label: 'FAQ', to: '/reference/faq' },
-              { label: 'Changelog', to: '/reference/changelog' },
               { label: 'Get Support', to: '/reference/support' },
             ],
           },
@@ -121,13 +106,6 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
         additionalLanguages: ['dart', 'bash', 'json', 'yaml'],
-      },
-      announcementBar: {
-        id: 'codecanyon_promo',
-        content: '🎉 <strong>Hana Go</strong> — Premium Flutter Grocery App Template. <a href="https://codecanyon.net" target="_blank"><strong>Buy on CodeCanyon →</strong></a>',
-        backgroundColor: '#004B30',
-        textColor: '#D2F6D2',
-        isCloseable: true,
       },
     }),
 };
