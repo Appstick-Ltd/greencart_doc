@@ -25,7 +25,6 @@ Skip straight to the **[Quick Start →](./quick-start)** and be running in unde
 | **5** | Run Flutter Doctor | ~2 min |
 | **6** | Set up Emulator or Device | ~5 min |
 | **7** | Install VS Code + Extensions | ~3 min |
-| **8** | Run Hana Go | ~2 min |
 
 ---
 
@@ -274,67 +273,8 @@ VS Code is the recommended editor for Flutter development.
 
 ---
 
-## Step 8 — Run Hana Go
+## Next Steps
 
-You're all set up. Now let's launch the app.
+Your environment is ready! Head over to the **[Quick Start →](./quick-start)** guide to run Hana Go on your device.
 
-1. Open the `hana_go/` folder in VS Code (**File → Open Folder**)
 
-2. Open the terminal and run:
-
-```bash
-flutter pub get
-```
-
-3. Click **Run and Debug** in the left sidebar (or press `Ctrl+Shift+D`)
-
-4. Select your emulator or device from the **device dropdown** at the top
-
-5. Press **F5** or click the green **▶ Run** button
-
-![Run the App](/img/screenshots/installation/vscode_run_debug.png)
-
-:::note First Build Time
-The very first build takes **60–90 seconds**. Subsequent runs are much faster thanks to build caching.
-:::
-
-<img src="/img/screenshots/installation/app_running.png" alt="Hana Go running successfully" width="350" />
-
-:::tip Hot Reload and Hot Restart
-Once the app is running:
-- Press **`r`** → **Hot Reload** — refreshes UI instantly, keeps state
-- Press **`R`** → **Hot Restart** — full restart, resets state — use after controller or logic changes
-:::
-
----
-
-## Building for Production
-
-When you're ready to publish, build a release version:
-
-<Tabs>
-  <TabItem value="android-apk" label="Android APK" default>
-
-```bash
-flutter build apk --release
-# Output: build/app/outputs/flutter-apk/app-release.apk
-```
-
-  </TabItem>
-  <TabItem value="android-aab" label="Android App Bundle (Play Store)">
-
-```bash
-flutter build appbundle --release
-# Output: build/app/outputs/bundle/release/app-release.aab
-```
-
-  </TabItem>
-  <TabItem value="ios" label="iOS (macOS only)">
-
-```bash
-flutter build ios --release
-# Then archive and distribute via Xcode → Product → Archive
-```
-
-  </TabItem>
-</Tabs>
