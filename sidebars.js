@@ -16,7 +16,6 @@ const sidebars = {
         'getting-started/installation',
         'getting-started/quick-start',
         'getting-started/project-structure',
-        'configuration',
       ],
     },
     {
