@@ -67,7 +67,7 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'mainSidebar',
             position: 'left',
-            label: '📖 Documentation',
+            label: 'Documentation',
           },
         ],
       },

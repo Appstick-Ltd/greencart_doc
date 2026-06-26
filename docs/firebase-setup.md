@@ -26,7 +26,7 @@ This guide details how to integrate **Firebase** into the **Hana Go** mobile app
 4. Click **Register App**.
 5. Download the `google-services.json` file.
 6. Move the downloaded file into your Flutter project at the following path:
-   📁 Path: [android/app/google-services.json](file:///d:/App_project/hanaGo/android/app/google-services.json)
+   Path: [android/app/google-services.json](file:///d:/App_project/hanaGo/android/app/google-services.json)
 
 ---
 
@@ -73,7 +73,7 @@ To receive push notifications on iOS devices:
 
 Notification logic is handled by the Notification Service:
 
-📁 File path: [lib/services/notification_service.dart](file:///d:/App_project/hanaGo/lib/services/notification_service.dart)
+File path: [lib/services/notification_service.dart](file:///d:/App_project/hanaGo/lib/services/notification_service.dart)
 
 When initialized, the service automatically requests notification permissions and synchronizes topic subscriptions based on the user's settings. The app subscribes or unsubscribes to these Firebase Cloud Messaging (FCM) topics:
 

@@ -14,7 +14,7 @@ function HomepageHeader() {
         {/* Left text column */}
         <div className={styles.heroContent}>
           <div className="badge badge--success margin-bottom--md" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '6px 16px', borderRadius: '20px', fontWeight: 600 }}>
-            ✨ Next-Gen Grocery E-Commerce
+            Next-Gen Grocery E-Commerce
           </div>
           <h1 className={styles.heroTitle}>
             Freshness Delivered <br />
@@ -29,7 +29,7 @@ function HomepageHeader() {
             <Link
               className="button button--secondary button--lg gradient-btn"
               to="/intro">
-              Get Started with Hana Go ⏱️
+              Get Started with Hana Go
             </Link>
           </div>
         </div>
@@ -56,7 +56,6 @@ function HomepageHeader() {
                   <div className={styles.cameraLens}></div>
                 </div>
                 <div className={styles.statusBarRight}>
-                  📶 🛜 🔋
                 </div>
               </div>
 
@@ -65,15 +64,15 @@ function HomepageHeader() {
                 <span className={styles.deliverLabel}>Deliver to</span>
                 <div className={styles.locationRow}>
                   <div className={styles.locationBadge}>
-                    🟢 5 mins <span style={{ opacity: 0.6 }}>|</span> Fukakusa Ya... ❯
+                    <span style={{ color: '#22c55e' }}>●</span> 5 mins <span style={{ opacity: 0.6 }}>|</span> Fukakusa Ya... ❯
                   </div>
                   <div className={styles.shopSelector}>
-                    🏪 Shop ▾
+                    Shop ▾
                   </div>
                 </div>
                 <div className={styles.phoneSearchBox}>
                   <span>🔍 Search food...</span>
-                  <span>🎛️</span>
+                  <span style={{ fontSize: '1rem' }}>&#9776;</span>
                 </div>
               </div>
 
@@ -84,17 +83,17 @@ function HomepageHeader() {
                   <div className={clsx(styles.pillCard, styles.pillCard1)}>
                     <span className={styles.pillTitle}>Grocery</span>
                     <span className={styles.pillDesc}>Everyday essentials</span>
-                    <div style={{ textAlign: 'right', fontSize: '1rem', marginTop: '2px' }}>🛒</div>
+                    <div style={{ textAlign: 'right', fontSize: '1rem', marginTop: '2px' }}></div>
                   </div>
                   <div className={clsx(styles.pillCard, styles.pillCard2)}>
                     <span className={styles.pillTitle}>Top Deals</span>
                     <span className={styles.pillDesc}>Save more today</span>
-                    <div style={{ textAlign: 'right', fontSize: '1rem', marginTop: '2px' }}>🥖</div>
+                    <div style={{ textAlign: 'right', fontSize: '1rem', marginTop: '2px' }}></div>
                   </div>
                   <div className={clsx(styles.pillCard, styles.pillCard3)}>
                     <span className={styles.pillTitle}>Fresh Picks</span>
                     <span className={styles.pillDesc}>Freshly Picked</span>
-                    <div style={{ textAlign: 'right', fontSize: '1rem', marginTop: '2px' }}>🥬</div>
+                    <div style={{ textAlign: 'right', fontSize: '1rem', marginTop: '2px' }}></div>
                   </div>
                 </div>
 
@@ -106,7 +105,7 @@ function HomepageHeader() {
                     Fresh Groceries
                   </div>
                   <button className={styles.bannerBtn}>Shop Now</button>
-                  <div className={styles.bannerIllustration}>🙋‍♀️</div>
+                  <div className={styles.bannerIllustration}></div>
                 </div>
 
                 {/* Categories Header */}
@@ -118,35 +117,35 @@ function HomepageHeader() {
                 {/* Categories Grid */}
                 <div className={styles.categoryGrid}>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#e8f5e9' }}>🥦</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#e8f5e9' }}></div>
                     <span className={styles.categoryLabel}>Vegetables</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#ffebee' }}>🍎</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#ffebee' }}></div>
                     <span className={styles.categoryLabel}>Fruits</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#e3f2fd' }}>🥛</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#e3f2fd' }}></div>
                     <span className={styles.categoryLabel}>Dairy</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#efebe9' }}>🥫</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#efebe9' }}></div>
                     <span className={styles.categoryLabel}>Pantry</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#fff3e0' }}>🍪</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#fff3e0' }}></div>
                     <span className={styles.categoryLabel}>Snacks</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#f3e5f5' }}>🍹</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#f3e5f5' }}></div>
                     <span className={styles.categoryLabel}>Beverages</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#efebe9' }}>🥩</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#efebe9' }}></div>
                     <span className={styles.categoryLabel}>Frozen</span>
                   </div>
                   <div className={styles.categoryItem}>
-                    <div className={styles.categoryIconBox} style={{ background: '#eceff1' }}>🧹</div>
+                    <div className={styles.categoryIconBox} style={{ background: '#eceff1' }}></div>
                     <span className={styles.categoryLabel}>Household</span>
                   </div>
                 </div>
@@ -155,23 +154,23 @@ function HomepageHeader() {
               {/* Bottom Nav bar */}
               <div className={styles.bottomNav}>
                 <div className={clsx(styles.navItem, styles.navItemActive)}>
-                  <span className={styles.navIcon}>🏠</span>
+                  <span className={styles.navIcon}></span>
                   <span className={styles.navLabel}>Home</span>
                 </div>
                 <div className={styles.navItem}>
-                  <span className={styles.navIcon}>🎛️</span>
+                  <span className={styles.navIcon}></span>
                   <span className={styles.navLabel}>Category</span>
                 </div>
                 <div className={styles.navItem}>
-                  <span className={styles.navIcon} style={{ fontSize: '1.25rem' }}>✨</span>
+                  <span className={styles.navIcon} style={{ fontSize: '1.25rem' }}></span>
                   <span className={styles.navLabel} style={{ fontWeight: 700 }}>Hana AI</span>
                 </div>
                 <div className={styles.navItem}>
-                  <span className={styles.navIcon}>🍳</span>
+                  <span className={styles.navIcon}></span>
                   <span className={styles.navLabel}>Recipes</span>
                 </div>
                 <div className={styles.navItem}>
-                  <span className={styles.navIcon}>👤</span>
+                  <span className={styles.navIcon}></span>
                   <span className={styles.navLabel}>Profile</span>
                 </div>
               </div>
