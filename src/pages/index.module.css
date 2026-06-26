@@ -3,7 +3,7 @@
   text-align: left;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(145deg, #073527 0%, #031510 100%);
+  background: linear-gradient(145deg, #004b30 0%, #001f14 100%);
   color: white;
 }
 
@@ -206,7 +206,7 @@
 }
 
 .locationBadge {
-  background: #0B5A43;
+  background: #004B30;
   color: white;
   border-radius: 20px;
   padding: 5px 12px;
@@ -314,7 +314,7 @@
 
 .dropdownItem:hover {
   background: #f0fdf4;
-  color: #0b5a43;
+  color: #004b30;
 }
 
 /* Scrollable Screen Content */
@@ -394,7 +394,7 @@
 
 /* Main Autumn Banner */
 .mainBanner {
-  background: #0B5A43;
+  background: #004B30;
   color: white;
   border-radius: 18px;
   padding: 12px 14px;
@@ -428,7 +428,7 @@
 
 .bannerBtn {
   background: white;
-  color: #0B5A43;
+  color: #004B30;
   border-radius: 20px;
   padding: 5px 12px;
   font-size: 0.6rem;
@@ -587,7 +587,7 @@
 .productPrice {
   font-size: 0.72rem;
   font-weight: 800;
-  color: #0b5a43;
+  color: #004b30;
 }
 
 .addBtn {
@@ -655,7 +655,7 @@
 
 .sidebarItemActive {
   background: #ffffff;
-  border-left-color: #0b5a43;
+  border-left-color: #004b30;
 }
 
 .sidebarIcon {
@@ -670,7 +670,7 @@
 }
 
 .sidebarItemActive .sidebarLabel {
-  color: #0b5a43;
+  color: #004b30;
 }
 
 .categoryProductsPane {
@@ -742,7 +742,7 @@
 
 .searchItemPrice {
   font-size: 0.65rem;
-  color: #0b5a43;
+  color: #004b30;
   font-weight: 600;
 }
 
@@ -774,11 +774,17 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #10b981 0%, #0b5a43 100%);
+  background: linear-gradient(135deg, #10b981 0%, #004b30 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  overflow: hidden;
+}
+
+.aiAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .aiStatusBox {
@@ -853,7 +859,7 @@
 }
 
 .userBubble {
-  background: #0B5A43;
+  background: #004B30;
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -904,7 +910,7 @@
 
 .aiProductCardPrice {
   font-size: 0.65rem;
-  color: #0b5a43;
+  color: #004b30;
   font-weight: 700;
   text-align: center;
   margin-top: 2px;
@@ -950,7 +956,7 @@
 
 .suggestionChip {
   background: #f0fdf4;
-  color: #0b5a43;
+  color: #004b30;
   border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 20px;
   padding: 5px 10px;
@@ -1135,12 +1141,12 @@
 }
 
 .ingredientPrice {
-  color: #0b5a43;
+  color: #004b30;
   font-weight: 600;
 }
 
 .recipeAddCartBtn {
-  background: #0B5A43;
+  background: #004B30;
   color: white;
   border: none;
   font-size: 0.65rem;
@@ -1153,7 +1159,7 @@
 }
 
 .recipeAddCartBtn:hover {
-  background: #084030;
+  background: #003723;
 }
 
 /* Cart / Profile Tab Layout */
@@ -1181,10 +1187,16 @@
   height: 32px;
   border-radius: 50%;
   background: #e8f5e9;
-  font-size: 1.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.profileAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profileInfo {
@@ -1281,7 +1293,7 @@
 
 .cartItemPrice {
   font-size: 0.62rem;
-  color: #0b5a43;
+  color: #004b30;
   font-weight: 700;
 }
 
@@ -1382,7 +1394,7 @@
 }
 
 .promoBtn {
-  background: #0B5A43;
+  background: #004B30;
   color: white;
   border: none;
   border-radius: 8px;
@@ -1483,7 +1495,7 @@
 .successText {
   font-size: 0.95rem;
   font-weight: 800;
-  color: #0b5a43;
+  color: #004b30;
   margin-bottom: 6px;
 }
 
@@ -1495,7 +1507,7 @@
 }
 
 .successBtn {
-  background: #0b5a43;
+  background: #004b30;
   color: white;
   border: none;
   font-size: 0.68rem;
@@ -1506,7 +1518,7 @@
 }
 
 .successBtn:hover {
-  background: #084030;
+  background: #003723;
 }
 
 /* Custom Bottom Nav Active Style */
@@ -1539,7 +1551,7 @@
 }
 
 .navItemActive {
-  color: #0B5A43;
+  color: #004B30;
 }
 
 .navIcon {
@@ -1549,6 +1561,19 @@
   justify-content: center;
   height: 18px;
   position: relative;
+}
+
+.navIconImg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.4;
+  filter: grayscale(100%) brightness(0.6);
+  transition: all 0.2s ease;
+}
+
+.navItemActive .navIconImg {
+  opacity: 1;
+  filter: none;
 }
 
 .navLabel {
@@ -1590,7 +1615,7 @@
   top: 45px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(11, 90, 67, 0.95);
+  background: rgba(0, 75, 48, 0.95);
   color: white;
   border-radius: 20px;
   padding: 6px 14px;

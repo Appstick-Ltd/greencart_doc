@@ -254,8 +254,11 @@ function HomepageHeader() {
       <div className={styles.heroContainer}>
         {/* Left text column */}
         <div className={styles.heroContent}>
-          <div className="badge badge--success margin-bottom--md" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '6px 16px', borderRadius: '20px', fontWeight: 600 }}>
-            Next-Gen Grocery E-Commerce
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1rem', flexWrap: 'wrap' }}>
+            <img src="/img/logo.png" alt="Hana Go Logo" style={{ width: '48px', height: '48px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} />
+            <div className="badge badge--success" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '6px 16px', borderRadius: '20px', fontWeight: 600 }}>
+              Next-Gen Grocery E-Commerce
+            </div>
           </div>
           <h1 className={styles.heroTitle}>
             Freshness Delivered <br />
@@ -578,7 +581,9 @@ function HomepageHeader() {
                   <div className={styles.chatContainer}>
                     {/* Chat Header */}
                     <div className={styles.chatHeader}>
-                      <div className={styles.aiAvatar}>🤖</div>
+                      <div className={styles.aiAvatar}>
+                        <img src="/img/logo.png" className={styles.aiAvatarImg} alt="Hana AI Logo" />
+                      </div>
                       <div className={styles.aiStatusBox}>
                         <span className={styles.aiName}>Hana AI Assistant</span>
                         <span className={styles.aiStatus}>
@@ -734,7 +739,9 @@ function HomepageHeader() {
                   <div className={styles.profileContainer}>
                     {/* User profile banner */}
                     <div className={styles.profileCard}>
-                      <div className={styles.profileAvatar}>👩‍🌾</div>
+                      <div className={styles.profileAvatar}>
+                        <img src="/img/profile_image.png" className={styles.profileAvatarImg} alt="Jane Doe" />
+                      </div>
                       <div className={styles.profileInfo}>
                         <span className={styles.profileName}>Jane Doe</span>
                         <span className={styles.profileBadge}>🏆 Gold Member</span>
@@ -897,28 +904,36 @@ function HomepageHeader() {
                   className={clsx(styles.navItem, activeTab === 'home' && styles.navItemActive)}
                   onClick={() => setActiveTab('home')}
                 >
-                  <span className={styles.navIcon}>🏠</span>
+                  <span className={styles.navIcon}>
+                    <img src="/img/navi_icon/Home.svg" className={styles.navIconImg} alt="Home" />
+                  </span>
                   <span className={styles.navLabel}>Home</span>
                 </div>
                 <div 
                   className={clsx(styles.navItem, activeTab === 'category' && styles.navItemActive)}
                   onClick={() => setActiveTab('category')}
                 >
-                  <span className={styles.navIcon}>🗂️</span>
+                  <span className={styles.navIcon}>
+                    <img src="/img/navi_icon/category.svg" className={styles.navIconImg} alt="Category" />
+                  </span>
                   <span className={styles.navLabel}>Category</span>
                 </div>
                 <div 
                   className={clsx(styles.navItem, activeTab === 'hana-ai' && styles.navItemActive)}
                   onClick={() => setActiveTab('hana-ai')}
                 >
-                  <span className={styles.navIcon} style={{ fontSize: '1.2rem' }}>🤖</span>
+                  <span className={styles.navIcon}>
+                    <img src="/img/navi_icon/hanaai.svg" className={styles.navIconImg} alt="Hana AI" style={{ width: '22px', height: '22px' }} />
+                  </span>
                   <span className={styles.navLabel}>Hana AI</span>
                 </div>
                 <div 
                   className={clsx(styles.navItem, activeTab === 'recipes' && styles.navItemActive)}
                   onClick={() => setActiveTab('recipes')}
                 >
-                  <span className={styles.navIcon}>🥗</span>
+                  <span className={styles.navIcon}>
+                    <img src="/img/navi_icon/recipes.svg" className={styles.navIconImg} alt="Recipes" />
+                  </span>
                   <span className={styles.navLabel}>Recipes</span>
                 </div>
                 <div 
@@ -926,7 +941,7 @@ function HomepageHeader() {
                   onClick={() => setActiveTab('profile')}
                 >
                   <span className={styles.navIcon}>
-                    👤
+                    <img src="/img/navi_icon/profile.svg" className={styles.navIconImg} alt="Profile" />
                     {cartCount > 0 && (
                       <span className={styles.navCartBadge}>{cartCount}</span>
                     )}
