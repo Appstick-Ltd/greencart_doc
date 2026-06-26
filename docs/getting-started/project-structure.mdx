@@ -18,9 +18,8 @@ This guide explains the project layout step by step. Each section includes a scr
 
 When you open the project, this is what you see — all folders and files in one place:
 
-<ZoomableImage src="/img/project-structure/architecture_overview.png" alt="Project overview" />
+<ZoomableImage src="/img/project-structure/architecture_overview.png" alt="Project overview" width={450} />
 
-*Click image to zoom — Above: Complete project overview — all folders and files at a glance*
 
 | Folder / File | What It Is |
 |---------------|-----------|
@@ -39,7 +38,6 @@ Open this file first. It controls the app version, dependencies, and which image
 
 <ZoomableImage src="/img/project-structure/pubspec_yaml_file.png" alt="pubspec.yaml overview" width={750} />
 
-*Click image to zoom — Above: The pubspec.yaml file — app name and description at the top*
 
 | Section | Line | What to Change |
 |---------|------|----------------|
@@ -47,9 +45,8 @@ Open this file first. It controls the app version, dependencies, and which image
 | Version | Line 19 | Change `1.0.0+1` to your version |
 | Description | Line 3 | Change app description |
 
-<ZoomableImage src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml launcher icons" />
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml launcher icons" width={750} />
 
-*Click image to zoom — Above: Launcher icon configuration — app icon settings for Android, iOS, Web, and macOS*
 
 | Section | What to Change |
 |---------|----------------|
@@ -57,17 +54,15 @@ Open this file first. It controls the app version, dependencies, and which image
 | `adaptive_icon_background:` | Change background color for Android adaptive icon |
 | `adaptive_icon_foreground:` | Change foreground image for Android adaptive icon |
 
-<ZoomableImage src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" />
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file2.png" alt="pubspec.yaml assets" width={750} />
 
-*Click image to zoom — Above: List of all image folders included in the app*
 
 | Section | What to Change |
 |---------|----------------|
 | `flutter: assets:` | Add new image folders here |
 
-<ZoomableImage src="/img/project-structure/pubspec_yaml_file3.png" alt="pubspec.yaml fonts and icons" />
+<ZoomableImage src="/img/project-structure/pubspec_yaml_file3.png" alt="pubspec.yaml fonts and icons" width={750} />
 
-*Click image to zoom — Above: Font configuration and app icon settings*
 
 | Section | What to Change |
 |---------|----------------|
@@ -80,9 +75,8 @@ Open this file first. It controls the app version, dependencies, and which image
 
 This folder holds everything that is not code — pictures, icons, fonts, and language files.
 
-<ZoomableImage src="/img/project-structure/assets_resources.png" alt="Assets folder" />
+<ZoomableImage src="/img/project-structure/assets_resources.png" alt="Assets folder" width={450} />
 
-*Click image to zoom — Above: The complete assets folder with all subfolders*
 
 | Subfolder | What It Contains | Action |
 |-----------|-----------------|--------|
@@ -94,9 +88,8 @@ This folder holds everything that is not code — pictures, icons, fonts, and la
 
 ### Icons Folder
 
-<ZoomableImage src="/img/project-structure/icons_folder.png" alt="Icons folder" />
+<ZoomableImage src="/img/project-structure/icons_folder.png" alt="Icons folder" width={450} />
 
-*Click image to zoom — Above: All icon subfolders — category icons, navigation icons, settings icons*
 
 | Subfolder | What It Contains | Action |
 |-----------|-----------------|--------|
@@ -108,9 +101,8 @@ This folder holds everything that is not code — pictures, icons, fonts, and la
 
 ### Translations Folder
 
-<ZoomableImage src="/img/project-structure/translations_folder.png" alt="Translations folder" />
+<ZoomableImage src="/img/project-structure/translations_folder.png" alt="Translations folder" width={450} />
 
-*Click image to zoom — Above: Language files for 9 different languages*
 
 | File | Language | Action |
 |------|----------|--------|
@@ -128,9 +120,8 @@ This folder holds everything that is not code — pictures, icons, fonts, and la
 
 This is the main folder. Every screen, button, and feature lives here.
 
-<ZoomableImage src="/img/project-structure/lib_source.png" alt="lib folder" />
+<ZoomableImage src="/img/project-structure/lib_source.png" alt="lib folder" width={450} />
 
-*Click image to zoom — Above: The lib folder — where all the app code lives*
 
 | Folder | What It Contains | Action |
 |--------|-----------------|--------|
@@ -151,9 +142,8 @@ This is the main folder. Every screen, button, and feature lives here.
 
 This is the very first file Flutter runs.
 
-<ZoomableImage src="/img/project-structure/main_dart_file.png" alt="main.dart" />
+<ZoomableImage src="/img/project-structure/main_dart_file.png" alt="main.dart" width={750} />
 
-*Click image to zoom — Above: The main.dart file — app initialization and entry point*
 
 | What It Does | Line | Action |
 |--------------|------|--------|
@@ -174,9 +164,8 @@ initialRoute: Routes.splashPage,
 
 This folder is the single source of truth for the app's visual design. Change a value here and it updates everywhere.
 
-<ZoomableImage src="/img/project-structure/constants_folder.png" alt="Constants folder" />
+<ZoomableImage src="/img/project-structure/constants_folder.png" alt="Constants folder" width={450} />
 
-*Click image to zoom — Above: The constants folder — colors, text sizes, spacing, images, config*
 
 | File | What It Controls | Action |
 |------|-----------------|--------|
@@ -205,15 +194,7 @@ This folder is the single source of truth for the app's visual design. Change a 
 | `supportEmail` | `'support@hanago.com'` | Your support email |
 | `aiName` | `'Hana AI'` | Your AI assistant name |
 
-:::warning Quick Changes
-```dart
-// lib/constants/ui.dart — Change your brand color
-Color primaryColor = Color(0xFF004B30);  // Change to your color
 
-// lib/constants/app_config.dart — Change app name
-String appName = 'HanaGo';  // Change to your app name
-```
-:::
 
 ---
 
@@ -221,9 +202,8 @@ String appName = 'HanaGo';  // Change to your app name
 
 Models define what a piece of data looks like. They are blueprints, not the data itself.
 
-<ZoomableImage src="/img/project-structure/models_folder.png" alt="Models folder" />
+<ZoomableImage src="/img/project-structure/models_folder.png" alt="Models folder" width={450} />
 
-*Click image to zoom — Above: The models folder — data structure definitions*
 
 | Model | What It Describes | Action |
 |-------|------------------|--------|
@@ -240,9 +220,8 @@ Models define what a piece of data looks like. They are blueprints, not the data
 
 ## Step 8: `data/` — Loading Product Data
 
-<ZoomableImage src="/img/project-structure/data_folder.png" alt="Data folder" />
+<ZoomableImage src="/img/project-structure/data_folder.png" alt="Data folder" width={450} />
 
-*Click image to zoom — Above: The data folder — loaders, repositories, and seed data*
 
 | Subfolder | What It Contains | Action |
 |-----------|-----------------|--------|
@@ -275,11 +254,7 @@ Screens use the data
 | `default_orders.dart` | Sample order data | Replace with your orders |
 | `default_payment_cards.dart` | Saved payment methods | Replace with your payment methods |
 
-:::warning File to Change
-| File | What to Replace |
-|------|-----------------|
-| `assets/data/products.json` | Your product data (keep same JSON structure) |
-:::
+
 
 ---
 
@@ -287,9 +262,8 @@ Screens use the data
 
 Services handle things that happen behind the scenes.
 
-<ZoomableImage src="/img/project-structure/services_folder.png" alt="Services folder" />
+<ZoomableImage src="/img/project-structure/services_folder.png" alt="Services folder" width={400} />
 
-*Click image to zoom — Above: The services folder — cart, profile, notifications, storage*
 
 | Service | What It Does | Action |
 |---------|-------------|--------|
@@ -307,9 +281,8 @@ Services handle things that happen behind the scenes.
 
 These are pre-built pieces used across many screens. Instead of building the same button 20 times, it is built once here and reused everywhere.
 
-<ZoomableImage src="/img/project-structure/components_folder.png" alt="Components folder" />
+<ZoomableImage src="/img/project-structure/components_folder.png" alt="Components folder" width={400} />
 
-*Click image to zoom — Above: The components folder — reusable UI elements*
 
 | Component | What It Is | Used On | Action |
 |-----------|-----------|---------|--------|
@@ -327,9 +300,8 @@ These are pre-built pieces used across many screens. Instead of building the sam
 
 This is the **largest folder**. Every screen the user sees is here.
 
-<ZoomableImage src="/img/project-structure/pages_folder.png" alt="Pages folder" />
+<ZoomableImage src="/img/project-structure/pages_folder.png" alt="Pages folder" width={400} />
 
-*Click image to zoom — Above: The pages folder — all screens organized by feature*
 
 | Folder | What It Contains | Action |
 |--------|-----------------|--------|
@@ -372,9 +344,8 @@ Get.toNamed(Routes.myScreenView);
 
 Two files that connect screen names to actual screens:
 
-<ZoomableImage src="/img/project-structure/routes_folder.png" alt="Routes folder" />
+<ZoomableImage src="/img/project-structure/routes_folder.png" alt="Routes folder" width={400} />
 
-*Click image to zoom — Above: The routes folder — route names and page connections*
 
 | File | What It Does | Action |
 |------|-------------|--------|
@@ -387,9 +358,9 @@ Two files that connect screen names to actual screens:
 
 The 5-tab bar at the bottom of the screen:
 
-<ZoomableImage src="/img/project-structure/navigator_folder.png" alt="Navigator folder" />
+<ZoomableImage src="/img/project-structure/navigator_folder.png" alt="Navigator folder" width={400} />
 
-*Click image to zoom — Above: The navigator folder — bottom navigation bar configuration*
+
 
 | Tab | What It Opens | Action |
 |-----|--------------|--------|
@@ -407,9 +378,8 @@ The 5-tab bar at the bottom of the screen:
 
 One file — `app.dart` — controls the overall look: button shapes, card styles, input field styles, and font.
 
-<ZoomableImage src="/img/project-structure/theme_folder.png" alt="Theme folder" />
+<ZoomableImage src="/img/project-structure/theme_folder.png" alt="Theme folder" width={400} />
 
-*Click image to zoom — Above: The theme folder — app-wide visual styling*
 
 | File | What It Controls | Action |
 |------|-----------------|--------|
@@ -423,13 +393,10 @@ One file — `app.dart` — controls the overall look: button shapes, card style
 
 ### Android
 
-<ZoomableImage src="/img/project-structure/android_folder1.png" alt="Android folder overview" />
+<ZoomableImage src="/img/project-structure/anroid_folder.png" alt="Android folder details" width={750} />
 
-*Click image to zoom — Above: Android folder — build settings and configuration*
+<ZoomableImage src="/img/project-structure/android_folder1.png" alt="Android folder overview" width={750} />
 
-<ZoomableImage src="/img/project-structure/anroid_folder.png" alt="Android folder details" />
-
-*Click image to zoom — Above: Android app folder — manifest and build files*
 
 | File | Line | What to Change |
 |------|------|----------------|
@@ -438,9 +405,8 @@ One file — `app.dart` — controls the overall look: button shapes, card style
 
 ### iOS
 
-<ZoomableImage src="/img/project-structure/ios_folder.png" alt="iOS folder" />
+<ZoomableImage src="/img/project-structure/ios_folder.png" alt="iOS folder" width={750} />
 
-*Click image to zoom — Above: iOS folder — Xcode project settings*
 
 | File | Line | What to Change |
 |------|------|----------------|
