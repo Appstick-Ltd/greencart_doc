@@ -71,38 +71,7 @@ const config = {
           },
         ],
       },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Getting Started',
-            items: [
-              { label: 'Introduction', to: '/' },
-              { label: 'Installation', to: '/getting-started/installation' },
-              { label: 'Quick Start', to: '/getting-started/quick-start' },
-              { label: 'Project Structure', to: '/getting-started/project-structure' },
-            ],
-          },
-          {
-            title: 'Features',
-            items: [
-              { label: 'Screens Overview', to: '/features/screens-overview' },
-              { label: 'Hana AI Assistant', to: '/features/hana-ai' },
-              { label: 'Cart & Checkout', to: '/features/cart-checkout' },
-              { label: 'Authentication', to: '/features/authentication' },
-            ],
-          },
-          {
-            title: 'Support',
-            items: [
-              { label: 'FAQ', to: '/reference/faq' },
-              { label: 'Get Support', to: '/reference/support' },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Hana Go — Flutter Grocery E-Commerce Template. Built with Docusaurus.`,
-      },
-      prism: {
+prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
         additionalLanguages: ['dart', 'bash', 'json', 'yaml'],
