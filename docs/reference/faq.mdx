@@ -42,7 +42,7 @@ Run `flutter doctor` and fix all issues. Common fixes:
 **No**. Firebase is optional. The app launches without it. Push notifications won't work until you set up Firebase.
 
 ### Why do I get a Google Places API error?
-Add your **Google Places API key** to the config file. See the [Configuration](../configuration) guide.
+Add your **Google Places API key** to the config file.
 
 ---
 
@@ -55,10 +55,10 @@ Edit `lib/constants/ui.dart`. Change `AppColors.primary` to any `Color(0xFFHHHHH
 Yes. In `lib/navigator/app_navigator.dart`, remove the AI tab from the `_tabs` list and `bottomNavigationBar` items. Also remove the `hana_ai` route from `lib/routes/pages.dart`.
 
 ### How do I add a new language?
-See the [Localization Guide](../customization/localization). Add a JSON file in `assets/translations/`. Declare it in `pubspec.yaml`. Add the locale to `kSupportedLanguages`.
+Add a JSON file in `assets/translations/`. Declare it in `pubspec.yaml`. Add the locale to `kSupportedLanguages`.
 
 ### How do I replace the font?
-See the [Typography Guide](../customization/typography). Add font files to `assets/font/`. Declare them in `pubspec.yaml`. Change `fontFamily` in `lib/theme/app.dart`.
+Add font files to `assets/font/`. Declare them in `pubspec.yaml`. Change `fontFamily` in `lib/theme/app.dart`.
 
 ### Can I add more product categories?
 Yes. Add category items to the `_kQuickCategories` list in `home_quick_categories.dart`. Add the corresponding icon SVG to `assets/icons/catagory/<your_category>/`.
@@ -78,7 +78,7 @@ Any REST API works. Popular choices:
 - **Django REST Framework** - Great for Python teams.
 
 ### How do I connect to my API?
-See the [Mock Data to Real API](../customization/mock-data) guide. Replace data loaders in `lib/data/loaders/` with `dio` HTTP calls. No UI changes needed.
+Replace data loaders in `lib/data/loaders/` with `dio` HTTP calls. No UI changes needed.
 
 ### Does it support GraphQL?
 Not by default. You can swap `dio` for the `graphql_flutter` package. The architecture supports it cleanly.

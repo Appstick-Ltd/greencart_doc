@@ -84,14 +84,7 @@ If you face unexpected compiler errors after updating package dependencies or pu
 
 ---
 
-## 4. Firebase Configuration Crash
-*   **Symptom**: The mobile app crashes instantly upon startup, specifically during the native splash transition.
-*   **Reason**: Firebase SDK is initialized in the code, but the required configuration credentials (`google-services.json` on Android or `GoogleService-Info.plist` on iOS) are missing or contain incorrect package IDs.
-*   **Fix**: Make sure you correctly downloaded and registered your project keys in the Firebase Console.
-
----
-
-## 5. Release Optimization Guide
+## 4. Release Optimization Guide
 
 When compiling the final production bundles for Google Play Store and Apple App Store, use the commands below to compile with full compilation optimizations:
 
