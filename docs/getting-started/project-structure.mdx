@@ -41,9 +41,13 @@ Open this file first. It controls the app version, dependencies, and which image
 
 | Section | Line | What to Change |
 |---------|------|----------------|
-| App Name | Line 1 | Change `hana_go` to your app name |
+| App Name | Line 1 | Change automatically → [Automated Rename](#automated-rename) |
 | Version | Line 19 | Change `1.0.0+1` to your version |
 | Description | Line 3 | Change app description |
+
+:::tip Quick Rename
+Use `change_project_name` package to rename everything automatically. See **Automated Rename** below.
+:::
 
 <ZoomableImage src="/img/project-structure/pubspec_yaml_file1.png" alt="pubspec.yaml launcher icons" width={750} />
 
@@ -411,6 +415,49 @@ One file — `app.dart` — controls the overall look: button shapes, card style
 |------|------|----------------|
 | `ios/Runner/Info.plist` | Line 10 | Change `CFBundleDisplayName` to your app name |
 | `ios/Runner/Info.plist` | Line 18 | Change `CFBundleName` to your app name |
+
+---
+
+## Automated Rename
+
+Rename the app in one command instead of editing files manually.
+
+**1. Install package:**
+
+```bash
+dart pub add change_project_name --dev
+```
+
+**2. Create `rename.json`:**
+
+```json
+{
+  "project_name": "hanago",
+  "app_name": "hanaGo",
+  "android_package_name": "com.appstick.hanago.hanago",
+  "ios_bundle_identifier": "com.appstick.hanago.hanago",
+  "custom_replacements": {
+    "HanaGo": "hanaGo",
+    "hana_go": "hanago"
+  }
+}
+```
+
+**3. Run:**
+
+```bash
+dart run change_project_name
+```
+
+**4. Verify:**
+
+```bash
+flutter analyze
+```
+
+:::tip
+This changes app name, package name, and all import statements automatically.
+:::
 
 ---
 
