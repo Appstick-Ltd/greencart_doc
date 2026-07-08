@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Project Structure
-description: A folder-by-folder guide to the Hana Go project structure, with screenshots and clear customization instructions.
+description: A folder-by-folder guide to the GreenCart project structure, with screenshots and clear customization instructions.
 ---
 
 import ZoomableImage from '@site/src/components/ZoomableImage';
@@ -192,10 +192,14 @@ This folder is the single source of truth for the app's visual design. Change a 
 
 | Variable | Current Value | Change To |
 |----------|--------------|-----------|
-| `appName` | `'HanaGo'` | Your app name |
+| `appName` | `'GreenCart'` | Your app name |
 | `appTagline` | `'Smart Grocery Shopping'` | Your tagline |
-| `supportEmail` | `'support@hanago.com'` | Your support email |
+| `supportEmail` | `'info@appstick.com.bd'` | Your support email |
 | `aiName` | `'Hana AI'` | Your AI assistant name |
+| `freeShippingThreshold` | `50.0` | Your free shipping minimum |
+| `shippingCharge` | `2.0` | Your flat shipping fee |
+| `discountThreshold` | `25.0` | Minimum order for discount |
+| `discountAmount` | `4.0` | Fixed discount amount |
 
 
 
@@ -432,13 +436,12 @@ dart pub add change_project_name --dev
 
 ```json
 {
-  "project_name": "hanago",
-  "app_name": "hanaGo",
-  "android_package_name": "com.appstick.hanago.hanago",
-  "ios_bundle_identifier": "com.appstick.hanago.hanago",
+  "project_name": "greencart",
+  "app_name": "GreenCart",
+  "android_package_name": "com.appstick.greencart",
+  "ios_bundle_identifier": "com.appstick.greencart",
   "custom_replacements": {
-    "HanaGo": "hanaGo",
-    "hana_go": "hanago"
+    "GreenCart": "greencart"
   }
 }
 ```

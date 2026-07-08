@@ -3,7 +3,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Hana Go — Flutter Grocery App',
+  title: 'GreenCart — Flutter Grocery App',
   tagline: 'Complete UI Template with AI Assistant, GetX Architecture & 26+ Screens',
   favicon: 'img/logo.png',
 
@@ -57,9 +57,9 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'Hana Go',
+        title: 'GreenCart',
         logo: {
-          alt: 'Hana Go Logo',
+          alt: 'GreenCart Logo',
           src: 'img/logo.png',
         },
         items: [

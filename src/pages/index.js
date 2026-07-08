@@ -220,7 +220,7 @@ function HomepageHeader() {
       } else if (normalized.includes('track') || normalized.includes('status') || normalized.includes('delivery') || normalized.includes('where')) {
         replyText = "I found your active order **#HN-2026-90**! Our delivery courier has picked it up and is currently **4 minutes** away. Hold tight! 🛵";
       } else {
-        replyText = "I can definitely help with that! At Hana Go, we offer 26+ screens of Flutter layouts, an integrated AI assistant, and a dark-green design system. Would you like to check today's coupons or suggest a salad recipe?";
+        replyText = "I can definitely help with that! At GreenCart, we offer 32 screens of Flutter layouts, an integrated AI assistant, and a dark-green design system. Would you like to check today's coupons or suggest a salad recipe?";
       }
 
       setChatMessages((prev) => [
@@ -255,7 +255,7 @@ function HomepageHeader() {
         {/* Left text column */}
         <div className={styles.heroContent}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1rem', flexWrap: 'wrap' }}>
-            <img src="/img/logo.png" alt="Hana Go Logo" style={{ width: '48px', height: '48px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} />
+            <img src="/img/logo.png" alt="GreenCart Logo" style={{ width: '48px', height: '48px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} />
             <div className="badge badge--success" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '6px 16px', borderRadius: '20px', fontWeight: 600 }}>
               Next-Gen Grocery E-Commerce
             </div>
@@ -267,13 +267,13 @@ function HomepageHeader() {
             </span>
           </h1>
           <p className={styles.heroSubtitle}>
-            Hana Go is a state-of-the-art grocery e-commerce platform bringing fresh farm-to-table vegetables, premium organic fruits, and daily essentials straight to your kitchen.
+            GreenCart is a state-of-the-art grocery e-commerce platform bringing fresh farm-to-table vegetables, premium organic fruits, and daily essentials straight to your kitchen.
           </p>
           <div className={styles.buttons}>
             <Link
               className="button button--secondary button--lg gradient-btn"
               to="/intro">
-              Get Started with Hana Go
+              Get Started with GreenCart
             </Link>
           </div>
         </div>
@@ -999,7 +999,7 @@ function HomepageFeatures() {
   return (
     <section className={styles.featuresSection}>
       <div className="container">
-        <h2 className={styles.featuresTitle}>Why Choose Hana Go?</h2>
+        <h2 className={styles.featuresTitle}>Why Choose GreenCart?</h2>
         <div className="row" style={{ gap: '2rem', justifyContent: 'center', margin: '0' }}>
           {FeatureList.map((props, idx) => (
             <div key={idx} className={clsx('col col--4', 'premium-card')} style={{ flex: '1', minWidth: '280px', padding: '2rem', margin: '0 8px' }}>
@@ -1024,7 +1024,7 @@ export default function Home() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`Hana Go - Premium Grocery E-Commerce`}
+      title={`GreenCart - Premium Grocery E-Commerce`}
       description="Modern Grocery App & Interactive Shopping Assistant">
       <HomepageHeader />
       <main>

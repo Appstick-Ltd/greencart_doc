@@ -1,15 +1,16 @@
-# Hana Go
+# GreenCart
 
-A premium Flutter grocery e-commerce app template with 26+ screens, built-in AI assistant, and 9 language support.
+A premium Flutter grocery e-commerce app template with 32 screens, built-in AI assistant, and 9 language support.
 
 ## What's Included
 
-- 26+ fully designed screens (onboarding, home, cart, checkout, orders, settings)
+- 32 fully designed screens (onboarding, home, cart, checkout, orders, settings)
 - AI shopping assistant with voice input and recipe suggestions
 - 9 languages: English, German, Spanish, French, Italian, Indonesian and more
 - Dark-green design system with Manrope typography
 - GetX state management
 - Firebase push notifications (optional)
+- Liquid glass UI effect (iOS 26-style, via `liquid_glass_renderer`)
 - Mock product data ready to replace with your own
 
 ## Quick Start
@@ -34,7 +35,7 @@ flutter run
 
 ## Documentation
 
-Open the `hana_go_docs/` folder and run:
+Open the `hana_go/` folder and run:
 
 ```bash
 npm install

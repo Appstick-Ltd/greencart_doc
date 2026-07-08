@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # Troubleshooting & Maintenance
 
-This section covers common compilation errors, SDK conflicts, and build optimization scripts. Use these steps to resolve issues when compiling or building the **Hana Go** mobile application.
+This section covers common compilation errors, SDK conflicts, and build optimization scripts. Use these steps to resolve issues when compiling or building the **GreenCart** mobile application.
 
 ---
 
@@ -43,7 +43,7 @@ If you face unexpected compiler errors after updating package dependencies or pu
 
 ### Multidex Limit Reached
 *   **Symptom**: `The number of method references in a .dex file cannot exceed 64K.`
-*   **Fix**: Android Multidex is already configured in Hana Go, but if you customize settings or add heavy packages, open `android/app/build.gradle` and ensure:
+*   **Fix**: Android Multidex is already configured in GreenCart, but if you customize settings or add heavy packages, open `android/app/build.gradle` and ensure:
     ```groovy
     android {
         defaultConfig {
